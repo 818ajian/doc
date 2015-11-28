@@ -1,0 +1,7 @@
+#/bin/bash
+for i in *.ipynb;
+do 
+ipython nbconvert --to slides $i
+ipython nbconvert --to latex --template nude $i 
+done
+

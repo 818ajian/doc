@@ -1,0 +1,25 @@
+usage: runipy [-h] [--quiet] [--overwrite] [--html [HTML]]
+              [--template [TEMPLATE]] [--pylab] [--matplotlib]
+              [--skip-exceptions] [--stdout] [--stdin] [--no-chdir]
+              [input_file] [output_file]
+
+positional arguments:
+  input_file            .ipynb file to run (or stdin)
+  output_file           .ipynb file to save cell output to
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --quiet, -q           don't print anything unless things go wrong
+  --overwrite, -o       write notebook output back to original notebook
+  --html [HTML]         output an HTML snapshot of the notebook
+  --template [TEMPLATE]
+                        template to use for HTML output
+  --pylab               start notebook with pylab enabled
+  --matplotlib          start notebook with matplotlib inlined
+  --skip-exceptions, -s
+                        if an exception occurs in a cell, continue running the
+                        subsequent cells
+  --stdout              print notebook to stdout (or use - as output_file
+  --stdin               read notebook from stdin (or use - as input_file)
+  --no-chdir            do not change directory to notebook's at kernel
+                        startup

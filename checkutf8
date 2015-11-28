@@ -1,0 +1,5 @@
+#!/bin/bash
+for k in `find $PYLAYERS/pylayers/ -name "*.py"`
+do
+file $k | grep UTF-8
+done

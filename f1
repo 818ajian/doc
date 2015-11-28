@@ -1,0 +1,18 @@
+#!/bin/bash
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/simul/link.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/rays.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/signature.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/tests/Fast_Diff.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/tests/test_vecang.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/tests/test_reciprocity2.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/tests/tmp.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/RadarCom.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/antenna.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/interactions.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/channel.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/slab.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/loss.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/aarray.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/measures/parker/smparker.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.py
+utf82ascii /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/gisutil.py
