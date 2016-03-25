@@ -14,9 +14,14 @@ Multi-wall model
     from pylayers.network.model import *
     %matplotlib inline
 
+
 .. parsed-literal::
 
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+    Layout:Mayavi is not installed
+    mayavi not installed
+    Layout:Mayavi is not installed
+    Layout:Mayavi is not installed
+    mayavi not installed
 
 
 The layout is loaded from an ini file. If the graphs are not available,
@@ -25,6 +30,7 @@ they are built.
 .. code:: python
 
     L=Layout('TA-Office.ini')
+
 Defining a radio link
 ---------------------
 
@@ -39,6 +45,7 @@ coordinates described as 1x2 ``numpy.array`` .
 
     A=np.array((4,1)) # defining transmitter position
     B=np.array((30,12)) # defining receiver position
+
 Ploting the scene
 -----------------
 
@@ -60,6 +67,7 @@ The scene is plotted with the ``showG`` method of the Layout
     a = plt.axis('off')
 
 
+
 .. image:: MultiWall_files/MultiWall_11_0.png
 
 
@@ -74,6 +82,7 @@ segment normal.
 
     %pdef L.angleonlink
 
+
 .. parsed-literal::
 
      [0mL[0m[1;33m.[0m[0mangleonlink[0m[1;33m([0m[0mp1[0m[1;33m=[0m[0marray[0m[1;33m([0m[1;33m[[0m[1;36m0[0m[1;33m,[0m [1;36m0[0m[1;33m][0m[1;33m)[0m[1;33m,[0m [0mp2[0m[1;33m=[0m[0marray[0m[1;33m([0m[1;33m[[0m[1;36m10[0m[1;33m,[0m  [1;36m3[0m[1;33m][0m[1;33m)[0m[1;33m)[0m[1;33m[0m[0m
@@ -82,6 +91,7 @@ segment normal.
 .. code:: python
 
     data=L.angleonlink(A,B)
+
 Computing the Multi-wall model
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -102,6 +112,7 @@ orthogonal and parallel polarization
     print 'Excess delay orthogonal polarization  \t %g ns' %(Edo[0][0])
     print 'Excess delay parallel polarization   \t %g ns' %(Edp[0][0])
 
+
 .. parsed-literal::
 
     Losses orthogonal polarization 	 27.7333 dB
@@ -121,9 +132,11 @@ coverage of a Layout given a transmitter position.
     C = Coverage()
     C.L  = L # set layout
     C.tx = A # set the transmitter
+
 .. code:: python
 
     C.L
+
 
 
 
@@ -136,14 +149,14 @@ coverage of a Layout given a transmitter position.
     ----------------
     
     Number of points  : 71
-    Number of segments  : 94
+    Number of segments  : 91
     Number of sub segments  : 16
-    Number of cycles  : 25
-    Number of rooms  : 24
+    Number of cycles  : 22
+    Number of rooms  : 19
     degree 0 : []
     degree 1 : []
-    degree 2 : 39
-    degree 3 : 32
+    number of node point of degree 2 : 39
+    number of node point of degree 3 : 32
     
     xrange :(0.0, 40.0)
     yrange :(0.0, 15.0)
@@ -161,7 +174,9 @@ coverage of a Layout given a transmitter position.
     offset : numpy array of offset 
     tsg : get segment index in Gs from tahe
     isss :  sub-segment index above Nsmax
-    tgs : get segment index in tahe from Gs
+    tgs : get segment index in tahe from self.Gs
+    upnt : get point id index from self.pt
+    iupnt : get point index in self.pt from point id  
     lsss : list of segments with sub-segment
     sla : list of all slab names (Nsmax+Nss+1)
     degree : degree of nodes 
@@ -171,6 +186,7 @@ coverage of a Layout given a transmitter position.
 .. code:: python
 
     C.creategrid()
+
 The coverage is performed on a grid. Boundaries of the grid are
 specified in the
 ```coverage.ini`` <https://github.com/pylayers/pylayers/blob/master/data/ini/coverage.ini>`__
@@ -186,9 +202,10 @@ Compute the coverage
     t2=time.time()
     print 'Coverage performed in ', t2-t1, 's'
 
+
 .. parsed-literal::
 
-    Coverage performed in  3.12195301056 s
+    Coverage performed in  1.81702399254 s
 
 
 Coverage Map
@@ -202,6 +219,7 @@ For Orthogonal polarization
     f,a = C.show(typ='pr',fig=fig1,nodes=False)
 
 
+
 .. image:: MultiWall_files/MultiWall_29_0.png
 
 
@@ -212,6 +230,7 @@ For parallel polarization
     C.cover(snr=False,sinr=False)
     fig1=plt.figure(figsize=(10,10))
     f,a = C.show(typ='pr',fig=fig1)
+
 
 
 .. image:: MultiWall_files/MultiWall_31_0.png

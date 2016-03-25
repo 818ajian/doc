@@ -2,15 +2,17 @@
 Effect of Modyfiying the Nature of Sub-Segments
 ===============================================
 
-This notebook illustrtates a simple ray tracing simulation with
-diffecent material properties for a single segment separating 2 rooms
-which contains multi-subsegments. The noteboook illustrates in details
-the whole steps.
+This notebook illustrates a simple ray tracing simulation with diffeent
+material properties for a single segment separating 2 rooms which
+contains multi-subsegments. The noteboook illustrates in details the
+whole steps.
 
 .. code:: python
 
     from pylayers.simul.link import *
     from pylayers.antprop.rays import *
+    from pylayers.antprop.aarray import *
+    from pylayers.antprop.channel import *
     from pylayers.gis.layout import *
     from pylayers.antprop.signature import *
     import pylayers.signal.bsignal as bs
@@ -31,12 +33,39 @@ subsegment is materialized by a segment.
 
 .. code:: python
 
-    L=Layout('defstr3.ini')
+    L=Layout('defstr.ini')
     f,a=L.showG('s',subseg=True,figsize=(10,10))
 
 
+::
 
-.. image:: Multisubsegments_files/Multisubsegments_4_0.png
+
+    ---------------------------------------------------------------------------
+
+    AssertionError                            Traceback (most recent call last)
+
+    <ipython-input-2-ba9e7d1397c8> in <module>()
+    ----> 1 L=Layout('defstr.ini')
+          2 f,a=L.showG('s',subseg=True,figsize=(10,10))
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check)
+        410         # check layout integrity (default)
+        411         if check:
+    --> 412             self.check()
+        413         #self.boundary()
+        414 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in check(self, level)
+        719             deg0 = filter(lambda x: nx.degree(self.Gs,x)==0,upnt)
+        720             deg1 = filter(lambda x: nx.degree(self.Gs,x)==1,upnt)
+    --> 721             assert (len(deg0)==0), "It exists degree 0 points :  %r" % deg0
+        722             assert (len(deg1)==0), "It exists degree 1 points : %r" % deg1
+        723 
+
+
+    AssertionError: It exists degree 0 points :  [-18, -17, -16, -15, -14]
 
 
 The studied configuration is composed of a simple 2 rooms building
@@ -50,6 +79,21 @@ attribute of the subsegment can be changed with the method
 
     L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-3-5d060b38fe5b> in <module>()
+    ----> 1 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
+    
+
+    NameError: name 'L' is not defined
+
+
 As the Layout structure has been modified it is required to rebuild the
 structure.
 
@@ -59,10 +103,19 @@ structure.
     L.save()
 
 
-.. parsed-literal::
+::
 
-    structure saved in  defstr3.str2
-    structure saved in  defstr3.ini
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-4-de0401164687> in <module>()
+    ----> 1 L.build()
+          2 L.save()
+
+
+    NameError: name 'L' is not defined
 
 
 The :math:`\mathcal{G}_s` graph dictionnary has the following structure
@@ -72,91 +125,26 @@ The :math:`\mathcal{G}_s` graph dictionnary has the following structure
     L.Gs.node
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    {-8: {},
-     -7: {},
-     -6: {},
-     -5: {},
-     -4: {},
-     -3: {},
-     -2: {},
-     -1: {},
-     1: {'connect': [-8, -7],
-      'name': 'PARTITION',
-      'ncycles': [1, 2],
-      'norm': array([-0.999982  , -0.00599989,  0.        ]),
-      'offset': 0,
-      'ss_name': ['WOOD', 'AIR', 'WOOD'],
-      'ss_offset': [0, 0, 0],
-      'ss_z': [(0.0, 2.7), (2.7, 2.8), (2.8, 3)],
-      'transition': True,
-      'z': (0.0, 3.0)},
-     2: {'connect': [-8, -2],
-      'name': 'WALL',
-      'ncycles': [1, 2],
-      'norm': array([ 0.99997778,  0.00666652,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     3: {'connect': [-7, -5],
-      'name': 'WALL',
-      'ncycles': [1, 2],
-      'norm': array([-0.99997775, -0.00667097,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     4: {'connect': [-6, -1],
-      'name': 'WALL',
-      'ncycles': [2, 0],
-      'norm': array([ 0.99997888,  0.00649986,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     5: {'connect': [-6, -5],
-      'name': 'WALL',
-      'ncycles': [2, 0],
-      'norm': array([-0.00619988,  0.99998078,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     6: {'connect': [-5, -4],
-      'name': 'WALL',
-      'ncycles': [1, 0],
-      'norm': array([-0.00639987,  0.99997952,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     7: {'connect': [-4, -3],
-      'name': 'WALL',
-      'ncycles': [1, 0],
-      'norm': array([ 0.99997887,  0.00650149,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     8: {'connect': [-3, -2],
-      'name': 'WALL',
-      'ncycles': [1, 0],
-      'norm': array([ 0.00639987, -0.99997952,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)},
-     9: {'connect': [-1, -2],
-      'name': 'WALL',
-      'ncycles': [2, 0],
-      'norm': array([-0.00639987,  0.99997952,  0.        ]),
-      'offset': 0,
-      'transition': False,
-      'z': (0.0, 3.0)}}
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-5-ef5d55244e1c> in <module>()
+    ----> 1 L.Gs.node
+    
+
+    NameError: name 'L' is not defined
 
 
 We define now two points which are the termination of a radio link.
 
 .. code:: python
 
+    #tx=np.array([759,1114,1.5])
+    #rx=np.array([767,1114,1.5])
     tx=np.array([759,1114,1.5])
     rx=np.array([767,1114,1.5])
 
@@ -167,87 +155,95 @@ We define now two points which are the termination of a radio link.
     fGHz=np.linspace(1,11,100)
     #Aa = Antenna('S1R1.vsh3')
     #Ab = Antenna('S1R1.vsh3')
-    Aa = Antenna('Omni',fGHz=fGHz)
-    Ab = Antenna('Omni',fGHz=fGHz)
+    #Aa = Antenna('Gauss',fGHz=fGHz)
+    #Ab = Antenna('Gauss',fGHz=fGHz)
+    Aa = AntArray(N=[8,1,1],fGHz=fGHz)
+    Ab = AntArray(N=[4,1,1],fGHz=fGHz)
     Lk = DLink(L=L,a=tx,b=rx,Aa=Aa,Ab=Ab,fGHz=np.linspace(1,11,100))
 
 
-.. parsed-literal::
+::
 
-    structure saved in  defstr3.str2
-    structure saved in  defstr3.ini
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-7-fd2986e5b29e> in <module>()
+    ----> 1 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
+          2 L.save()
+          3 fGHz=np.linspace(1,11,100)
+          4 #Aa = Antenna('S1R1.vsh3')
+          5 #Ab = Antenna('S1R1.vsh3')
+
+
+    NameError: name 'L' is not defined
 
 
 A link is the set of a layout and 2 termination points.
 
 .. code:: python
 
-    f,a=Lk.show()
+    Aa.plotG()
 
 
+::
 
-.. image:: Multisubsegments_files/Multisubsegments_15_0.png
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-8-5cb5df1cbc48> in <module>()
+    ----> 1 Aa.plotG()
+    
+
+    NameError: name 'Aa' is not defined
+
+
+.. code:: python
+
+    #f,a=Lk.show(rays=True)
+    f,a=Lk.show(rays=True)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-9-7ecd8f980a4c> in <module>()
+          1 #f,a=Lk.show(rays=True)
+    ----> 2 f,a=Lk.show(rays=True)
+    
+
+    NameError: name 'Lk' is not defined
 
 
 On the figure above, we can see the Tx and Rx each placed in a different
 room appart from a wall with a subsegement placed in the middle. Then
 for evaluating the radio link, simply type:
 
-.. code:: python
-
-    ak,tauk=Lk.eval(force=True,a=tx,b=rx)
-
-
-.. parsed-literal::
-
-    checkh5
-    Start Signatures
-    algo 7
-    Signatures'> from 2_1_3 saved
-    Stop signature 0.0472140312195
-    Start Rays
-    Rays'> from 3_2_1 saved
-    Stop rays 0.546607017517
-    Ctilde'> from 2_1_0 saved
-    Tchannel'> from 2_1_0_0_0_0_0 saved
-
-
-At that point the channel has been evaluated and all the data stored in
-an ``hdf5`` file
-
-Link members
-------------
-
-The Signature of the radio channel is in ``Lk.Si``, the 3D rays are in
-``Lk.R``, the propagation channel is in ``Lk.C`` and the transmission
-channel is in ``Lk.H``
 
 .. code:: python
 
-    Lk.R
+    ak,tauk=Lk.eval(force=True,a=tx,b=rx,applywav=True)
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    Rays3D
-    ----------
-    1 / 1 : [0]
-    2 / 6 : [1 2 3 4 5 6]
-    3 / 19 : [ 7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25]
-    4 / 40 : [26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
-     51 52 53 54 55 56 57 58 59 60 61 62 63 64 65]
-    5 / 46 : [ 66  67  68  69  70  71  72  73  74  75  76  77  78  79  80  81  82  83
-      84  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 101
-     102 103 104 105 106 107 108 109 110 111]
-    6 / 28 : [112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129
-     130 131 132 133 134 135 136 137 138 139]
-    -----
-    ni : 628
-    nl : 1396
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-10-d9efa0c5005d> in <module>()
+    ----> 1 ak,tauk=Lk.eval(force=True,a=tx,b=rx,applywav=True)
+    
 
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -255,18 +251,18 @@ channel is in ``Lk.H``
     Lk.C
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    Ctilde
-    ---------
-    (140, 100)
-    Nray : 140
-    fmin(GHz) : 1.0
-    fmax(GHz): 11.0
-    Nfreq : 100
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-11-08f49e889d34> in <module>()
+    ----> 1 Lk.C
+    
+
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -275,8 +271,25 @@ channel is in ``Lk.H``
     f,a=Lk.C.show(cmap='jet',fig=f,typ='l20',vmin=-120,vmax=-10)
 
 
+::
 
-.. image:: Multisubsegments_files/Multisubsegments_23_0.png
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-12-ef1e84aff51a> in <module>()
+          1 f = plt.figure(figsize=(10,10))
+    ----> 2 f,a=Lk.C.show(cmap='jet',fig=f,typ='l20',vmin=-120,vmax=-10)
+    
+
+    NameError: name 'Lk' is not defined
+
+
+
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x2b33fec56690>
 
 
 .. code:: python
@@ -287,7 +300,7 @@ channel is in ``Lk.H``
 
 
 
-.. image:: Multisubsegments_files/Multisubsegments_24_0.png
+.. image:: Multisubsegments_files/Multisubsegments_22_0.png
 
 
 .. code:: python
@@ -308,29 +321,56 @@ channel is in ``Lk.H``
     len(Lk.fGHz)
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    100
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-15-00ef4b2c8627> in <module>()
+    ----> 1 len(Lk.fGHz)
+    
+
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
     Lk = DLink(L=L,a=tx,b=rx)
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-16-8ec0715e9a54> in <module>()
+    ----> 1 Lk = DLink(L=L,a=tx,b=rx)
+    
+
+    NameError: name 'L' is not defined
+
+
 .. code:: python
 
     Lk.a
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    array([  759. ,  1114. ,     1.5])
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-17-7f012f925fcc> in <module>()
+    ----> 1 Lk.a
+    
+
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -338,17 +378,38 @@ channel is in ``Lk.H``
     Lk.b
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    array([  767. ,  1114. ,     1.5])
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-18-6142b9bad81d> in <module>()
+    ----> 1 Lk.b
+    
+
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
     cir = Lk.H.applywavB(wav.sf)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-19-74e87499760f> in <module>()
+    ----> 1 cir = Lk.H.applywavB(wav.sf)
+    
+
+    NameError: name 'Lk' is not defined
+
 
 .. code:: python
 
@@ -362,97 +423,63 @@ channel is in ``Lk.H``
     #Aa = Antenna('Omni',fGHz=fGHz)
     ak,tauk=Lk.eval(force=True)
     plt.stem(Lk.H.taud,Lk.H.ak)
+    plt.stem(Lk.H.taud,Lk.H.ak[:,0,50])
 
 
-.. parsed-literal::
-
-    structure saved in  defstr3.str2
-    structure saved in  defstr3.ini
-    checkh5
-    Start Signatures
-    algo 7
-    Signatures'> from 2_1_3 saved
-    Stop signature 0.0257730484009
-    Start Rays
-    Rays'> from 3_2_1 saved
-    Stop rays 0.311182022095
-    Ctilde'> from 2_1_0 saved
-    Tchannel'> from 2_1_0_0_0_2_2 saved
+::
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-20-ae5fc4f64f59> in <module>()
+          1 layer = ['AIR','AIR','AIR']
+    ----> 2 Lk.L.chgmss(1,ss_name=layer)
+          3 Lk.L.Gs.node[1]['ss_name']=layer
+          4 Lk.L.g2npy()
+          5 Lk.L.save()
 
 
-.. parsed-literal::
-
-    <Container object of 3 artists>
+    NameError: name 'Lk' is not defined
 
 
+.. code:: python
+
+    Lk.H.ak.shape
 
 
-.. image:: Multisubsegments_files/Multisubsegments_31_2.png
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-21-1ef58d341060> in <module>()
+    ----> 1 Lk.H.ak.shape
+    
+
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
     cirair = Lk.H.applywavB(wav.sf)
 
-.. code:: python
 
-    cirair.plot(typ=['v'],xmin=20,xmax=80)
-
+::
 
 
+    ---------------------------------------------------------------------------
 
-.. parsed-literal::
+    NameError                                 Traceback (most recent call last)
 
-    (<matplotlib.figure.Figure at 0x2b73a37a9950>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b73a37b2050>]], dtype=object))
+    <ipython-input-22-c6ef9fd0c1d5> in <module>()
+    ----> 1 cirair = Lk.H.applywavB(wav.sf)
+    
 
-
-
-
-.. image:: Multisubsegments_files/Multisubsegments_33_1.png
-
-
-.. code:: python
-
-    layer = ['PARTITION','PARTITION','PARTITION']
-    Lk.L.chgmss(1,ss_name=layer)
-    Lk.L.Gs.node[1]['ss_name']=layer
-    Lk.L.g2npy()
-    Lk.L.save()
-    Lk.eval(force=True)
-    cirpart = Lk.H.applywavB(wav.sf)
-    cirpart.plot(typ=['v'],xmin=20,xmax=80)
-
-
-.. parsed-literal::
-
-    structure saved in  defstr3.str2
-    structure saved in  defstr3.ini
-    checkh5
-    Start Signatures
-    algo 7
-    Signatures'> from 2_1_3 saved
-    Stop signature 0.0452868938446
-    Start Rays
-    Rays'> from 3_2_1 saved
-    Stop rays 0.529342889786
-    Ctilde'> from 2_1_0 saved
-    Tchannel'> from 2_1_0_0_0_2_2 saved
-
-
-
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b73a300e150>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b73a8818090>]], dtype=object))
-
-
-
-
-.. image:: Multisubsegments_files/Multisubsegments_34_2.png
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -467,33 +494,22 @@ channel is in ``Lk.H``
     cirmet.plot(typ=['v'],xmin=20,xmax=80)
 
 
-.. parsed-literal::
-
-    structure saved in  defstr3.str2
-    structure saved in  defstr3.ini
-    checkh5
-    Start Signatures
-    algo 7
-    Signatures'> from 2_1_3 saved
-    Stop signature 0.0311608314514
-    Start Rays
-    Rays'> from 3_2_1 saved
-    Stop rays 0.318943977356
-    Ctilde'> from 2_1_0 saved
-    Tchannel'> from 2_1_0_0_0_2_2 saved
+::
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-23-02ef6687144f> in <module>()
+          1 layer = ['METAL','METAL','METAL']
+    ----> 2 Lk.L.chgmss(1,ss_name=layer)
+          3 Lk.L.Gs.node[1]['ss_name']=layer
+          4 Lk.L.g2npy()
+          5 Lk.L.save()
 
 
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b73a876e410>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b73a3764b50>]], dtype=object))
-
-
-
-
-.. image:: Multisubsegments_files/Multisubsegments_35_2.png
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -511,24 +527,22 @@ channel is in ``Lk.H``
     plt.legend(['metal'])
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    <matplotlib.legend.Legend at 0x2b73a2802510>
+    NameError                                 Traceback (most recent call last)
 
-
-
-
-.. image:: Multisubsegments_files/Multisubsegments_36_1.png
-
-
-
-.. image:: Multisubsegments_files/Multisubsegments_36_2.png
+    <ipython-input-24-e1d90729636b> in <module>()
+          1 #fig2=plt.figure()
+    ----> 2 f,a=cirair.plot(typ=['l20'],color='b')
+          3 plt.axis([0,120,-120,-40])
+          4 plt.title('A simple illustration of shadowing effect')
+          5 plt.legend(['air'])
 
 
-
-.. image:: Multisubsegments_files/Multisubsegments_36_3.png
+    NameError: name 'cirair' is not defined
 
 
 We have modified successively the nature of the 3 surfaces in the sub

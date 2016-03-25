@@ -3,10 +3,10 @@ Description of the propagation environment
 ==========================================
 
 The ``Layout`` class contains the data structure for describing an
-Indoor environment. It implements the different graphs helping the
+Indoor environment. It contathe different graphs helping the
 implementation of the ray tracing. The class is implemented in the
 ```layout.py`` <http://pylayers.github.io/pylayers/modules/pylayers.gis.layout.html>`__
-module.
+module.ins
 
 .. code:: python
 
@@ -18,7 +18,8 @@ module.
 
 .. parsed-literal::
 
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+    Warning : OSM Parser seems to be not installed
+    Layout:Mayavi is not installed
 
 
 Getting the list of all available Layouts : the ``ls()`` method
@@ -67,14 +68,16 @@ Creating a default Layout is as simple as :
     offset : numpy array of offset 
     tsg : get segment index in Gs from tahe
     isss :  sub-segment index above Nsmax
-    tgs : get segment index in tahe from Gs
+    tgs : get segment index in tahe from self.Gs
+    upnt : get point id index from self.pt
+    iupnt : get point index in self.pt from point id  
     lsss : list of segments with sub-segment
     sla : list of all slab names (Nsmax+Nss+1)
     degree : degree of nodes 
 
 
 
-Querying the default file name as simple as :
+Querying the file name associated with the Layout
 
 .. code:: python
 
@@ -89,12 +92,11 @@ Querying the default file name as simple as :
 
 
 
-The ``ls()`` method lists the layout files which are available in the
-``struc`` directory of your current project, which is set up via the
-$BASENAME environment variable which is crucial to be early defined in
-order PyLayers find its way to the good directories. Over the
-development process, the layout data format has evolved quite a lot, the
-most simple is an ``ini`` key-value text file.
+The Layout is described in an ``.ini`` file.The ``ls()`` method lists
+the layout files which are available in the ``struc`` directory of your
+current project, which is set up via the $BASENAME environment variable
+which is crucial to be early defined in order PyLayers find its way to
+the good directories.
 
 .. code:: python
 
@@ -105,32 +107,299 @@ most simple is an ``ini`` key-value text file.
 
 .. parsed-literal::
 
-    ['CORM1.ini',
+    ['11Dbibli.ini',
+     'CORM1.ini',
+     'DLR-bug.ini',
      'DLR.ini',
      'DLR2.ini',
-     'MADRID-METIS.ini',
+     'Jimmy.ini',
      'MOCAP-small.ini',
      'MOCAP-small2.ini',
-     'MOCAP-small3.ini',
      'MOCAP.ini',
      'MOCAPext.ini',
      'Scene.ini',
      'TA-Office.ini',
-     'TA-OfficeAir.ini',
      'W2PTIN.ini',
      'WHERE1.ini',
-     'WHERE2.ini',
-     'd24.ini',
+     'defdiff.ini',
+     'defsthdiff.ini',
      'defstr.ini',
      'defstr3.ini',
-     'homeK_vf.ini',
+     'edge.ini',
      'klepal.ini',
-     'nicta.ini',
-     'scat1.ini',
-     'scat2.ini',
      'scattering.ini',
      'test.ini']
 
+
+
+.. code:: python
+
+    L=Layout('defstr.ini')
+
+.. code:: python
+
+    L
+
+
+
+
+.. parsed-literal::
+
+    
+    ----------------
+    defstr.ini
+    ----------------
+    
+    Number of points  : 8
+    Number of segments  : 9
+    Number of sub segments  : 3
+    Number of cycles  : 3
+    Number of rooms  : 2
+    degree 0 : []
+    degree 1 : [-8 -7]
+    number of node point of degree 2 : 4
+    number of node point of degree 3 : 2
+    
+    xrange :(758.49, 768.516)
+    yrange :(1111.9, 1115.963)
+    
+    Useful dictionnaries
+    ----------------
+    dca {cycle : []} cycle with an airwall
+    sl {slab name : slab dictionary}
+    name :  {slab :seglist} 
+    
+    Useful arrays
+    ----------------
+    pt : numpy array of points 
+    normal : numpy array of normal 
+    offset : numpy array of offset 
+    tsg : get segment index in Gs from tahe
+    isss :  sub-segment index above Nsmax
+    tgs : get segment index in tahe from self.Gs
+    upnt : get point id index from self.pt
+    iupnt : get point index in self.pt from point id  
+    lsss : list of segments with sub-segment
+    sla : list of all slab names (Nsmax+Nss+1)
+    degree : degree of nodes 
+
+
+
+.. code:: python
+
+    f,a=L.showG('s',nodes=True,slab=True,subseg=True,figsize=(10,10),labels=True)
+
+
+
+.. image:: Layout_files/Layout_12_0.png
+
+
+L.ax is : (xmin,xmax,ymin,ymax)
+
+.. code:: python
+
+    L.ax
+
+
+
+
+.. parsed-literal::
+
+    (758.49, 768.516, 1111.9, 1115.963)
+
+
+
+.. code:: python
+
+    L.build()
+
+.. code:: python
+
+    L.ma
+
+
+
+
+.. image:: Layout_files/Layout_16_0.svg
+
+
+
+This Layout has 3 cycles. Negative index cycle are outdoor and positive
+index cycle are indoor. The list of diffraction point for indoor is in
+ldiffin and the list of diffraction points for outdoor diffraction is in
+ldiffout. These two listr are
+
+.. code:: python
+
+    L.Gv.node
+
+
+
+
+.. parsed-literal::
+
+    {-8: {}, -7: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}, 8: {}, 9: {}}
+
+
+
+.. code:: python
+
+    L.ldiff
+
+
+
+
+.. parsed-literal::
+
+    [-8, -7, -6, -1, -3, -4, -8, -7]
+
+
+
+.. code:: python
+
+    L.ldiffin
+
+
+
+
+.. parsed-literal::
+
+    [-8, -7]
+
+
+
+.. code:: python
+
+    L.ldiffout
+
+
+
+
+.. parsed-literal::
+
+    [-6, -1, -3, -4]
+
+
+
+.. code:: python
+
+    L.Gt.node
+
+
+
+
+.. parsed-literal::
+
+    {0: {'indoor': False,
+      'inter': [(6, 0),
+       (6, 0, 1),
+       (6, 1, 0),
+       (7, 0),
+       (7, 0, 1),
+       (7, 1, 0),
+       (8, 0),
+       (8, 0, 1),
+       (8, 1, 0),
+       (9, 0),
+       (9, 0, 2),
+       (9, 2, 0),
+       (4, 0),
+       (4, 0, 2),
+       (4, 2, 0),
+       (5, 0),
+       (5, 0, 2),
+       (5, 2, 0),
+       (-4,),
+       (-3,),
+       (-1,),
+       (-6,)],
+      'isopen': True,
+      'polyg': (753.49,1106.9)
+      (753.49,1120.963)
+      (773.516,1120.963)
+      (773.516,1106.9)
+      
+      vnodes : (-5 6 -4 7 -3 8 -2 9 -1 4 -6 5 )},
+     1: {'cycle': cycle nstr[-8  2 -2  8 -3  7 -4  6 -5  3 -7  1]
+      point number 6
+      segment number 6
+      area : 19.995824
+      centroid : [  766.00300113  1113.94747911],
+      'indoor': True,
+      'inter': [(2, 1),
+       (2, 1, 2),
+       (2, 2, 1),
+       (8, 1),
+       (8, 1, 0),
+       (8, 0, 1),
+       (7, 1),
+       (7, 1, 0),
+       (7, 0, 1),
+       (6, 1),
+       (6, 1, 0),
+       (6, 0, 1),
+       (3, 1),
+       (3, 1, 2),
+       (3, 2, 1),
+       (1, 1),
+       (1, 1, 2),
+       (1, 2, 1),
+       (-8,),
+       (-7,)],
+      'isopen': True,
+      'polyg': (763.506,1113.432)
+      (763.516,1111.932)
+      (768.516,1111.964)
+      (768.49,1115.963)
+      (763.49,1115.931)
+      (763.5,1114.432)
+      
+      vnodes : (-8 2 -2 8 -3 7 -4 6 -5 3 -7 1 )},
+     2: {'cycle': cycle nstr[-8  2 -2  9 -1  4 -6  5 -5  3 -7  1]
+      point number 6
+      segment number 6
+      area : -19.998327
+      centroid : [  761.0028967   1113.91576981],
+      'indoor': True,
+      'inter': [(2, 2),
+       (2, 2, 1),
+       (2, 1, 2),
+       (9, 2),
+       (9, 2, 0),
+       (9, 0, 2),
+       (4, 2),
+       (4, 2, 0),
+       (4, 0, 2),
+       (5, 2),
+       (5, 2, 0),
+       (5, 0, 2),
+       (3, 2),
+       (3, 2, 1),
+       (3, 1, 2),
+       (1, 2),
+       (1, 2, 1),
+       (1, 1, 2),
+       (-8,),
+       (-7,)],
+      'isopen': True,
+      'polyg': (763.506,1113.432)
+      (763.516,1111.932)
+      (758.516,1111.9)
+      (758.49,1115.9)
+      (763.49,1115.931)
+      (763.5,1114.432)
+      
+      vnodes : (-8 2 -2 9 -1 4 -6 5 -5 3 -7 1 )}}
+
+
+
+.. code:: python
+
+    f,a=L.showG()
+
+
+
+.. image:: Layout_files/Layout_23_0.png
 
 
 .. code:: python
@@ -143,7 +412,7 @@ most simple is an ``ini`` key-value text file.
 
 
 
-.. image:: Layout_files/Layout_11_0.png
+.. image:: Layout_files/Layout_25_0.png
 
 
 To check which are the used slabs :
@@ -186,42 +455,7 @@ The showG method provides many vizualization of the layout
 
 
 
-.. image:: Layout_files/Layout_17_0.png
-
-
-.. code:: python
-
-    L=Layout('W2PTIN.ini')
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    AssertionError                            Traceback (most recent call last)
-
-    <ipython-input-10-366aeaf5fde2> in <module>()
-    ----> 1 L=Layout('W2PTIN.ini')
-    
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check)
-        411         # check layout integrity (default)
-        412         if check:
-    --> 413             self.check()
-        414         self.boundary()
-        415 
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in check(self, level)
-        719             deg0 = filter(lambda x: nx.degree(self.Gs,x)==0,upnt)
-        720             deg1 = filter(lambda x: nx.degree(self.Gs,x)==1,upnt)
-    --> 721             assert (len(deg0)==0), "It exists degree 0 points :  %r" % deg0
-        722             assert (len(deg1)==0), "It exists degree 1 points : %r" % deg1
-        723 
-
-
-    AssertionError: It exists degree 0 points :  [-110, -109, -108, -103]
+.. image:: Layout_files/Layout_31_0.png
 
 
 .. code:: python
@@ -230,7 +464,7 @@ The showG method provides many vizualization of the layout
 
 
 
-.. image:: Layout_files/Layout_19_0.png
+.. image:: Layout_files/Layout_32_0.png
 
 
 The useful numpy arrays of the Layout
@@ -286,10 +520,6 @@ number of segment. The first line is the tail index of the segment
 :math:`k` and the second line is the head of the segment :math:`k`.
 Where :math:`k` is the index of a given segment (starting in 0).
 
-.. code:: python
-
-    L.build()
-
 The figure below illustrates a Layout and a surimposition of the graph
 of cycles :math:`\mathcal{G}_c`. Those cycles are automatically
 extracted from a well defined layout. This concept of **cycles** is
@@ -305,7 +535,7 @@ connected to the origin (corresponding to exterior cycle).
 
 
 
-.. image:: Layout_files/Layout_32_0.png
+.. image:: Layout_files/Layout_44_0.png
 
 
 .. code:: python
@@ -318,12 +548,12 @@ connected to the origin (corresponding to exterior cycle).
 
 .. parsed-literal::
 
-    <matplotlib.collections.LineCollection at 0x2b1d75935950>
+    <matplotlib.collections.LineCollection at 0x7f1b7d559590>
 
 
 
 
-.. image:: Layout_files/Layout_33_1.png
+.. image:: Layout_files/Layout_45_1.png
 
 
 ``tgs`` : trancodage from graph indexing to numpy array indexing
@@ -377,7 +607,7 @@ because none segment has 0 as an index.
 
     {'connect': [-286, -292],
      'name': 'CONCRETE_20CM3D',
-     'ncycles': [6, 0],
+     'ncycles': [7, -1],
      'norm': array([-0.99995577, -0.00940477,  0.        ]),
      'offset': 0,
      'ss_name': ['3D_WINDOW_GLASS'],
@@ -476,5 +706,6 @@ because none segment has 0 as an index.
 
 
 
-.. image:: Layout_files/Layout_51_1.png
+.. image:: Layout_files/Layout_63_1.png
+
 

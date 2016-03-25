@@ -3,8 +3,9 @@
 
     import pylayers.gis.ezone as ez
     from pylayers.gis.gisutil import ent,ext2qt
-    import matplotlib.pyplot as plt
     import numpy as np
+    import seaborn as sns
+    from matplotlib import cm
 
 .. code:: python
 
@@ -27,12 +28,14 @@ The command h5ls allows to see the hierarchical structure of the file
 
 .. code:: python
 
-    !h5ls $BASENAME/gis/h5/N48W002.h5ls
+    !h5ls $BASENAME/gis/h5/N48W002.h5
 
 
 .. parsed-literal::
 
-    /home/uguen/Bureau/P1/gis/h5/N48W002.h5ls: unable to open file
+    bldg                     Group
+    dem                      Group
+    extent                   Dataset {4}
 
 
 Invoquing an earth zone requires to specify the tile prefix with the
@@ -64,8 +67,8 @@ gathered for this ``Ezone`` in an existing HDF5 file let invoque the
 
     N48W002
     --------
-    [-2 -1 48 49]
-    latlon : [ 0.000 73676.623 cartesian :0.000 111194.358 ]
+    latlon (deg) : [-2 -1 48 49]
+    cartesian (meters) : [0.000 73676.623 0.000 111194.358 ] 
     
     Buildings 
     --------- 
@@ -85,15 +88,16 @@ method.
 
 .. code:: python
 
-    z.show(source='srtm',bldg=False,height=True,clim=[80,120])
+    z.show(source='srtm',bldg=False,height=True,clim=[0,350],cmap=cm.hsv,alpha=1)
 
 
 
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b90e8763410>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b90e8763810>)
+    (<matplotlib.figure.Figure at 0x2aad8810c410>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2aad8810c850>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2aad8a90d150>)
 
 
 
@@ -150,15 +154,16 @@ The aster DEM can also be shown.
 
 .. code:: python
 
-    z.show(source='aster',bldg=False,clim=[0,120])
+    z.show(source='aster',bldg=False,clim=[0,320])
 
 
 
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b90e8ba6710>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b90e8ba6110>)
+    (<matplotlib.figure.Figure at 0x2aad8810c290>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2aad8ae3d990>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2aad8b09fc10>)
 
 
 
@@ -199,16 +204,43 @@ the ``show`` method for zooming in the map.
 
 .. code:: python
 
-    f,a = z.show(title='Rennes City Center (ASTER data)',
+    z.show()
+
+
+
+
+.. parsed-literal::
+
+    (<matplotlib.figure.Figure at 0x2aad8810c250>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2aad8aed8650>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2aad8b8371d0>)
+
+
+
+
+.. image:: Ezone_files/Ezone_28_1.png
+
+
+.. code:: python
+
+    f,a,c= z.show(title='Rennes City Center (ASTER data)',
                  extent=extent1,
                  bldg=True,
                  height=True,
                  contour=False,
                  source='aster',
-                 clim=[0,105],
-                 figsize=(20,20)
+                 clim=[0,105]
                  )
-    f,a = z.show(title='Rennes City Center (SRTM data)',
+
+
+
+
+.. image:: Ezone_files/Ezone_29_0.png
+
+
+.. code:: python
+
+    f,a,c = z.show(title='Rennes City Center (SRTM data)',
                  extent=extent1,
                  bldg=True,
                  height=True,
@@ -220,11 +252,7 @@ the ``show`` method for zooming in the map.
 
 
 
-.. image:: Ezone_files/Ezone_28_0.png
-
-
-
-.. image:: Ezone_files/Ezone_28_1.png
+.. image:: Ezone_files/Ezone_30_0.png
 
 
 The maps diplayed above are labeled in longitude (horizontal axis) and
@@ -233,19 +261,19 @@ cartesian coordinates as below
 
 .. code:: python
 
-    z.rebase()
+    z.rebase('srtm')
     z.tocart()
 
 .. code:: python
 
-    f,a = z.show(title='Rennes City Center',
+    f,a,c = z.show(title='Rennes City Center',
                  extent=extent1_cart,coord='cartesian',
                  bldg=True,height=True,
                  clim=[0,100])
 
 
 
-.. image:: Ezone_files/Ezone_31_0.png
+.. image:: Ezone_files/Ezone_33_0.png
 
 
 Let zoom to the University of Rennes 1 campus in the North-East region
@@ -267,7 +295,7 @@ of the city.
 
 .. code:: python
 
-    f,a = z.show(title='Beaulieu Campus',
+    f,a,c = z.show(title='Beaulieu Campus',
                  extent=extent2_cart,
                  coord='cartesian',
                  height=False,
@@ -276,12 +304,12 @@ of the city.
 
 
 
-.. image:: Ezone_files/Ezone_34_0.png
+.. image:: Ezone_files/Ezone_36_0.png
 
 
 .. code:: python
 
-    f,a = z.show(title='Beaulieu Campus',
+    f,a,c = z.show(title='Beaulieu Campus',
                  extent=extent2_cart,
                  coord='cartesian',
                  bldg=True,
@@ -290,7 +318,7 @@ of the city.
 
 
 
-.. image:: Ezone_files/Ezone_35_0.png
+.. image:: Ezone_files/Ezone_37_0.png
 
 
 Ground Height Profile Extraction
@@ -316,16 +344,20 @@ be expressed in (lon,lat) coordinates in WGS84 system.
     plt.xlabel('distance (meters)')
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    <matplotlib.text.Text at 0x2b90fcc80990>
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-23-583563e25255> in <module>()
+    ----> 1 f = plt.figure(figsize=(15,5))
+          2 a=plt.plot(d,dh,'r',d,h,'b',d,m[0,:],'g',d,LOS,'k')
+          3 plt.xlabel('distance (meters)')
 
 
-
-
-.. image:: Ezone_files/Ezone_39_1.png
+    NameError: name 'plt' is not defined
 
 
 .. code:: python
@@ -337,44 +369,20 @@ be expressed in (lon,lat) coordinates in WGS84 system.
     plt.xlabel('Distance (meters)')
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    <matplotlib.text.Text at 0x2b90fcca9e90>
+    NameError                                 Traceback (most recent call last)
 
-
-
-
-.. image:: Ezone_files/Ezone_40_1.png
-
-
-.. code:: python
-
-    z
+    <ipython-input-24-819ed69f01ef> in <module>()
+    ----> 1 f = plt.figure(figsize=(15,5))
+          2 a=plt.plot(d,nu)
+          3 a = plt.axis([0,25000,-2,2])
+          4 plt.title(r'Fresnel parameter $\nu$')
+          5 plt.xlabel('Distance (meters)')
 
 
-
-
-.. parsed-literal::
-
-    N48W002
-    --------
-    [-2 -1 48 49]
-    latlon : [ 0.000 73676.623 cartesian :0.000 111194.358 ]
-    
-    Buildings 
-    --------- 
-    i-longitude : 64 96
-    i-latitude  : 19 38
-
-
-
-.. code:: python
-
-    a=z.cover(Ht=2,Hr=2,Rmax=10000)
-
-
-
-.. image:: Ezone_files/Ezone_42_0.png
+    NameError: name 'plt' is not defined
 

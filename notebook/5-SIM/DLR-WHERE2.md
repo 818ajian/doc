@@ -1,3 +1,12 @@
+---
+!!python/unicode 'latex_envs':
+  !!python/unicode 'bibliofile': !!python/unicode 'biblio.bib'
+  !!python/unicode 'cite_by': !!python/unicode 'apalike'
+  !!python/unicode 'current_citInitial': 1
+  !!python/unicode 'eqLabelWithNumbers': true
+  !!python/unicode 'eqNumInitial': 0
+---
+
 ## Example of a trajectory synthesis in the DLR WHERE2 environment
 
 The document describing the measurement performed in the DLR environment is
@@ -31,7 +40,7 @@ It run a full simulation and returns a list of channel impulse response.
 ...     """
 ...     Parameters
 ...     ----------
->>> 
+...
 ...     S
 ...     tx
 ...     rx
@@ -40,7 +49,7 @@ It run a full simulation and returns a list of channel impulse response.
 >>> p.rays import *
 >>> from pylayers.antpr
 ...     """
->>> 
+...
 ...     crxp =-1
 ...     ctxp =-1
 ...     tcir = {}
@@ -48,14 +57,14 @@ It run a full simulation and returns a list of channel impulse response.
 ...     Ntx = len(tx[0])
 ...     rx = S.rx.position
 ...     Nrx = len(rx[0])
->>> 
+...
 ...     #for kt in range(1,Ntx-1):
 ...     #print kt+1
 ...     kt=0
 ...     tcir[kt+1] = {}
 ...     t = np.array([S.tx.position[0,kt+1],S.tx.position[1,kt+1],S.tx.position[2,kt+1]])
 ...     for kr in range(Nrx-1):
-...         if (mod(kr,10)==0):
+...         if (np.mod(kr,10)==0):
 ...             print kr+1
 ...         r = np.array([S.rx.position[0,kr+1],S.rx.position[1,kr+1],S.rx.position[2,kr+1]])
 ...         ctx = S.L.pt2cy(t)
@@ -68,7 +77,7 @@ It run a full simulation and returns a list of channel impulse response.
 >>> ='old')
 ...         r2d = Si.rays(t,r)
 ...         #r2d.show(S.L)
->>> 
+...
 ...         r3d = r2d.to3D(S.L)
 ...         r3d.locbas(S.L)
 ...         r3d.fillinter(S.L)
@@ -90,7 +99,7 @@ It run a full simulation and returns a list of channel impulse response.
 >>> except:
 ...     S.L.build()
 ...     S.L.dumpw()
-new file WHERE1.str
+new file DLR2.str
 ```
 
 ```python
@@ -99,6 +108,10 @@ new file WHERE1.str
 >>> S.L.display['title']='DLR WP4 WHERE2 measurement site'
 >>> S.L.display['overlay']=False
 >>> fig,ax = S.L.showGs()
+/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:650: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+  if self._edgecolors_original != str('face'):
+/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+  if self._edgecolors == str('face'):
 ```
 
 ```python
@@ -146,7 +159,7 @@ Vizualization of the simulated scenario
 ... S.tx.point(pta,mode="add")
 >>> da[c]=k
 >>> plt.plot(pta[0,:],pta[1,:],'or')
-[<matplotlib.lines.Line2D at 0x7f51286fa610>]
+[<matplotlib.lines.Line2D at 0x7fb841bd3810>]
 ```
 
 In the following a trajectory for the receiver is defined.
@@ -168,8 +181,8 @@ Looking what is does
 >>> S.L.display['title']='Trajectory to be simulated'
 >>> S.show(s=20)
 Warning : no furniture file loaded
-(<matplotlib.figure.Figure at 0x7f512892f690>,
- <matplotlib.axes.AxesSubplot at 0x7f5128924390>)
+(<matplotlib.figure.Figure at 0x7fb841bd3390>,
+ <matplotlib.axes._subplots.AxesSubplot at 0x7fb841abcd10>)
 ```
 
 Choosing a UWB waveform for the simulation
@@ -182,7 +195,7 @@ Choosing a UWB waveform for the simulation
 running the simulation
 
 ```python
->>> #tcir = evalcir(S,wav,cutoff=4)
+>>> tcir = evalcir(S,wav,cutoff=4)
 ```
 
 Saving the data in pickle format
@@ -214,6 +227,8 @@ Reading the data from the above file
 ```python
 >>> tcir[1][1].x
 >>> tcir[1][102].x
+array([  1.01214575e-02,   3.03643725e-02,   5.06072874e-02, ...,
+         1.49949393e+02,   1.49969636e+02,   1.49989879e+02])
 ```
 
 #### Aggregated CIR along a synthetic trajectory (line in the corridor)
@@ -227,15 +242,15 @@ Reading the data from the above file
 ... plt.ylabel(r'trajectory index number',fontsize=20)
 >>> clb=plt.colorbar()
 >>> clb.set_label('level (dB)',fontsize=20)
->>> 
+...
 >>> plt.axis('tight')
 (0.0, 150.0, 1.0, 69.0)
 ```
 
 ```python
 >>> tcir[1][10].plot(typ=['v'])
-(<matplotlib.figure.Figure at 0x7f7118a6ded0>,
- array([[<matplotlib.axes.AxesSubplot object at 0x7f7118a6de90>]], dtype=object))
+(<matplotlib.figure.Figure at 0x7fb846e06f50>,
+ array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7fb8417fc6d0>]], dtype=object))
 ```
 
 ```python

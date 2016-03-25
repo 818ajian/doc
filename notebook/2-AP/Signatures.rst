@@ -20,9 +20,11 @@ in the ``pylayers.simul.Link.DLink`` class.
     from pylayers.antprop.rays import *
     %matplotlib inline
 
+
 .. parsed-literal::
 
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+    Layout:Mayavi is not installed
+    Layout:Mayavi is not installed
 
 
 .. code:: python
@@ -30,12 +32,20 @@ in the ``pylayers.simul.Link.DLink`` class.
     L = Layout('defstr3.ini')
     L.build()
     L.dumpw()
+
+
+.. parsed-literal::
+
+    check len(ncycles) == 2 passed
+
+
 Showing the graph of rooms with 2 rooms separated by a DOOR segment
 
 .. code:: python
 
     L.showG('sv',figsize=(8,8))
     a=plt.axis('off')
+
 
 
 .. image:: Signatures_files/Signatures_6_0.png
@@ -47,6 +57,7 @@ The graph of interactions is shown below.
 
     L.showG('si',figsize=(10,5))
     a=plt.axis('off')
+
 
 
 .. image:: Signatures_files/Signatures_8_0.png
@@ -61,9 +72,12 @@ nodes of ``Gt``
 
 
 
+
 .. parsed-literal::
 
-    {(1, 1): {},
+    {(-8,): {},
+     (-7,): {},
+     (1, 1): {},
      (1, 1, 2): {},
      (1, 2): {},
      (1, 2, 1): {},
@@ -76,29 +90,29 @@ nodes of ``Gt``
      (3, 2): {},
      (3, 2, 1): {},
      (4, 0): {},
-     (4, 0, 2): {},
-     (4, 2): {},
-     (4, 2, 0): {},
+     (4, 0, 1): {},
+     (4, 1): {},
+     (4, 1, 0): {},
      (5, 0): {},
-     (5, 0, 2): {},
-     (5, 2): {},
-     (5, 2, 0): {},
+     (5, 0, 1): {},
+     (5, 1): {},
+     (5, 1, 0): {},
      (6, 0): {},
-     (6, 0, 1): {},
-     (6, 1): {},
-     (6, 1, 0): {},
+     (6, 0, 2): {},
+     (6, 2): {},
+     (6, 2, 0): {},
      (7, 0): {},
-     (7, 0, 1): {},
-     (7, 1): {},
-     (7, 1, 0): {},
+     (7, 0, 2): {},
+     (7, 2): {},
+     (7, 2, 0): {},
      (8, 0): {},
-     (8, 0, 1): {},
-     (8, 1): {},
-     (8, 1, 0): {},
+     (8, 0, 2): {},
+     (8, 2): {},
+     (8, 2, 0): {},
      (9, 0): {},
-     (9, 0, 2): {},
-     (9, 2): {},
-     (9, 2, 0): {}}
+     (9, 0, 1): {},
+     (9, 1): {},
+     (9, 1, 0): {}}
 
 
 
@@ -108,30 +122,31 @@ nodes of ``Gt``
 
 
 
+
 .. parsed-literal::
 
-    [(6, 0),
-     (6, 0, 1),
-     (6, 1, 0),
-     (7, 0),
-     (7, 0, 1),
-     (7, 1, 0),
-     (8, 0),
-     (8, 0, 1),
-     (8, 1, 0),
-     (9, 0),
-     (9, 0, 2),
-     (9, 2, 0),
+    [(9, 0),
+     (9, 0, 1),
+     (9, 1, 0),
      (4, 0),
-     (4, 0, 2),
-     (4, 2, 0),
+     (4, 0, 1),
+     (4, 1, 0),
      (5, 0),
-     (5, 0, 2),
-     (5, 2, 0),
-     (-4,),
-     (-3,),
+     (5, 0, 1),
+     (5, 1, 0),
+     (6, 0),
+     (6, 0, 2),
+     (6, 2, 0),
+     (7, 0),
+     (7, 0, 2),
+     (7, 2, 0),
+     (8, 0),
+     (8, 0, 2),
+     (8, 2, 0),
      (-1,),
-     (-6,)]
+     (-6,),
+     (-4,),
+     (-3,)]
 
 
 
@@ -141,6 +156,7 @@ cycle numbers. In example below it is 0 and 1.
 .. code:: python
 
     Si = Signatures(L,0,1)
+
 The cold start determination of the signature is done with a ``run``
 function. The code is not in its final shape here and there is room for
 significant acceleration in incorporating propagation based heuristics.
@@ -150,6 +166,22 @@ The mitigation of graph exploration depth is done in setting a
 .. code:: python
 
     Si.run5(cutoff=5,diffraction=False,algo='old')
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-8-d547d93e7556> in <module>()
+    ----> 1 Si.run5(cutoff=5,diffraction=False,algo='old')
+    
+
+    AttributeError: 'Signatures' object has no attribute 'run5'
+
+
 The representation method of a signature gives informations about the
 different signatures. Signatures are grouped by number of interactions.
 
@@ -159,11 +191,12 @@ different signatures. Signatures are grouped by number of interactions.
 
 
 
+
 .. parsed-literal::
 
     {0: (758.49, 1111.9),
-     1: (766.00300113353387, 1113.947479109665),
-     2: (761.00289669547806, 1113.915769812613)}
+     1: array([  761.00289669,  1113.91576981]),
+     2: array([  766.00300113,  1113.94747911])}
 
 
 
@@ -174,8 +207,9 @@ different signatures. Signatures are grouped by number of interactions.
     print ptx
     print prx
 
+
 .. parsed-literal::
 
-    [  758.53994658  1112.31559265]
-    [  766.04084206  1114.61159219]
+    [  759.12113251  1112.5940909 ]
+    [  761.6061431   1113.92961102]
 

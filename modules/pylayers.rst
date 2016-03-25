@@ -7,11 +7,8 @@ PyLayers
 Simulations  
 -----------
 
-In this section are described the different high level module 
-in charge of the different simulations. 
-
-+ Dlink class handles the deterministic simulation 
-
+This section describes the different high level modules 
+for running the different simulations. 
 
 .. toctree::
    :maxdepth: 2
@@ -36,6 +33,7 @@ Antenna
    pylayers.antprop.antssh
    pylayers.antprop.antvsh
    pylayers.antprop.spharm
+   pylayers.antprop.aarray
 
 Materials and Slabs
 ~~~~~~~~~~~~~~~~~~~

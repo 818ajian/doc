@@ -26,7 +26,7 @@ WHERE1-M1 UWB measurement campaign
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b1daa308710>
+    <matplotlib.figure.Figure at 0x2b8fd7a9bb90>
 
 
 The deliverable describing the FP7 WHERE1 measurement campaign M1 can be
@@ -75,8 +75,16 @@ If not already available, the layout associated graphs are built.
     f,a=S.L.showG('s',figsize=(16,8),nodes=False)
 
 
+.. parsed-literal::
 
-.. image:: Where1M1_files/Where1M1_11_0.png
+    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:650: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+      if self._edgecolors_original != str('face'):
+    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+      if self._edgecolors == str('face'):
+
+
+
+.. image:: Where1M1_files/Where1M1_11_1.png
 
 
 .. code:: python
@@ -87,16 +95,16 @@ If not already available, the layout associated graphs are built.
 
 .. parsed-literal::
 
-    int0 :  (81, 34, 38)
-    int1 :  (120, 38, 37)
-     output  {(129, 37, 39): 0.41574782790169362, (125, 39, 38): 0.99999999999998146, (127, 37): 5.3091135732287613e-08, (127, 37, 41): 5.3091135732287613e-08, (117, 41, 38): 5.3091135732287613e-08, (129, 37): 0.41574782790169362, (126, 37): 0.58425217209829539, (126, 37, 45): 0.58425217209829539}
+    int0 :  (220, 58, 61)
+    int1 :  (216, 61)
+     output  {(223, 61): 4.631245566616953e-05, (189, 61): 0.52059781654978099, (213, 61): 0.99999999999997502, (222, 61): 0.42854915043759029, (207, 61, 60): 0.015898410593098666, (213, 61, 59): 0.99999999999997502, (207, 61): 0.015898410593098666, (223, 61, 57): 4.631245566616953e-05, (205, 61): 0.074214608852340755, (189, 61, 70): 0.52059781654978099, (205, 61, 60): 0.074214608852340755}
 
 
 
 
 .. parsed-literal::
 
-    (-31.123950000000001, 34.74295, 0.34508915054064992, 17.468049999999998)
+    (-31.123950000000001, 34.74295, 3.6289500000000001, 24.594305147086835)
 
 
 
@@ -129,7 +137,7 @@ dictionnary member of the Layout object.
 
 .. parsed-literal::
 
-    ((81, 34, 38), (131, 38))
+    ((274, 55, 54), (286, 52, 55))
 
 
 
@@ -262,10 +270,20 @@ Choose measurement points
 
 .. parsed-literal::
 
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
     [-24.867   12.3097   1.2   ] [-24.867   12.3097   1.2   ]
     [-18.7747  15.178    1.2   ] [-18.7747  15.178    1.2   ]
     Txs OK
     Rxs OK
+
+
+.. parsed-literal::
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/measures/mesuwb.py:993: FutureWarning: elementwise != comparison failed and returning scalar instead; this will raise an error or perform elementwise comparison in the future.
+      if d != []:
 
 
 .. code:: python
@@ -294,7 +312,7 @@ Choose measurement points
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x2b1dab1df410>
+    <matplotlib.legend.Legend at 0x2b8fd85783d0>
 
 
 
@@ -322,8 +340,8 @@ point to cycle function.
 
 .. parsed-literal::
 
-    tx point belongs to cycle  6
-    rx point belongs to cycle  5
+    tx point belongs to cycle  7
+    rx point belongs to cycle  4
 
 
 Then the signature between 2 given cycle can be calculated. This is done
@@ -346,23 +364,63 @@ The representaion of a signature objet
     r2d = Si.rays(tx,rx)
     r3d = r2d.to3D(S.L)
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-18-ef07e5b83169> in <module>()
+    ----> 1 r2d = Si.rays(tx,rx)
+          2 r3d = r2d.to3D(S.L)
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/signature.pyc in rays(self, ptx, prx)
+       4623                     # --> sig2ray
+       4624 
+    -> 4625                     isray,Yi  = s.sig2ray(self.L, ptx[:2], prx[:2])
+       4626 
+       4627                     if isray:
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/signature.pyc in sig2ray(self, L, pTx, pRx, mode)
+       5881         self.ev(L)
+       5882         # calculates images from pTx
+    -> 5883         M = self.image(pTx)
+       5884         #print self
+       5885         #if np.array_equal(self.seq,np.array([5,7,4])):
+
+
+    AttributeError: 'Signature' object has no attribute 'image'
+
+
 .. code:: python
 
     fig = plt.figure(figsize=(10,10))
     r2d.show(L=S.L,fig=fig)
 
 
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-19-7a057e2d7c22> in <module>()
+          1 fig = plt.figure(figsize=(10,10))
+    ----> 2 r2d.show(L=S.L,fig=fig)
+    
+
+    NameError: name 'r2d' is not defined
+
 
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b1daaf41c10>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b1daaf41290>)
-
-
-
-
-.. image:: Where1M1_files/Where1M1_37_1.png
+    <matplotlib.figure.Figure at 0x2b8fd88a0090>
 
 
 .. code:: python
@@ -372,56 +430,20 @@ The representaion of a signature objet
     r3d
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    Rays3D
-    ----------
-    1 / 1 : [0]
-    2 / 6 : [1 2 3 4 5 6]
-    3 / 32 : [ 7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
-     32 33 34 35 36 37 38]
-    4 / 137 : [ 39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54  55  56
-      57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72  73  74
-      75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90  91  92
-      93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110
-     111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128
-     129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146
-     147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164
-     165 166 167 168 169 170 171 172 173 174 175]
-    5 / 227 : [176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193
-     194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211
-     212 213 214 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229
-     230 231 232 233 234 235 236 237 238 239 240 241 242 243 244 245 246 247
-     248 249 250 251 252 253 254 255 256 257 258 259 260 261 262 263 264 265
-     266 267 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283
-     284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301
-     302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318 319
-     320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 335 336 337
-     338 339 340 341 342 343 344 345 346 347 348 349 350 351 352 353 354 355
-     356 357 358 359 360 361 362 363 364 365 366 367 368 369 370 371 372 373
-     374 375 376 377 378 379 380 381 382 383 384 385 386 387 388 389 390 391
-     392 393 394 395 396 397 398 399 400 401 402]
-    6 / 198 : [403 404 405 406 407 408 409 410 411 412 413 414 415 416 417 418 419 420
-     421 422 423 424 425 426 427 428 429 430 431 432 433 434 435 436 437 438
-     439 440 441 442 443 444 445 446 447 448 449 450 451 452 453 454 455 456
-     457 458 459 460 461 462 463 464 465 466 467 468 469 470 471 472 473 474
-     475 476 477 478 479 480 481 482 483 484 485 486 487 488 489 490 491 492
-     493 494 495 496 497 498 499 500 501 502 503 504 505 506 507 508 509 510
-     511 512 513 514 515 516 517 518 519 520 521 522 523 524 525 526 527 528
-     529 530 531 532 533 534 535 536 537 538 539 540 541 542 543 544 545 546
-     547 548 549 550 551 552 553 554 555 556 557 558 559 560 561 562 563 564
-     565 566 567 568 569 570 571 572 573 574 575 576 577 578 579 580 581 582
-     583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 600]
-    7 / 30 : [601 602 603 604 605 606 607 608 609 610 611 612 613 614 615 616 617 618
-     619 620 621 622 623 624 625 626 627 628 629 630]
-    8 / 4 : [631 632 633 634]
-    -----
-    ni : 3222
-    nl : 7079
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-20-ca9247e523cf> in <module>()
+    ----> 1 r3d.locbas(S.L)
+          2 r3d.fillinter(S.L)
+          3 r3d
 
 
+    NameError: name 'r3d' is not defined
 
 
 .. code:: python
@@ -441,11 +463,41 @@ The representaion of a signature objet
 
     Ct = r3d.eval(S.freq())
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-22-3d2a58b0e4d6> in <module>()
+    ----> 1 Ct = r3d.eval(S.freq())
+    
+
+    NameError: name 'r3d' is not defined
+
+
 The ``energy`` method calculates the energy of each ray
 
 .. code:: python
 
     Ett,Epp,Etp,Ept = Ct.energy()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-23-5a542a3e037f> in <module>()
+    ----> 1 Ett,Epp,Etp,Ept = Ct.energy()
+    
+
+    NameError: name 'Ct' is not defined
+
 
 .. code:: python
 
@@ -464,12 +516,22 @@ The ``energy`` method calculates the energy of each ray
     plt.xlabel('delay(ns)')
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    <matplotlib.text.Text at 0x2b1dab30f750>
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-24-ed03cfaffe60> in <module>()
+          1 plt.subplot(121)
+    ----> 2 plt.plot(Ct.tauk,10*np.log10(Ett),'ob',label=r'$\theta\theta$')
+          3 plt.plot(Ct.tauk,10*np.log10(Epp),'or',label=r'$\phi\phi$')
+          4 plt.ylim(-160,-60)
+          5 plt.xlabel('delay(ns)')
+
+
+    NameError: name 'Ct' is not defined
 
 
 
@@ -490,6 +552,23 @@ Apply waveform
     sco= Ct.prop2tran()
     sca= Ct.prop2tran(a=Aa,b=Ab)
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-26-f59dd2910f4c> in <module>()
+    ----> 1 Ct.freq = S.freq
+          2 sco= Ct.prop2tran()
+          3 sca= Ct.prop2tran(a=Aa,b=Ab)
+
+
+    NameError: name 'Ct' is not defined
+
+
 .. code:: python
 
     wav = wvf.Waveform(typ='W1offset')
@@ -497,8 +576,16 @@ Apply waveform
     wav.show()
 
 
+.. parsed-literal::
 
-.. image:: Where1M1_files/Where1M1_47_0.png
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
+
+
+
+.. image:: Where1M1_files/Where1M1_47_1.png
 
 
 .. code:: python
@@ -506,12 +593,18 @@ Apply waveform
     sco.isFriis
 
 
+::
 
 
-.. parsed-literal::
+    ---------------------------------------------------------------------------
 
-    True
+    NameError                                 Traceback (most recent call last)
 
+    <ipython-input-28-483cb18240de> in <module>()
+    ----> 1 sco.isFriis
+    
+
+    NameError: name 'sco' is not defined
 
 
 .. code:: python
@@ -525,14 +618,44 @@ Apply waveform
     else:
          cira = sca.applywavB(wav.sfg)
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-29-32aad411a377> in <module>()
+    ----> 1 if sco.isFriis:
+          2     ciro = sco.applywavB(wav.sf)
+          3 else:
+          4     ciro = sco.applywavB(wav.sfg)
+          5 if sca.isFriis:
+
+
+    NameError: name 'sco' is not defined
+
+
 .. code:: python
 
     ciro.plot(typ='v')
     f=plt.title(u'received waveform without antenna $\\theta\\theta$')
 
 
+::
 
-.. image:: Where1M1_files/Where1M1_50_0.png
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-30-32970dcb6f93> in <module>()
+    ----> 1 ciro.plot(typ='v')
+          2 f=plt.title(u'received waveform without antenna $\\theta\\theta$')
+
+
+    NameError: name 'ciro' is not defined
 
 
 .. code:: python
@@ -541,8 +664,19 @@ Apply waveform
     f=plt.title('received waveform with antenna')
 
 
+::
 
-.. image:: Where1M1_files/Where1M1_51_0.png
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-31-ec3ee7283c4d> in <module>()
+    ----> 1 cira.plot(typ='v')
+          2 f=plt.title('received waveform with antenna')
+
+
+    NameError: name 'cira' is not defined
 
 
 .. code:: python
@@ -567,8 +701,8 @@ Apply waveform
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b1dab4ad410>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b1daba64e90>)
+    (<matplotlib.figure.Figure at 0x2b8fd9318810>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2b8fd8d97c90>)
 
 
 
@@ -592,8 +726,26 @@ Apply waveform
     #ciro.plot()
 
 
+::
 
-.. image:: Where1M1_files/Where1M1_54_0.png
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-34-7ab773200d86> in <module>()
+         10 plt.xlim(20,70)
+         11 plt.ylim(-95,-50)
+    ---> 12 u = cira.plot(ax=ax2)
+         13 plt.title('Simulation-with antenna - without noise')
+         14 plt.tight_layout()
+
+
+    NameError: name 'cira' is not defined
+
+
+
+.. image:: Where1M1_files/Where1M1_54_1.png
 
 
 .. code:: python
@@ -601,29 +753,18 @@ Apply waveform
     r3d.info(0)
 
 
-.. parsed-literal::
+::
 
-    -------------------------
-    Informations of ray # 0
-    -------------------------
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-35-9db4433723d2> in <module>()
+    ----> 1 r3d.info(0)
     
-    Index , type, slab      , th(rad), alpha     , gamma2    
-        0 , B0  , -         , -      , -         , -         
-        0 , T   , PARTITION ,    0.43,  (0.35+0j),  (0.88+0j)
-        0 , B   , -         , -      , -         , -         
-    
-    ----------------------------------------
-     Matrix of ray # 0 at f= 2.0
-    ----------------------------------------
-    rotation matrix# type: B0
-    [[-0.99533359 -0.09649373]
-     [ 0.09649373 -0.99533359]]
-    interaction # 0 type: T
-    [[ 0.05599940-0.55542654j  0.00000000-0.j        ]
-     [ 0.00000000-0.j          0.03832677-0.60999405j]]
-    rotation matrix# [0] type: B
-    [[-0.99533359 -0.09649373]
-     [ 0.09649373 -0.99533359]]
+
+    NameError: name 'r3d' is not defined
 
 
 .. code:: python
@@ -631,6 +772,16 @@ Apply waveform
     f,a=Ct.doadod(phi=(-180,180),cmap='copper')
 
 
+::
 
-.. image:: Where1M1_files/Where1M1_56_0.png
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-36-deb54e4502f7> in <module>()
+    ----> 1 f,a=Ct.doadod(phi=(-180,180),cmap='copper')
+    
+
+    NameError: name 'Ct' is not defined
 

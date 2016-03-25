@@ -1,81 +1,33 @@
----
-!!python/unicode 'celltoolbar': !!python/unicode 'Slideshow'
-!!python/unicode 'latex_envs':
-  !!python/unicode 'bibliofile': !!python/unicode 'biblio.bib'
-  !!python/unicode 'cite_by': !!python/unicode 'apalike'
-  !!python/unicode 'current_citInitial': 1
-  !!python/unicode 'eqLabelWithNumbers': true
-  !!python/unicode 'eqNumInitial': 0
----
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
-
 #  Indoor Coverage with the PyLayers Multi Wall model
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'fragment'
-...
 
-> A Multi wall model accounts only for the attenuation along the direct path between Tx and Rx.
+A Multi wall model accounts only for the attenuation along the direct path between Tx and Rx.
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'fragment'
-...
 
-> This approach do not provide information about delay spread or multi paths but it can nevertheless be useful in different contexts, as i.e optimization of an indoor radio network. The MultiWall approach provides a fast rough indication about the propagation losses.
+This approach do not provide information about delay spread or multi paths but it can nevertheless be useful in different contexts, as i.e optimization of an indoor radio network. The MultiWall approach provides a fast rough indication about the propagation losses.
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
-> A ray tracing approach is much more accurate, but  also is much more time consuming and depending on the purpose, it is relevant
-> to proceed with a simpler and faster site-specific approach as the Multiwall model.
+A ray tracing approach is much more accurate, but  also is much more time consuming and depending on the purpose, it is relevant
+to proceed with a simpler and faster site-specific approach as the Multiwall model.
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
+**`PyLayers`** provides a multiwall module which heavily relies on the core class **`Slab`**. Notice that, the same core **`Slab`** module is used for Ray tracing and MultiWall model approaches.
 
->**`PyLayers`** provides a multiwall module which heavily relies on the core class **`Slab`**. Notice that, the same core **`Slab`** module is used for Ray tracing and MultiWall model approaches.
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 Let's see, how it works.
 First let's import the `coverage` module. And the `time` module for performance evaluation.
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
-
 ```python
 >>> from pylayers.antprop.coverage import *
+>>> from matplotlib.pyplot import *
+>>> %matplotlib inline
 >>> import time
 ```
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 Instantiate a coverage object.
 By defaut the `TA-Office.ini` layout is loaded.
 
 The coverage information is placed in the **coverage.ini** file in the project directory.
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 Below is an example such a configuration file.
 
@@ -108,17 +60,7 @@ noisefactordb = 0
 show = True
 ```
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
-
 The ini file contains 5 sections.
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 + [grid] section
     This section precises the size of the grid. By default the grid is placed over the whole region of the Layout.
@@ -129,34 +71,14 @@ The ini file contains 5 sections.
     A dictionnary of access points precising the standard, the used channel, the emitted power and the position
     of the access point.
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
-
 + [show] section
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 ```python
 >>> # Create a Coverage object from coverag.ini file
 ... C = Coverage('coverage.ini')
 ```
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
-
 `C` has a dictionnary `dap` (dictionnary of access points) which gathers information about each access points of the scene.
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 ```python
 >>> C.dap[1]
@@ -169,17 +91,8 @@ nant : 1
 On : True
 ```
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 The coverage object has a `__repr__` method which summarizes different parameters of the current coverage object
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 ```python
 >>> C
@@ -236,40 +149,18 @@ nx : 40
 ny : 20
 ```
 
-Then, the coverage calculation is launched by calling the `cover()` method
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
-
 ```python
->>> tic = time.time()
 >>> C.cover()
->>> toc = time.time()
->>> print "Execution time : %2.3f " % (toc-tic)
-Execution time : 1.687
 ```
 
 Let display the current Layout with hidding nodes.
 
 ```python
->>> from matplotlib.pyplot import *
->>> %matplotlib inline
 >>> fig=figure(figsize=(10,5))
 >>> C.L.display['nodes']=False
 >>> C.L.display['ednodes']=False
 >>> f,a = C.show(fig=fig)
-/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:650: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-  if self._edgecolors_original != str('face'):
-/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-  if self._edgecolors == str('face'):
 ```
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'slide'
-...
 
 The shadowing map coverage results can be displayed by invoquing various functions.
 
@@ -300,9 +191,7 @@ The shadowing map coverage results can be displayed by invoquing various functio
 
 ```python
 >>> fig=figure(figsize=(10,5))
->>> C.show(fig=fig,f=5,typ='sinr')
-(<matplotlib.figure.Figure at 0x7f1d80d48290>,
- <matplotlib.axes._subplots.AxesSubplot at 0x7f1d80b83850>)
+>>> f=C.show(fig=fig,f=5,typ='sinr')
 ```
 
 As you have noticed the calculation has been done for all the center frequencies of the selected standard.
@@ -317,9 +206,7 @@ Let's consider an other standard
 
 ```python
 >>> fig=figure(figsize=(10,5))
->>> C2.show(ftyp='pr')
-(<matplotlib.figure.Figure at 0x7f1d80fc2410>,
- <matplotlib.axes._subplots.AxesSubplot at 0x7f1d810945d0>)
+>>> f=C2.show(ftyp='pr')
 ```
 
 ```python
@@ -330,8 +217,8 @@ Let's consider an other standard
 ```python
 >>> fig=figure(figsize=(10,5))
 >>> C.show(fig=fig,f=5,typ='capacity',dB=False)
-(<matplotlib.figure.Figure at 0x7f1d8045c510>,
- <matplotlib.axes._subplots.AxesSubplot at 0x7f1d804541d0>)
+(<matplotlib.figure.Figure at 0x7f3ea6200ed0>,
+ <matplotlib.axes._subplots.AxesSubplot at 0x7f3e9e473310>)
 ```
 
 All simulated quantities are stored in linear scale.
@@ -344,8 +231,4 @@ All simulated quantities are stored in linear scale.
 ```python
 >>> C2.freespace[0,0,0]
 8.520773206944774e-07
-```
-
-```python
-
 ```

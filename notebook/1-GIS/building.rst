@@ -7,6 +7,13 @@
     import os
     %matplotlib inline
 
+
+.. parsed-literal::
+
+    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/__init__.py:872: UserWarning: axes.color_cycle is deprecated and replaced with axes.prop_cycle; please use the latter.
+      warnings.warn(self.msg_depr % (key, alt_key))
+
+
 .. code:: python
 
     prefix=ez.enctile(-1.5,47.5)
@@ -33,8 +40,8 @@
 
     N47W002
     --------
-    (-2, -1, 47, 48)
-    latlon : [ -0.000 75118.790 cartesian :0.000 111194.505 ]
+    latlon (deg) : (-2, -1, 47, 48)
+    cartesian (meters) : [-0.000 75118.790 0.000 111194.505 ] 
 
 
 
@@ -58,8 +65,9 @@
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b6eb5f7a210>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b6ee9172190>)
+    (<matplotlib.figure.Figure at 0x2ba9bf1cae10>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2baa01b2fd90>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2baa02150310>)
 
 
 
@@ -78,7 +86,7 @@
 
     N47W002
     --------
-    (-2, -1, 47, 48)
-    latlon : [ -0.000 75118.790 cartesian :0.000 111194.505 ]
+    latlon (deg) : (-2, -1, 47, 48)
+    cartesian (meters) : [-0.000 75118.790 0.000 111194.505 ] 
 
 

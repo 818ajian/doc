@@ -89,7 +89,14 @@ following :
 
 .. parsed-literal::
 
+    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/__init__.py:872: UserWarning: axes.color_cycle is deprecated and replaced with axes.prop_cycle; please use the latter.
+      warnings.warn(self.msg_depr % (key, alt_key))
     WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+
+
+.. parsed-literal::
+
+    Warning : OSM Parser seems to be not installed
 
 
 Reading an exiting Layout
@@ -171,12 +178,7 @@ The structure of the ``.osm`` file is shown below
 
 .. parsed-literal::
 
-    DLR.osm
-    MADRID-METIS.osm
-    MOCAP2.osm
-    MOCAP3.osm
-    MOCAP-small2.osm
-    TA-Office.osm
+    Jimmy.osm
 
 
 .. code:: python
@@ -190,34 +192,13 @@ The structure of the ``.osm`` file is shown below
 
 .. parsed-literal::
 
-    <?xml version='1.0' encoding='UTF-8'?>
-    <osm version='0.6' upload='false' generator='PyLayers'>
-    <node id='-212' action='modify' visible='true' lat='47.0100855114' lon='-1.98980710934' />
-    <node id='-210' action='modify' visible='true' lat='47.0100789151' lon='-1.9897910381' />
-    <node id='-208' action='modify' visible='true' lat='47.0100738861' lon='-1.98977878545' />
-    <node id='-206' action='modify' visible='true' lat='47.0100616861' lon='-1.98982814281' />
-    <node id='-204' action='modify' visible='true' lat='47.0101583649' lon='-1.98982436917' />
-    <node id='-202' action='modify' visible='true' lat='47.0101656174' lon='-1.98981796656' />
-    <node id='-200' action='modify' visible='true' lat='47.0101843662' lon='-1.98977935424' />
-    <node id='-198' action='modify' visible='true' lat='47.0101791636' lon='-1.98982426816' />
     ---
-    <tag k='transition' v='False' />
-    </way>
-    <way id='-10000123' action='modify' visible='true'>
-    <nd ref='-200' />
-    <nd ref='-100' />
-    <tag k='name' v='WALL' />
-    <tag k='z' v="('0.0', '3.0')" />
-    <tag k='transition' v='False' />
-    </way>
-    <way id='-10000124' action='modify' visible='true'>
-    <nd ref='-166' />
-    <nd ref='-188' />
-    <tag k='name' v='WALL' />
-    <tag k='z' v="('0.0', '3.0')" />
-    <tag k='transition' v='False' />
-    </way>
-    </osm>
+
+
+.. parsed-literal::
+
+    head: impossible d'ouvrir «DLR.osm» en lecture: Aucun fichier ou dossier de ce type
+    tail: impossible d'ouvrir «DLR.osm» en lecture: Aucun fichier ou dossier de ce type
 
 
 To read a new layout in osm format :
@@ -246,7 +227,7 @@ To read a new layout in osm format :
     filematini :  matDB.ini
     fileslabini :  slabDB.ini
     filegeom :  DLR.off
-    boundaries  (-0.505, 32.586, -8.277, 8.878)
+    boundaries  [-6.571295099826252, 38.37510026097863, -11.339789148099044, 11.170751733658253]
     number of Points : 105
     number of Segments : 124
     number of Sub-Segments : 30
@@ -266,6 +247,29 @@ The different graphs associated with the layout are then built
 .. code:: python
 
     L.build()
+
+
+.. parsed-literal::
+
+    WARNING:root:punctual contact detected proceed in reverse order
+    CRITICAL:root:contact detected reconsider the layout description 
+    WARNING:root:punctual contact detected proceed in reverse order
+    CRITICAL:root:contact detected reconsider the layout description 
+    CRITICAL:root:second decompose run failed
+
+
+.. parsed-literal::
+
+    merge
+    merge
+    merge
+    merge
+    merge
+    merge
+    merge
+    merge
+    merge
+
 
 The topological graph :math:`\mathcal{G}_t` or graph of non overlapping
 cycles.
@@ -350,18 +354,18 @@ The display options dictionnary
     filematini :  matDB.ini
     fileslabini :  slabDB.ini
     filegeom :  DLR.off
-    boundaries  (-0.505, 32.586, -8.277, 8.878)
+    boundaries  [-6.571295099826252, 38.37510026097863, -11.339789148099044, 11.170751733658253]
     number of Points : 105
-    number of Segments : 124
+    number of Segments : 133
     number of Sub-Segments : 30
-    Gs Nodes :  229
-    Gs Edges :  248
-    Gt Nodes :  21
-    Gt Edges :  52
+    Gs Nodes :  238
+    Gs Edges :  266
+    Gt Nodes :  30
+    Gt Edges :  75
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
-    Gr Nodes    : 18
-    Gr Edges    : 18
+    Gr Nodes    : 23
+    Gr Edges    : 22
     Nc  = Gr.node[nroom]['cycles']  
 
 
@@ -380,15 +384,16 @@ are exploited in ``showGs()`` vizualisation method.
 
     {'activelayer': 'WALL',
      'alpha': 0.5,
-     'box': (-0.505, 32.586, -8.277, 8.878),
+     'box': [-6.571295099826252,
+      38.37510026097863,
+      -11.339789148099044,
+      11.170751733658253],
      'clear': True,
      'edges': True,
      'edlabel': False,
      'edlblsize': 20,
      'ednodes': True,
-     'fileoverlay': 'DLR4991.png',
      'fontsize': 10,
-     'inverse': False,
      'layer': [],
      'layers': ['WALL', 'PARTITION', 'AIR', 'WINDOW_GLASS', '3D_WINDOW_GLASS'],
      'layerset': ['WINDOW_GLASS',
@@ -418,6 +423,12 @@ are exploited in ``showGs()`` vizualisation method.
      'ndsize': 10,
      'nodes': True,
      'overlay': False,
+     'overlay_axis': [-6.571295099826252,
+      38.37510026097863,
+      -11.339789148099044,
+      11.170751733658253],
+     'overlay_file': 'DLR4991.png',
+     'overlay_flip': '',
      'scaled': True,
      'subseg': True,
      'subsegnb': True,
@@ -535,41 +546,19 @@ a filename. In that case the file is stored in
     L.showGs()
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    IOError                                   Traceback (most recent call last)
+    (<matplotlib.figure.Figure at 0x2b5273dfca10>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2b5273dc2090>)
 
-    <ipython-input-19-9bcb9acc34ba> in <module>()
-          1 plt.figure(figsize=(10,10))
-    ----> 2 L.showGs()
-    
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in showGs(self, **kwargs)
-       4958                 img_file = urllib.urlopen(self.display['fileoverlay'])
-       4959                 im = StringIO(img_file.read())
-    -> 4960                 image = Image.open(im)
-       4961                 imok =True
-       4962             else:
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/PIL/Image.pyc in open(fp, mode)
-       2288 
-       2289     raise IOError("cannot identify image file %r"
-    -> 2290                   % (filename if filename else fp))
-       2291 
-       2292 
-
-
-    IOError: cannot identify image file <cStringIO.StringI object at 0x2ac26b04a250>
 
 
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2ac26b7c9d90>
+    <matplotlib.figure.Figure at 0x2b5273dfca90>
 
 
 

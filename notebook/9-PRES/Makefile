@@ -6,4 +6,4 @@ all: $(OBJ)
 %.rst: %.ipynb
 	echo "Running" $<
 	runipy --pylab $<  2> /dev/null
-	ipython nbconvert $< --to rst 
+	jupyter nbconvert $< --to rst 

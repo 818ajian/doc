@@ -13,28 +13,26 @@ WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'imp
 
 ```python
 >>> A
-FileName : S1R1.mat
------------------------
+Antenna type : mat
+------------------------
+file name : S1R1.mat
 fmin : 0.80GHz
 fmax : 5.95GHz
 step : 50.00MHz
 Nf : 104
 -----------------------
+      evaluated        
+-----------------------
 Ntheta : 91
 Nphi : 180
-GmaxdB : 2.23 dB
-   f = 5.60 GHz
-   theta = 70.00 (degrees)
+   f = 5.60 GHz 
+   theta = 70.00 (degrees) 
    phi = 272.00  (degrees)
-antenna name : Th1
-date : 04/12/12
-time : 15:55
-Notes : Mohamed at the log
+```
 
-Serie : 1
-Run : 1
-Nb theta (lat) : 91
-Nb phi (lon) :180
+```python
+>>> A.nf
+104
 ```
 
 To calculate scalar spherical harmonics use method `ssh(A,L)`
@@ -46,38 +44,31 @@ To calculate scalar spherical harmonics use method `ssh(A,L)`
 
 ```python
 >>> A
-FileName : S1R1.mat
------------------------
+Antenna type : mat
+------------------------
+file name : S1R1.mat
 fmin : 0.80GHz
 fmax : 5.95GHz
 step : 50.00MHz
 Nf : 104
 -----------------------
+      evaluated        
+-----------------------
 Ntheta : 91
 Nphi : 180
-GmaxdB : 2.23 dB
-   f = 5.60 GHz
-   theta = 70.00 (degrees)
+   f = 5.60 GHz 
+   theta = 70.00 (degrees) 
    phi = 272.00  (degrees)
-antenna name : Th1
-date : 04/12/12
-time : 15:55
-Notes : Mohamed at the log
-
-Serie : 1
-Run : 1
-Nb theta (lat) : 91
-Nb phi (lon) :180
 ```
 
 ```python
 >>> plt.plot(abs(A.S.Cx.s2[0]))
-[<matplotlib.lines.Line2D at 0x7f7e259c47d0>]
+[<matplotlib.lines.Line2D at 0x7fe754161bd0>]
 ```
 
 ```python
 >>> A.savesh2()
-/home/uguen/Bureau/P1/ant/S1R1.sh2  already exist
+create  /home/uguen/Bureau/P1/ant/S1R1.sh2  file
 ```
 
 ```python
@@ -86,7 +77,7 @@ Nb phi (lon) :180
 
 ```python
 >>> plt.plot(abs(A.S.Cx.s2[0]))
-[<matplotlib.lines.Line2D at 0x7f7e258c67d0>]
+[<matplotlib.lines.Line2D at 0x7fe7540d0b90>]
 ```
 
 ```python
@@ -95,7 +86,7 @@ Nb phi (lon) :180
 
 ```python
 >>> plt.plot(abs(A.S.Cx.s3[0]))
-[<matplotlib.lines.Line2D at 0x7f7e25815750>]
+[<matplotlib.lines.Line2D at 0x7fe753d11510>]
 ```
 
 ```python
@@ -110,7 +101,7 @@ Nb phi (lon) :180
 
 ```python
 >>> plt.plot(abs(A.S.Cx.s2[0]))
-[<matplotlib.lines.Line2D at 0x7f7e25752d90>]
+[<matplotlib.lines.Line2D at 0x7fe753c51250>]
 ```
 
 ```python
@@ -119,41 +110,43 @@ Nb phi (lon) :180
 
 ```python
 >>> plt.plot(abs(A.S.Cx.s3[100]))
-[<matplotlib.lines.Line2D at 0x7f7e2569e410>]
+[<matplotlib.lines.Line2D at 0x7fe753b8f150>]
 ```
 
 ```python
 >>> plt.plot(abs(A.S.Cx.s2[100]))
-[<matplotlib.lines.Line2D at 0x7f7e25569290>]
+[<matplotlib.lines.Line2D at 0x7fe753acac90>]
 ```
 
 ```python
 >>> A.__dict__.keys()
 ['tau',
- 'Nf',
  'PhotoFile',
- 'Np',
- 'Nt',
+ 'nf',
+ 'Fp',
  'Run',
  'source',
  '_filename',
+ 'param',
  'Serie',
- 'Ftheta',
+ 'Date',
  'theta',
  'fromfile',
+ 'fGHz',
  'phi',
- 'Fphi',
+ 'nph',
  'Notes',
- 'fa',
+ 'nth',
  'S',
  'AntennaName',
+ 'grid',
+ 'Ft',
  'typ',
  'DataFile',
  'evaluated',
- 'Date',
  'ext',
  'StartTime',
- 'SqG']
+ 'sqG']
 ```
 
 ```python

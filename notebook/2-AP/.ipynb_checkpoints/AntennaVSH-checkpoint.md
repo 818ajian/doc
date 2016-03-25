@@ -1,5 +1,4 @@
 ---
-!!python/unicode 'celltoolbar': !!python/unicode 'Slideshow'
 !!python/unicode 'latex_envs':
   !!python/unicode 'bibliofile': !!python/unicode 'biblio.bib'
   !!python/unicode 'cite_by': !!python/unicode 'apalike'
@@ -10,15 +9,11 @@
 
 # Vector Spherical Harmonics Representation of Antennas
 
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'skip'
-...
-
 ```python
 >>> from pylayers.antprop.antenna import *
 >>> from pylayers.antprop.antvsh import *
 >>> %matplotlib inline
+WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
 ```
 
 Loading an Antenna from a Matlab file
@@ -29,38 +24,55 @@ Loading an Antenna from a Matlab file
 
 The shape of the $F_{\phi}$ functions indicates :
 
-- $N_f= 104$
+
 - $N_{\theta} = 91$
 - $N_{\phi} = 180 $
+- $N_f= 104$
 
 ```python
->>> np.shape(A.Fphi)
-(104, 91, 180)
+>>> np.shape(A.Fp)
+(91, 180, 104)
 ```
 
 The frequency array is expressed in $GHz$ and delays are expressed in $ns$
 
 ```python
->>> fGHz = A.fa.reshape(104,1,1)
+>>> fGHz = A.fGHz
+```
+
+```python
+>>> fGHz.shape
+(104,)
 ```
 
 Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 
 ```python
->>> I = A.Ftheta[:,:,:]
+>>> I = A.Ft[:,:,:]
+```
+
+```python
+>>> I.shape
+(91, 180, 104)
+```
+
+```python
 >>> plt.figure(figsize=(10,8))
 >>> plt.imshow(np.unwrap(np.angle(I[:,45,:])))
 >>> plt.title(r'Unwrapped phase of $F_{\theta}$ w.r.t frequency and phi for $\theta=\frac{pi}{2}$')
 >>> plt.ylabel('f index')
 >>> plt.colorbar()
 >>> plt.figure()
->>> plt.plot(fGHz[:,0,0],np.unwrap(np.angle(I[:,45,85])))
+>>> plt.plot(fGHz,np.unwrap(np.angle(I[45,85,:])))
 >>> plt.xlabel('f index')
+
+/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+  if self._edgecolors == str('face'):
 ```
 
 ```python
 >>> tau=4.185
->>> I = A.Ftheta[:,:,:]*exp(-2*1j*pi*fGHz*tau)
+>>> I = A.Ft[:,:,:]*np.exp(-2*1j*np.pi*fGHz[None,None,:]*tau)
 ```
 
 ```python
@@ -68,9 +80,9 @@ Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 >>> plt.title(r'Unwrapped phase of $F_{\theta}$ w.r.t frequency and phi for $\theta=\frac{pi}{2}$')
 >>> plt.ylabel('f index')
 >>> plt.colorbar()
-...
->>> plt.plot(fGHz[:,0,0],np.unwrap(np.angle(I[:,45,85])))
-[<matplotlib.lines.Line2D at 0x7f657955ced0>]
+>>> plt.figure()
+>>> plt.plot(fGHz,np.unwrap(np.angle(I[45,85,:])))
+[<matplotlib.lines.Line2D at 0x7f2a328d7190>]
 ```
 
 ##### Display of the radiation pattern for all frequencies
@@ -78,16 +90,7 @@ Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 ```python
 >>> plt.figure(figsize=(10,10))
 >>> for nf in range(104):
-...     plt.polar(A.phi,abs(A.Ftheta[nf,45,:]))
-```
-
-```python
->>> print 'Ntheta',A.Nt
->>> print 'Nphi',A.Np
->>> print 'Nf',A.Nf
-Ntheta 91
-Nphi 180
-Nf 104
+...     plt.polar(A.phi,abs(A.Ft[45,:,nf]))
 ```
 
 ```python
@@ -215,8 +218,4 @@ Ncoeff s3 : 145
 >>> fig = plt.figure(figsize=(8,8))
 >>> A.C.show('s3')
 >>> plt.tight_layout()
-```
-
-```python
-
 ```

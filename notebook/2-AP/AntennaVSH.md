@@ -1,24 +1,10 @@
----
-!!python/unicode 'celltoolbar': !!python/unicode 'Slideshow'
-!!python/unicode 'latex_envs':
-  !!python/unicode 'bibliofile': !!python/unicode 'biblio.bib'
-  !!python/unicode 'cite_by': !!python/unicode 'apalike'
-  !!python/unicode 'current_citInitial': 1
-  !!python/unicode 'eqLabelWithNumbers': true
-  !!python/unicode 'eqNumInitial': 0
----
-
 # Vector Spherical Harmonics Representation of Antennas
-
----
-!!python/unicode 'slideshow':
-  !!python/unicode 'slide_type': !!python/unicode 'skip'
-...
 
 ```python
 >>> from pylayers.antprop.antenna import *
 >>> from pylayers.antprop.antvsh import *
 >>> %matplotlib inline
+WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
 ```
 
 Loading an Antenna from a Matlab file
@@ -29,9 +15,10 @@ Loading an Antenna from a Matlab file
 
 The shape of the $F_{\phi}$ functions indicates :
 
-- $N_f= 104$
+
 - $N_{\theta} = 91$
 - $N_{\phi} = 180 $
+- $N_f= 104$
 
 ```python
 >>> np.shape(A.Fp)
@@ -61,7 +48,6 @@ Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 ```
 
 ```python
-...
 >>> plt.figure(figsize=(10,8))
 >>> plt.imshow(np.unwrap(np.angle(I[:,45,:])))
 >>> plt.title(r'Unwrapped phase of $F_{\theta}$ w.r.t frequency and phi for $\theta=\frac{pi}{2}$')
@@ -70,6 +56,9 @@ Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 >>> plt.figure()
 >>> plt.plot(fGHz,np.unwrap(np.angle(I[45,85,:])))
 >>> plt.xlabel('f index')
+
+/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+  if self._edgecolors == str('face'):
 ```
 
 ```python
@@ -84,7 +73,7 @@ Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 >>> plt.colorbar()
 >>> plt.figure()
 >>> plt.plot(fGHz,np.unwrap(np.angle(I[45,85,:])))
-[<matplotlib.lines.Line2D at 0x7f3f027bbe10>]
+[<matplotlib.lines.Line2D at 0x7f2a328d7190>]
 ```
 
 ##### Display of the radiation pattern for all frequencies
@@ -97,7 +86,7 @@ Then an electrical delay of $4.185ns$ is applied on the $F_{\theta}$
 
 ```python
 >>> A.info()
- S2R2.mat
+S2R2.mat
 type :  mat
 S2R2
 Th1
@@ -118,19 +107,6 @@ At that stage we compute the Vector Spherical Harmonics coefficients
 
 ```python
 >>> A=vsh(A)
- 
-pass to vhaec
-nlon =  180
-nlat =  91
-ityp =  0
-nt =  1
-idvw =  91
-jdvw =  180
-mdab =  90
-ndab =  91
-lvhaec =  40963
-lwork =  57876
-return from vhaec with br,bi,cr,ci
 ```
 
 ```python
@@ -156,6 +132,33 @@ No vsh coefficient calculated yet
 
 ```python
 >>> A.C
+Br
+-------------
+L1  : 90
+M1  : 89
+Ncoeff s1 8010
+NCoeff s2  : 495
+
+Bi
+-------------
+L1  : 90
+M1  : 89
+Ncoeff s1 8010
+NCoeff s2  : 495
+
+Cr
+-------------
+L1  : 90
+M1  : 89
+Ncoeff s1 8010
+NCoeff s2  : 495
+
+Ci
+-------------
+L1  : 90
+M1  : 89
+Ncoeff s1 8010
+NCoeff s2  : 495
 ```
 
 ```python
@@ -206,8 +209,4 @@ Ncoeff s3 : 145
 >>> fig = plt.figure(figsize=(8,8))
 >>> A.C.show('s3')
 >>> plt.tight_layout()
-```
-
-```python
-
 ```

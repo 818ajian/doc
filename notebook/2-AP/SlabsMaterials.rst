@@ -5,6 +5,7 @@ Slabs and Materials
 .. code:: python
 
     %matplotlib inline
+
 A slab is a set ol several layers of materials with specified thickness.
 Slabs are used to describe properties of the different constitutive
 elements of a building such as wall, windows ,...
@@ -22,6 +23,7 @@ module.
 .. code:: python
 
     from pylayers.antprop.slab import *
+
 The Class ``SlabDB`` contains a dictionnary of all available Slabs. This
 information is read in the file ``slabDB.ini`` of the current project
 pointed by environment variable ``$BASENAME``
@@ -29,12 +31,14 @@ pointed by environment variable ``$BASENAME``
 .. code:: python
 
     S = SlabDB()
+
 A SlabDB is a dictionnary, the keys are for the current file are shown
 below
 
 .. code:: python
 
     S.keys()
+
 
 
 
@@ -71,9 +75,11 @@ Defining a new Slab and a new Material
 .. code:: python
 
     S.add('slab2',['STONE'],[0.15])
+
 .. code:: python
 
     S.mat['STONE']
+
 
 
 
@@ -94,6 +100,7 @@ Defining a new Slab and a new Material
 
 
 
+
 .. parsed-literal::
 
     ['STONE']
@@ -103,6 +110,7 @@ Defining a new Slab and a new Material
 .. code:: python
 
     S['slab2']['lthick']
+
 
 
 
@@ -117,10 +125,12 @@ Defining a new Slab and a new Material
     fGHz= np.arange(3,5,0.01)
     theta = np.arange(0,np.pi/2,0.01)
     S['slab2'].ev(fGHz,theta)
+
 .. code:: python
 
     fig = plt.figure(figsize=(10,10))
     S['slab2'].pcolor()
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_17_0.png
@@ -129,12 +139,14 @@ Defining a new Slab and a new Material
 .. code:: python
 
     A=S['slab2']
+
 As any PyLayers object there is an help function for remembering which
 methods are implemented in the class.
 
 .. code:: python
 
     A.help()
+
 
 .. parsed-literal::
 
@@ -186,6 +198,7 @@ slab. The slab 'WOOD' is a layer of 4cm 'WOOD' material.
 
 
 
+
 .. parsed-literal::
 
     ['WOOD']
@@ -197,6 +210,7 @@ thickness is expressed in meters
 .. code:: python
 
     S['WOOD']['lthick']
+
 
 
 
@@ -212,6 +226,7 @@ thickness is expressed in meters
 
 
 
+
 .. parsed-literal::
 
     'maroon'
@@ -221,6 +236,7 @@ thickness is expressed in meters
 .. code:: python
 
     S['WOOD']['linewidth']
+
 
 
 
@@ -242,6 +258,7 @@ defined using the two lists **lmatname** and **lthick**.
 
 
 
+
 .. parsed-literal::
 
     ['GLASS', 'AIR', 'GLASS']
@@ -251,6 +268,7 @@ defined using the two lists **lmatname** and **lthick**.
 .. code:: python
 
     S['3D_WINDOW_GLASS']['lthick']
+
 
 
 
@@ -266,6 +284,7 @@ properties can be obtained as:
 .. code:: python
 
     S['3D_WINDOW_GLASS']['lmat']
+
 
 
 
@@ -310,6 +329,7 @@ coefficients for
     sR = np.shape(S['WOOD'].R)
     print '\nHere, slab is evaluted for',sR[0],'frequency(ies)', 'and',sR[1], 'angle(s)\n'
 
+
 .. parsed-literal::
 
     
@@ -330,6 +350,7 @@ frequency range and theta range
     
     print '\nReflection coefficient @',fGHz[ifreq],'GHz and theta=',theta[ithet],':\n\n R=',S['WOOD'].R[0,0]
     print '\nTransmission coefficient @',fGHz[ifreq],'GHz and theta=',theta[ithet],':\n\n T=',S['WOOD'].T[0,0],'\n'
+
 
 .. parsed-literal::
 
@@ -360,6 +381,7 @@ with respect to angle or frequency.
     f,a=S['WOOD'].plotwrt()
 
 
+
 .. image:: SlabsMaterials_files/SlabsMaterials_44_0.png
 
 
@@ -371,9 +393,11 @@ with respect to angle or frequency.
     S['3D_WINDOW_GLASS']['lthick']=[0.006,0.01,0.006]
     #S['3D_WINDOW_GLASS']['lmatname']=['GLASS','AIR','GLASS']
     S['3D_WINDOW_GLASS'].ev(fGHz,theta)
+
 .. code:: python
 
     fig,ax = S['3D_WINDOW_GLASS'].plotwrt(var='f',coeff='T',polar='o')
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_46_0.png
@@ -382,6 +406,7 @@ with respect to angle or frequency.
 .. code:: python
 
     fig,ax = S['WOOD'].plotwrt(var='a',coeff='R',polar='p')
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_47_0.png
@@ -398,9 +423,10 @@ plot with respect to angle
     plt.tight_layout()
 
 
+
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2ac871853490>
+    <matplotlib.figure.Figure at 0x2afb15e9f290>
 
 
 
@@ -415,6 +441,7 @@ wrt to angle and frequency
     fGHz= np.arange(0.7,5.2,0.1)
     S['WOOD'].ev(fGHz,theta)
     S['WOOD'].pcolor()
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_51_0.png
@@ -439,6 +466,7 @@ wrt to angle and frequency
     plt.tight_layout()
 
 
+
 .. image:: SlabsMaterials_files/SlabsMaterials_52_0.png
 
 
@@ -449,6 +477,7 @@ wrt to angle and frequency
 .. code:: python
 
     ## Adding new materials
+
 .. code:: python
 
     theta = np.arange(0,np.pi/2,0.01)
@@ -474,6 +503,7 @@ wrt to angle and frequency
     fig,ax = sl['AIR-10cm'].plotwrt(color='k',labels=['10cm'],linestyle='dashed',fig=fig,ax=ax)
     fig,ax = sl['AIR-50cm'].plotwrt(color='k',labels=['15cm'],linestyle='dashdot',fig=fig,ax=ax)
     plt.tight_layout()
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_54_0.png
@@ -507,12 +537,14 @@ Evaluation without phase compensation
     plt.tight_layout()
 
 
+
 .. image:: SlabsMaterials_files/SlabsMaterials_56_0.png
 
 
 .. code:: python
 
     from pylayers.signal.bsignal import *
+
 .. code:: python
 
     sl['AIR-5cm'].ev(fGHz,theta,compensate=False)
@@ -521,19 +553,22 @@ Evaluation without phase compensation
     f=S.fGHz
     y = S.T[:,0,0,0]
     F=FUsignal(f[:,0],y)
+
 .. code:: python
 
     g=F.ift(ffts=1)
+
 .. code:: python
 
     g.plot(typ='v')
 
 
 
+
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2ac86d628c50>,
-     array([[<matplotlib.axes.AxesSubplot object at 0x2ac86d6365d0>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2afb12382c90>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2afb11c1ad10>]], dtype=object))
 
 
 
@@ -554,6 +589,7 @@ Evaluation without phase compensation
     plt.tight_layout()
 
 
+
 .. image:: SlabsMaterials_files/SlabsMaterials_61_0.png
 
 
@@ -568,6 +604,7 @@ Evaluation without phase compensation
     fig,ax = sl['ConcreteJc'].plotwrt('a')
 
 
+
 .. image:: SlabsMaterials_files/SlabsMaterials_62_0.png
 
 
@@ -578,6 +615,7 @@ Evaluation without phase compensation
     sl.add('DoubleGlass',['GlassJc','AIR','GlassJc'],[0.0029,0.0102,0.0029])
     sl['DoubleGlass'].ev(fGHz,theta)
     sl['DoubleGlass'].pcolor(dB=True)
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_63_0.png
@@ -591,9 +629,10 @@ Evaluation without phase compensation
     plt.tight_layout()
 
 
+
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2ac86cdfdd10>
+    <matplotlib.figure.Figure at 0x2afb11d94e90>
 
 
 
@@ -606,6 +645,7 @@ Evaluation without phase compensation
     sl['DoubleGlass'].ev(freq,theta)
     fig,ax = sl['DoubleGlass'].plotwrt('f',figsize=(10,10))  # @20
     plt.tight_layout()
+
 
 
 .. image:: SlabsMaterials_files/SlabsMaterials_65_0.png

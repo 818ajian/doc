@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
-BUILDDIR      = ../
+BUILDDIR      = ../website
 FIXIT         = $(BUILDDIR)/html/notebook/fixit 
 PDFBUILDDIR   = /tmp
 PDF           = ../PyLayersManual.pdf

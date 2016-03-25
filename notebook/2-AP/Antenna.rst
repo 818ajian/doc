@@ -18,23 +18,12 @@ module which is placed in the ``antprop`` module.
 .. code:: python
 
     from pylayers.antprop.antenna import *
-    %pylab inline
+    %matplotlib inline
 
 
 .. parsed-literal::
 
     WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
-
-.. parsed-literal::
-
-    Populating the interactive namespace from numpy and matplotlib
-
-
-.. parsed-literal::
-
-    WARNING: pylab import has clobbered these variables: ['plt', 'mlab', 'rc']
-    `%matplotlib` prevents importing * from pylab and numpy
 
 
 An antenna object can not be loaded in specifying an existing antenna
@@ -72,9 +61,8 @@ The object antenna can show itself just by typing it's name.
 We got information about the antenna filename and the frequency band
 where it has been defined.
 
-At loading time the antenna is not evaluated. It means that there is not
-internally any instanciation of the pattern for a set of angular and
-frequency values.
+At loading time the antenna is not evaluated. It means that there is no
+internally any pattern for a set of angular and frequency values.
 
 To list all the available antenna files in the dedicated directory of
 the project it is possible to invoke the ``ls()`` method.
@@ -105,17 +93,18 @@ different type
     print "Number of antenna in .sh3 format : ",len(lssh3)
     print lvsh3[0:5]
     print lssh3[0:5]
-    print lmat[0:5]
 
 
 .. parsed-literal::
 
-    Number of antenna in .vsh3 format :  66
-    Number of antenna in .sh3 format :  56
-    ['S1R1.vsh3', 'S1R10.vsh3', 'S1R11.vsh3', 'S1R12.vsh3', 'S1R13.vsh3']
-    ['3GPP_AnkleLeft_7.sh3', '3GPP_AnkleRight_7.sh3', '3GPP_BackCenter_7.sh3', '3GPP_BackCenter_8.sh3', '3GPP_ElbowLeft_7.sh3']
-    ['S1R1.mat']
+    Number of antenna in .vsh3 format :  5
+    Number of antenna in .sh3 format :  4
+    ['S1R1.vsh3', 'UWB_CEA.vsh3', 'defant.vsh3', 'dipole_XZ_NEC2.vsh3', 'monocone_IETR_1_6_G.vsh3']
+    ['S17R1.sh3', 'S17R2m.sh3', 'S1R1.sh3', 'S2R2.sh3']
 
+
+Pattern Visualization
+=====================
 
 As already mentionned, the radiation pattern of the antenna has not yet
 been evaluated. The method to evaluate the pattern is ``eval()`` with
@@ -123,6 +112,84 @@ the ``grid`` option set to true. If the ``grid`` option is set to False,
 the antenna is evaluated for only the specified direction. This mode is
 used in the ray tracing, while the former is used to visualize the whole
 antenna pattern.
+
+.. code:: python
+
+    A.eval()
+
+Now the antenna is evaluated
+
+.. code:: python
+
+    A
+
+
+
+
+.. parsed-literal::
+
+    Antenna type : vsh3
+    ------------------------
+    file name : S1R1.vsh3
+    fmin : 0.80GHz
+    fmax : 5.95GHz
+    step : 50.00MHz
+    Nf : 104
+    -----------------------
+          evaluated        
+    -----------------------
+    Ntheta : 90
+    Nphi : 181
+       f = 5.60 GHz 
+       theta = 68.76 (degrees) 
+       phi = 270.50  (degrees) 
+
+
+
+.. code:: python
+
+    A.fGHz
+
+
+
+
+.. parsed-literal::
+
+    array([ 0.8 ,  0.85,  0.9 ,  0.95,  1.  ,  1.05,  1.1 ,  1.15,  1.2 ,
+            1.25,  1.3 ,  1.35,  1.4 ,  1.45,  1.5 ,  1.55,  1.6 ,  1.65,
+            1.7 ,  1.75,  1.8 ,  1.85,  1.9 ,  1.95,  2.  ,  2.05,  2.1 ,
+            2.15,  2.2 ,  2.25,  2.3 ,  2.35,  2.4 ,  2.45,  2.5 ,  2.55,
+            2.6 ,  2.65,  2.7 ,  2.75,  2.8 ,  2.85,  2.9 ,  2.95,  3.  ,
+            3.05,  3.1 ,  3.15,  3.2 ,  3.25,  3.3 ,  3.35,  3.4 ,  3.45,
+            3.5 ,  3.55,  3.6 ,  3.65,  3.7 ,  3.75,  3.8 ,  3.85,  3.9 ,
+            3.95,  4.  ,  4.05,  4.1 ,  4.15,  4.2 ,  4.25,  4.3 ,  4.35,
+            4.4 ,  4.45,  4.5 ,  4.55,  4.6 ,  4.65,  4.7 ,  4.75,  4.8 ,
+            4.85,  4.9 ,  4.95,  5.  ,  5.05,  5.1 ,  5.15,  5.2 ,  5.25,
+            5.3 ,  5.35,  5.4 ,  5.45,  5.5 ,  5.55,  5.6 ,  5.65,  5.7 ,
+            5.75,  5.8 ,  5.85,  5.9 ,  5.95])
+
+
+
+.. code:: python
+
+    f,a=A.plotG(fGHz=[0.8,1,2,3,4,5,6],plan='phi',GmaxdB=5)
+
+
+
+.. image:: Antenna_files/Antenna_22_0.png
+
+
+.. code:: python
+
+    f,a = A.plotG(fGHz=[0.8,1,2,3,4,5,6],plan='theta',GmaxdB=5)
+
+
+
+.. image:: Antenna_files/Antenna_23_0.png
+
+
+Spherial Harmonics representation
+=================================
 
 The vector spherical coefficient are strored in ``A.C``. This C refers
 to the coefficients. Those coefficients are obtained thanks to the
@@ -192,73 +259,50 @@ The radiation pattern is synthetized with the following call
 
     A.eval(grid=True)
 
-The ``polar()`` method allow to superpose different pattern for a list
+.. code:: python
+
+    20*np.log10(np.max(A.sqG))
+
+
+
+
+.. parsed-literal::
+
+    2.2267467105871743
+
+
+
+The ``plotG()`` method allow to superpose different pattern for a list
 of frequencies ``fGHz`` + If ``phd`` (phi in degree) is specified the
 diagram is given as a function of :math:`\theta` + If ``thd`` (theta in
 degree) is specified the diagram is given as a function of :math:`\phi`
 
 .. code:: python
 
-    f = plt.figure(figsize=(15,15))
-    a1 = f.add_subplot(121,polar=True)
-    f1,a1 = A.polar(fGHz=[3,4,5.6],phd=0,GmaxdB=5,fig=f,ax=a1)
-    a2 = f.add_subplot(122,polar=True)
-    f2,a2 = A.polar(fGHz=[3,4,5.6],thd=90,GmaxdB=5,fig=f,ax=a2)
-    plt.tight_layout()
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-8-6ad8bdbb6278> in <module>()
-          1 f = plt.figure(figsize=(15,15))
-          2 a1 = f.add_subplot(121,polar=True)
-    ----> 3 f1,a1 = A.polar(fGHz=[3,4,5.6],phd=0,GmaxdB=5,fig=f,ax=a1)
-          4 a2 = f.add_subplot(122,polar=True)
-          5 f2,a2 = A.polar(fGHz=[3,4,5.6],thd=90,GmaxdB=5,fig=f,ax=a2)
-
-
-    AttributeError: 'Antenna' object has no attribute 'polar'
+    f = plt.figure(figsize=(20,10))
+    a1 = f.add_subplot(121,projection='polar')
+    f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,GmaxdB=5,fig=f,ax=a1,show=False)
+    a2 = f1.add_subplot(122,projection='polar')
+    f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f,ax=a2)
+    f2.tight_layout()
 
 
 
-.. image:: Antenna_files/Antenna_27_1.png
+.. image:: Antenna_files/Antenna_36_0.png
 
 
 .. code:: python
 
-    f = plt.figure(figsize=(15,15))
+    f = plt.figure(figsize=(20,10))
     a1 = f.add_subplot(121)
-    f1,a1 = A.polar(fGHz=[3,4,5.6],phd=0,GmaxdB=5,fig=f,ax=a1,polar=False)
+    f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,fig=f,ax=a1,show=False,polar=False)
     a2 = f.add_subplot(122)
-    f2,a2 = A.polar(fGHz=[3,4,5.6],thd=90,GmaxdB=5,fig=f,ax=a2,polar=False)
-    plt.tight_layout()
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-9-792ccb0daa6e> in <module>()
-          1 f = plt.figure(figsize=(15,15))
-          2 a1 = f.add_subplot(121)
-    ----> 3 f1,a1 = A.polar(fGHz=[3,4,5.6],phd=0,GmaxdB=5,fig=f,ax=a1,polar=False)
-          4 a2 = f.add_subplot(122)
-          5 f2,a2 = A.polar(fGHz=[3,4,5.6],thd=90,GmaxdB=5,fig=f,ax=a2,polar=False)
-
-
-    AttributeError: 'Antenna' object has no attribute 'polar'
+    f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f1,ax=a2,polar=False)
+    f2.tight_layout()
 
 
 
-.. image:: Antenna_files/Antenna_28_1.png
+.. image:: Antenna_files/Antenna_37_0.png
 
 
 .. code:: python
@@ -276,49 +320,25 @@ degree) is specified the diagram is given as a function of :math:`\phi`
 
 .. code:: python
 
-    A.polar(fGHz=[5.6],phd=270,GmaxdB=5)
+    A.plotG(fGHz=[5.6],plan='phi',angdeg=90,GmaxdB=5)
 
 
-::
+
+.. image:: Antenna_files/Antenna_39_0.png
 
 
-    ---------------------------------------------------------------------------
 
-    AttributeError                            Traceback (most recent call last)
 
-    <ipython-input-11-1cd75b7126be> in <module>()
-    ----> 1 A.polar(fGHz=[5.6],phd=270,GmaxdB=5)
-    
+.. parsed-literal::
 
-    AttributeError: 'Antenna' object has no attribute 'polar'
+    (<matplotlib.figure.Figure at 0x2b419e470d50>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b419ff13ed0>)
+
 
 
 .. code:: python
 
-    A.pol3d(R=5,St=8,Sp=8)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    IndexError                                Traceback (most recent call last)
-
-    <ipython-input-12-7638e69ff747> in <module>()
-    ----> 1 A.pol3d(R=5,St=8,Sp=8)
-    
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/antenna.pyc in pol3d(self, k, R, St, Sp, silent)
-       2281                                   np.cos(theta)))
-       2282                 fd.write('{\n')
-    -> 2283                 geu.ellipse(fd, p, B[0, :], B[1, :], self.Ft[k, n, m], self.Fp[k, n, m], N)
-       2284                 fd.write('}\n')
-       2285         fd.close()
-
-
-    IndexError: index 104 is out of bounds for axis 2 with size 104
-
+    # A.pol3d(R=5,St=8,Sp=8)
 
 The vector spherical coefficients can be dispalayed as follows
 
@@ -330,21 +350,77 @@ The vector spherical coefficients can be dispalayed as follows
 
 
 
-.. image:: Antenna_files/Antenna_33_0.png
+.. image:: Antenna_files/Antenna_42_0.png
 
 
 Defining Antenna gain from analytic formulas
 --------------------------------------------
 
 An antenna can also be defined from closed-form expressions. Available
-antennas are the following + Omni + Gauss + WirePlate
+antennas are the following + Omni + Gauss + WirePlate + 3GPP
 
 .. code:: python
 
-    A = Antenna(typ='Gauss')
+    Ag = Antenna(typ='Gauss')
+
+.. code:: python
+
+    Ag.plotG()
+
+
+
+.. image:: Antenna_files/Antenna_46_0.png
+
+
+
+
+.. parsed-literal::
+
+    (<matplotlib.figure.Figure at 0x2b41a0783d10>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b41a0783150>)
+
 
 
 .. code:: python
 
-    A = Antenna('Gauss')
+    Ao = Antenna('Omni')
+
+.. code:: python
+
+    Ao.plotG()
+
+
+
+.. image:: Antenna_files/Antenna_48_0.png
+
+
+
+
+.. parsed-literal::
+
+    (<matplotlib.figure.Figure at 0x2b41a0653690>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b41a0653310>)
+
+
+
+.. code:: python
+
+    A3 = Antenna('3gpp')
+
+.. code:: python
+
+    A3.plotG()
+
+
+
+.. image:: Antenna_files/Antenna_50_0.png
+
+
+
+
+.. parsed-literal::
+
+    (<matplotlib.figure.Figure at 0x2b41a076d050>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b41a05c62d0>)
+
 
