@@ -37,35 +37,8 @@ subsegment is materialized by a segment.
     f,a=L.showG('s',subseg=True,figsize=(10,10))
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    AssertionError                            Traceback (most recent call last)
-
-    <ipython-input-2-ba9e7d1397c8> in <module>()
-    ----> 1 L=Layout('defstr.ini')
-          2 f,a=L.showG('s',subseg=True,figsize=(10,10))
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check)
-        410         # check layout integrity (default)
-        411         if check:
-    --> 412             self.check()
-        413         #self.boundary()
-        414 
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in check(self, level)
-        719             deg0 = filter(lambda x: nx.degree(self.Gs,x)==0,upnt)
-        720             deg1 = filter(lambda x: nx.degree(self.Gs,x)==1,upnt)
-    --> 721             assert (len(deg0)==0), "It exists degree 0 points :  %r" % deg0
-        722             assert (len(deg1)==0), "It exists degree 1 points : %r" % deg1
-        723 
-
-
-    AssertionError: It exists degree 0 points :  [-18, -17, -16, -15, -14]
+.. image:: Multisubsegments_files/Multisubsegments_4_0.png
 
 
 The studied configuration is composed of a simple 2 rooms building
@@ -79,21 +52,6 @@ attribute of the subsegment can be changed with the method
 
     L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-3-5d060b38fe5b> in <module>()
-    ----> 1 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
-    
-
-    NameError: name 'L' is not defined
-
-
 As the Layout structure has been modified it is required to rebuild the
 structure.
 
@@ -103,19 +61,40 @@ structure.
     L.save()
 
 
+.. parsed-literal::
+
+    check len(ncycles) == 2 passed
+
+
 ::
 
 
     ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
+    KeyError                                  Traceback (most recent call last)
 
     <ipython-input-4-de0401164687> in <module>()
-    ----> 1 L.build()
-          2 L.save()
+          1 L.build()
+    ----> 2 L.save()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
+       5203             _fileini = racine + '.ini'
+       5204             self.savestr2(_filename)
+    -> 5205             self.saveini(_fileini)
+       5206             print "structure saved in ", _filename
+       5207             print "structure saved in ", _fileini
 
 
-    NameError: name 'L' is not defined
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
+       1282             d['vnodes']=vnodes
+       1283             d['ss_slab']=[]
+    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
+       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
+       1286             config.set("cycles",str(c),d)
+
+
+    KeyError: 'ss_slab'
 
 
 The :math:`\mathcal{G}_s` graph dictionnary has the following structure
@@ -125,18 +104,85 @@ The :math:`\mathcal{G}_s` graph dictionnary has the following structure
     L.Gs.node
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    {-8: {},
+     -7: {},
+     -6: {},
+     -5: {},
+     -4: {},
+     -3: {},
+     -2: {},
+     -1: {},
+     1: {'connect': [-8, -7],
+      'name': 'PARTITION',
+      'ncycles': [1, 2],
+      'norm': array([-0.999982  , -0.00599989,  0.        ]),
+      'offset': 0,
+      'ss_name': ['WOOD', 'AIR', 'WOOD'],
+      'ss_offset': [0, 0, 0],
+      'ss_z': [(0.0, 2.7), (2.7, 2.8), (2.8, 3)],
+      'transition': True,
+      'z': (0.0, 3.0)},
+     2: {'connect': [-8, -2],
+      'name': 'WALL',
+      'ncycles': [1, 2],
+      'norm': array([ 0.99997778,  0.00666652,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     3: {'connect': [-7, -5],
+      'name': 'WALL',
+      'ncycles': [1, 2],
+      'norm': array([-0.99997775, -0.00667097,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     4: {'connect': [-6, -1],
+      'name': 'WALL',
+      'ncycles': [1, 0],
+      'norm': array([ 0.99997888,  0.00649986,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     5: {'connect': [-6, -5],
+      'name': 'WALL',
+      'ncycles': [1, 0],
+      'norm': array([-0.00619988,  0.99998078,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     6: {'connect': [-5, -4],
+      'name': 'WALL',
+      'ncycles': [2, 0],
+      'norm': array([-0.00639987,  0.99997952,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     7: {'connect': [-4, -3],
+      'name': 'WALL',
+      'ncycles': [2, 0],
+      'norm': array([ 0.99997887,  0.00650149,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     8: {'connect': [-3, -2],
+      'name': 'WALL',
+      'ncycles': [2, 0],
+      'norm': array([ 0.00639987, -0.99997952,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)},
+     9: {'connect': [-1, -2],
+      'name': 'WALL',
+      'ncycles': [1, 0],
+      'norm': array([-0.00639987,  0.99997952,  0.        ]),
+      'offset': 0,
+      'transition': False,
+      'z': (0.0, 3.0)}}
 
-    <ipython-input-5-ef5d55244e1c> in <module>()
-    ----> 1 L.Gs.node
-    
-
-    NameError: name 'L' is not defined
 
 
 We define now two points which are the termination of a radio link.
@@ -167,17 +213,33 @@ We define now two points which are the termination of a radio link.
 
     ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
+    KeyError                                  Traceback (most recent call last)
 
     <ipython-input-7-fd2986e5b29e> in <module>()
-    ----> 1 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
-          2 L.save()
+          1 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
+    ----> 2 L.save()
           3 fGHz=np.linspace(1,11,100)
           4 #Aa = Antenna('S1R1.vsh3')
           5 #Ab = Antenna('S1R1.vsh3')
 
 
-    NameError: name 'L' is not defined
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
+       5203             _fileini = racine + '.ini'
+       5204             self.savestr2(_filename)
+    -> 5205             self.saveini(_fileini)
+       5206             print "structure saved in ", _filename
+       5207             print "structure saved in ", _fileini
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
+       1282             d['vnodes']=vnodes
+       1283             d['ss_slab']=[]
+    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
+       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
+       1286             config.set("cycles",str(c),d)
+
+
+    KeyError: 'ss_slab'
 
 
 A link is the set of a layout and 2 termination points.
@@ -289,7 +351,7 @@ for evaluating the radio link, simply type:
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b33fec56690>
+    <matplotlib.figure.Figure at 0x2b6d7fef2210>
 
 
 .. code:: python
@@ -339,38 +401,17 @@ for evaluating the radio link, simply type:
 
     Lk = DLink(L=L,a=tx,b=rx)
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-16-8ec0715e9a54> in <module>()
-    ----> 1 Lk = DLink(L=L,a=tx,b=rx)
-    
-
-    NameError: name 'L' is not defined
-
-
 .. code:: python
 
     Lk.a
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    array([  759. ,  1114. ,     1.5])
 
-    <ipython-input-17-7f012f925fcc> in <module>()
-    ----> 1 Lk.a
-    
-
-    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -378,18 +419,12 @@ for evaluating the radio link, simply type:
     Lk.b
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    array([  767. ,  1114. ,     1.5])
 
-    <ipython-input-18-6142b9bad81d> in <module>()
-    ----> 1 Lk.b
-    
-
-    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -397,18 +432,9 @@ for evaluating the radio link, simply type:
     cir = Lk.H.applywavB(wav.sf)
 
 
-::
+.. parsed-literal::
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-19-74e87499760f> in <module>()
-    ----> 1 cir = Lk.H.applywavB(wav.sf)
-    
-
-    NameError: name 'Lk' is not defined
+    WARNING : Tchannel.applywavB is going to be replaced by Tchannel.applywav
 
 
 .. code:: python
@@ -431,17 +457,33 @@ for evaluating the radio link, simply type:
 
     ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
+    KeyError                                  Traceback (most recent call last)
 
     <ipython-input-20-ae5fc4f64f59> in <module>()
-          1 layer = ['AIR','AIR','AIR']
-    ----> 2 Lk.L.chgmss(1,ss_name=layer)
           3 Lk.L.Gs.node[1]['ss_name']=layer
           4 Lk.L.g2npy()
-          5 Lk.L.save()
+    ----> 5 Lk.L.save()
+          6 fGHz=np.linspace(2,11,181)
+          7 #Aa = Antenna('Omni',fGHz=fGHz)
 
 
-    NameError: name 'Lk' is not defined
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
+       5203             _fileini = racine + '.ini'
+       5204             self.savestr2(_filename)
+    -> 5205             self.saveini(_fileini)
+       5206             print "structure saved in ", _filename
+       5207             print "structure saved in ", _fileini
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
+       1282             d['vnodes']=vnodes
+       1283             d['ss_slab']=[]
+    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
+       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
+       1286             config.set("cycles",str(c),d)
+
+
+    KeyError: 'ss_slab'
 
 
 .. code:: python
@@ -454,13 +496,13 @@ for evaluating the radio link, simply type:
 
     ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
+    AttributeError                            Traceback (most recent call last)
 
     <ipython-input-21-1ef58d341060> in <module>()
     ----> 1 Lk.H.ak.shape
     
 
-    NameError: name 'Lk' is not defined
+    AttributeError: 'Tchannel' object has no attribute 'ak'
 
 
 .. code:: python
@@ -468,18 +510,9 @@ for evaluating the radio link, simply type:
     cirair = Lk.H.applywavB(wav.sf)
 
 
-::
+.. parsed-literal::
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-22-c6ef9fd0c1d5> in <module>()
-    ----> 1 cirair = Lk.H.applywavB(wav.sf)
-    
-
-    NameError: name 'Lk' is not defined
+    WARNING : Tchannel.applywavB is going to be replaced by Tchannel.applywav
 
 
 .. code:: python
@@ -499,17 +532,33 @@ for evaluating the radio link, simply type:
 
     ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
+    KeyError                                  Traceback (most recent call last)
 
     <ipython-input-23-02ef6687144f> in <module>()
-          1 layer = ['METAL','METAL','METAL']
-    ----> 2 Lk.L.chgmss(1,ss_name=layer)
           3 Lk.L.Gs.node[1]['ss_name']=layer
           4 Lk.L.g2npy()
-          5 Lk.L.save()
+    ----> 5 Lk.L.save()
+          6 Lk.eval(force=True)
+          7 cirmet = Lk.H.applywavB(wav.sf)
 
 
-    NameError: name 'Lk' is not defined
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
+       5203             _fileini = racine + '.ini'
+       5204             self.savestr2(_filename)
+    -> 5205             self.saveini(_fileini)
+       5206             print "structure saved in ", _filename
+       5207             print "structure saved in ", _fileini
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
+       1282             d['vnodes']=vnodes
+       1283             d['ss_slab']=[]
+    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
+       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
+       1286             config.set("cycles",str(c),d)
+
+
+    KeyError: 'ss_slab'
 
 
 .. code:: python
@@ -535,14 +584,18 @@ for evaluating the radio link, simply type:
     NameError                                 Traceback (most recent call last)
 
     <ipython-input-24-e1d90729636b> in <module>()
-          1 #fig2=plt.figure()
-    ----> 2 f,a=cirair.plot(typ=['l20'],color='b')
-          3 plt.axis([0,120,-120,-40])
           4 plt.title('A simple illustration of shadowing effect')
           5 plt.legend(['air'])
+    ----> 6 f,a=cirpart.plot(typ=['l20'],color='k')
+          7 plt.axis([0,120,-120,-40])
+          8 plt.legend(['wood'])
 
 
-    NameError: name 'cirair' is not defined
+    NameError: name 'cirpart' is not defined
+
+
+
+.. image:: Multisubsegments_files/Multisubsegments_33_1.png
 
 
 We have modified successively the nature of the 3 surfaces in the sub

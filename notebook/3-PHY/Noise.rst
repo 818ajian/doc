@@ -41,9 +41,9 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
     -------------
     Noise Figure : 0 dB
     Vrms : 9.97631157484e-05 Volts
-    Variance : 9.94012046425e-09 V^2
+    Variance : 9.51113272612e-09 V^2
     Power (dBm) /50 Ohms : -157.010299957 dBm
-    Power realized /50 Ohms : -157.015783567 dBm
+    Power realized /50 Ohms : -157.207377621 dBm
 
 
 
@@ -85,29 +85,13 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
     ---------------------------------------------------------------------------
 
-    IndexError                                Traceback (most recent call last)
+    TypeError                                 Traceback (most recent call last)
 
     <ipython-input-6-0901d96562a6> in <module>()
     ----> 1 w2 = w.fgating(fcGHz=4,BGHz=3)
     
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in fgating(self, fcGHz, BGHz, window)
-       3616         else:
-       3617             parity = 1
-    -> 3618         U = N.unrex()
-       3619         f = U.x
-       3620         f1 = fcGHz - BGHz / 2.
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in unrex(self)
-       3411         if np.mod(N, 2) == 0:
-       3412             xu = self.x[1:(N + 2) / 2]
-    -> 3413             yu = self.y[:,1:(N + 2) / 2]
-       3414         # odd case
-       3415         else:
-
-
-    IndexError: too many indices for array
+    TypeError: fgating() got an unexpected keyword argument 'BGHz'
 
 
 .. code:: python
@@ -140,8 +124,8 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b9921022f10>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9920ede390>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b6ba4843090>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b6ba486b250>]], dtype=object))
 
 
 

@@ -331,8 +331,8 @@ degree) is specified the diagram is given as a function of :math:`\phi`
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b419e470d50>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b419ff13ed0>)
+    (<matplotlib.figure.Figure at 0x2b0900a8d1d0>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b09003648d0>)
 
 
 
@@ -376,8 +376,8 @@ antennas are the following + Omni + Gauss + WirePlate + 3GPP
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b41a0783d10>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b41a0783150>)
+    (<matplotlib.figure.Figure at 0x2b0900c1e350>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b0900c1e310>)
 
 
 
@@ -398,8 +398,8 @@ antennas are the following + Omni + Gauss + WirePlate + 3GPP
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b41a0653690>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b41a0653310>)
+    (<matplotlib.figure.Figure at 0x2b0900af2d10>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b0900af2910>)
 
 
 
@@ -420,7 +420,7 @@ antennas are the following + Omni + Gauss + WirePlate + 3GPP
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b41a076d050>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b41a05c62d0>)
+    (<matplotlib.figure.Figure at 0x2b0900ab4c90>,
+     <matplotlib.projections.polar.PolarAxes at 0x2b0900ab44d0>)
 
 

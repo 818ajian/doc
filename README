@@ -32,3 +32,8 @@ proper place type :
 
 ../notebook/
 make
+
+
+The website is created by doing 
+
+make html in the same directory as this README file. 

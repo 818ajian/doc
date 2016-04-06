@@ -2,29 +2,34 @@
 .. code:: python
 
     import pylayers.signal.standard as std
+
 Parameters of different standards are stored in ``wstd.json`` file. The
 class which handles wireless standards is ``standard``
 
 .. code:: python
 
     ws1 = std.Wstandard('ieee80211b')
+
 To list the available standard :
 
 .. code:: python
 
     ws1.ls()
 
+
 .. parsed-literal::
 
-    ieee80211g ,  ieee80211b ,  ieee80211a ,  bluetooth-class3 ,  bluetooth-class2 ,  bluetooth-class1 ,  ieee80211ah ,  ieee802116UWB , 
+    ieee80211g ,  ieee80211b ,  ieee80211a ,  bluetooth-class3 ,  bluetooth-class2 ,  bluetooth-class1 ,  ieee80211ah ,  ieee802154 , 
 
 
 .. code:: python
 
     wifi= ws1.load('ieee80211b')
+
 .. code:: python
 
     ws1
+
 
 
 
@@ -52,45 +57,73 @@ To list the available standard :
 .. code:: python
 
     AP1 = std.AP()
+
 .. code:: python
 
     ws2 = std.Wstandard('ieee80211g')
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-7-c21d9b04bd47> in <module>()
+    ----> 1 ws2 = std.Wstandard('ieee80211g')
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/standard.pyc in __init__(self, stdname, _filejson)
+        227         self.name = stdname
+        228         if stdname != '':
+    --> 229             self.load(stdname)
+        230 
+        231     def __repr__(self):
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/standard.pyc in load(self, stdname, _fileini)
+        272                 for k in chan:
+        273                     bandname = k
+    --> 274                     fstart=chan[k]['fstart']
+        275                     fstop =chan[k]['fstop']
+        276                     smhz =chan[k]['smhz']
+
+
+    TypeError: 'int' object has no attribute '__getitem__'
+
+
 .. code:: python
 
     ws2
 
 
-
-.. parsed-literal::
-
-    ieee80211g
-    -------------------------
-    1 :  2.412 : [2.401,2.423]
-    2 :  2.417 : [2.406,2.428]
-    3 :  2.422 : [2.411,2.433]
-    4 :  2.427 : [2.416,2.438]
-    5 :  2.432 : [2.421,2.443]
-    6 :  2.437 : [2.426,2.448]
-    7 :  2.442 : [2.431,2.453]
-    8 :  2.447 : [2.436,2.458]
-    9 :  2.452 : [2.441,2.463]
-    10 :  2.457 : [2.446,2.468]
-    11 :  2.462 : [2.451,2.473]
-    12 :  2.467 : [2.456,2.478]
-    13 :  2.472 : [2.461,2.483]
+::
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-8-8be99413ae52> in <module>()
+    ----> 1 ws2
+    
+
+    NameError: name 'ws2' is not defined
 
 
 .. code:: python
 
     ws3 = std.Wstandard('ieee80211a')
+
 .. code:: python
 
     ws3 = std.Wstandard('bluetooth-class3')
+
 .. code:: python
 
     ws3
+
 
 
 

@@ -3,6 +3,7 @@
 
     %pylab inline
 
+
 .. parsed-literal::
 
     Populating the interactive namespace from numpy and matplotlib
@@ -30,15 +31,10 @@ electromagnetic simulation.
     from pylayers.antprop.channel import *
     from pylayers.simul.simulem import *
 
+
 .. parsed-literal::
 
     WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
-
-
-.. parsed-literal::
-
-    <matplotlib.figure.Figure at 0x2af06dfcc1d0>
 
 
 Generation of an Impulse of normalized energy
@@ -61,26 +57,46 @@ the pulse.
 
 .. code:: python
 
-    fc     = 4 
+    fc     = 4
     band   = 2
     thresh = 10
-    fe     = 100 
+    fe     = 100
     ip     = EnImpulse([],fc,band,thresh,fe)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-3-eb9e61732349> in <module>()
+          3 thresh = 10
+          4 fe     = 100
+    ----> 5 ip     = EnImpulse([],fc,band,thresh,fe)
+    
+
+    NameError: name 'EnImpulse' is not defined
+
+
 .. code:: python
 
     ip.info()
 
-.. parsed-literal::
 
-    TUsignal
-    --------
-    shx :  (343,)
-    shy :  (343,)
-    dx :   0.01
-    xmin : -1.71
-    xmax : 1.71
-    ymin : -1.89545539648
-    ymax : 2.16154131873
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-4-f2dd061e0735> in <module>()
+    ----> 1 ip.info()
+    
+
+    NameError: name 'ip' is not defined
 
 
 Verification of energy normalization in both domains
@@ -91,9 +107,20 @@ Verification of energy normalization in both domains
     E1= sum(ip.y*ip.y)*ip.dx()
     print "Integration in time",E1
 
-.. parsed-literal::
 
-    Integration in time 1.0
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-5-2ff960551bb1> in <module>()
+    ----> 1 E1= sum(ip.y*ip.y)*ip.dx()
+          2 print "Integration in time",E1
+
+
+    NameError: name 'ip' is not defined
 
 
 .. code:: python
@@ -102,9 +129,21 @@ Verification of energy normalization in both domains
     E2 = sum(P.y)*P.dx()
     print "Integration in frequency domain ",E2
 
-.. parsed-literal::
 
-    Integration in frequency domain  1.0
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-6-f88fbaeebaf0> in <module>()
+    ----> 1 P = ip.esd()
+          2 E2 = sum(P.y)*P.dx()
+          3 print "Integration in frequency domain ",E2
+
+
+    NameError: name 'ip' is not defined
 
 
 Calculation of UWB channel impulse response
@@ -117,11 +156,6 @@ We choose to load a simple floor plan.
     S = Simul()
     S.L = Layout('defstr3.ini')
 
-.. parsed-literal::
-
-    new file WHERE1.str
-
-
 A simulation object has an ``info`` method providing a summary of
 simulation informations.
 
@@ -130,6 +164,7 @@ simulation informations.
     st = S.wav.st
     sf = S.wav.sf
     S.wav.info()
+
 
 .. parsed-literal::
 
@@ -151,6 +186,7 @@ The waveform associated with the simulation object is
 
 
 
+
 .. parsed-literal::
 
     {'Np': 3000,
@@ -169,7 +205,8 @@ The waveform associated with the simulation object is
     S.wav.show()
 
 
-.. image:: Signal_files/Signal_17_0.png
+
+.. image:: Signal_files/Signal_24_0.png
 
 
 Above the waveform is a generic UWB waveform. The interested user can
@@ -192,7 +229,31 @@ especially waveforms compliants with the current IEEE 802.15.4a and IEEE
     wavmeasured.show()
 
 
-.. image:: Signal_files/Signal_19_0.png
+::
+
+
+    ---------------------------------------------------------------------------
+
+    IndexError                                Traceback (most recent call last)
+
+    <ipython-input-11-22a822769751> in <module>()
+          1 wavmeasured = Waveform(typ='W1compensate')
+    ----> 2 wavmeasured.show()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/waveform.pyc in show(self, fig)
+        382         #plt.title(title)
+        383         ax1 = fig.add_subplot(2,1,1)
+    --> 384         ax1.plot(self.st.x,self.st.y[0,:])
+        385         plt.xlabel('time (ns)')
+        386         plt.ylabel('level in linear scale')
+
+
+    IndexError: too many indices for array
+
+
+
+.. image:: Signal_files/Signal_27_1.png
 
 
 .. code:: python
@@ -201,7 +262,8 @@ especially waveforms compliants with the current IEEE 802.15.4a and IEEE
     wavmeasured.show()
 
 
-.. image:: Signal_files/Signal_20_0.png
+
+.. image:: Signal_files/Signal_28_0.png
 
 
 Here the time domain waveform is measured and the anticausal part of the
@@ -220,10 +282,11 @@ representation.
     print type(S.wav.sf)
     print type(S.wav.st)
 
+
 .. parsed-literal::
 
     <class 'pylayers.signal.bsignal.FUsignal'>
-    <class 'pylayers.signal.bsignal.EnImpulse'>
+    <class 'pylayers.signal.bsignal.TUsignal'>
 
 
 -  ``FUsignal`` Frequency domain uniformly sampled base signal
@@ -243,12 +306,21 @@ channel.
 
     from pylayers.antprop.signature import *
     from pylayers.antprop.channel import *
+
 .. code:: python
 
     S.L.build()
+
+
+.. parsed-literal::
+
+    check len(ncycles) == 2 passed
+
+
 .. code:: python
 
     S.L
+
 
 
 
@@ -267,8 +339,8 @@ channel.
     Number of rooms  : 2
     degree 0 : []
     degree 1 : [-8 -7]
-    degree 2 : 4
-    degree 3 : 2
+    number of node point of degree 2 : 4
+    number of node point of degree 3 : 2
     
     xrange :(758.49, 768.516)
     yrange :(1111.9, 1115.963)
@@ -286,7 +358,9 @@ channel.
     offset : numpy array of offset 
     tsg : get segment index in Gs from tahe
     isss :  sub-segment index above Nsmax
-    tgs : get segment index in tahe from Gs
+    tgs : get segment index in tahe from self.Gs
+    upnt : get point id index from self.pt
+    iupnt : get point index in self.pt from point id  
     lsss : list of segments with sub-segment
     sla : list of all slab names (Nsmax+Nss+1)
     degree : degree of nodes 
@@ -299,11 +373,12 @@ channel.
 
 
 
+
 .. parsed-literal::
 
     {0: (758.49, 1111.9),
-     1: (766.00300113353387, 1113.947479109665),
-     2: (761.00289669547806, 1113.915769812613)}
+     1: array([  761.00289669,  1113.91576981]),
+     2: array([  766.00300113,  1113.94747911])}
 
 
 
@@ -313,6 +388,7 @@ channel.
     rx=np.array([767,1114,1.5])
     ctx = S.L.pt2cy(tx)
     crx = S.L.pt2cy(rx)
+
 The sequence of command below :
 
 -  initialize a signature between cycle ctx and cycle crx
@@ -333,18 +409,55 @@ The sequence of command below :
     r3d = r2d.to3D(S.L)
     r3d.locbas(S.L)
     r3d.fillinter(S.L)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-19-2b87940b94c6> in <module>()
+          1 Si = Signatures(S.L,ctx,crx)
+    ----> 2 Si.run5(cutoff=5)
+          3 r2d = Si.rays(tx,rx)
+          4 r3d = r2d.to3D(S.L)
+          5 r3d.locbas(S.L)
+
+
+    AttributeError: 'Signatures' object has no attribute 'run5'
+
+
 Define a frequency base in GHz.
 
 .. code:: python
 
     fGHz = np.arange(2,10,0.01)
+
 Evaluate the propagation channel :math:`\tilde{\mathbf{C}}`. Here the
 meaning of tilde is that the complex value of the channel do not include
 the phase term due to delay along the ray.
 
 .. code:: python
 
-    C = r3d.eval(fGHz) 
+    C = r3d.eval(fGHz)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-21-6de7eb6ea340> in <module>()
+    ----> 1 C = r3d.eval(fGHz)
+    
+
+    NameError: name 'r3d' is not defined
+
+
 Construction of the transmission channel
 ----------------------------------------
 
@@ -356,6 +469,22 @@ the ``prop2tran`` method of the ``Ctilde`` class.
 .. code:: python
 
     sc = C.prop2tran()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-22-b1508994e444> in <module>()
+    ----> 1 sc = C.prop2tran()
+    
+
+    NameError: name 'C' is not defined
+
+
 The transmission channel is obtained by applying a vector radiation
 pattern using an antenna file.
 
@@ -368,13 +497,10 @@ during the **FP7 project WHERE1** measurement campaign M1.
 
 
 
+
 .. parsed-literal::
 
-    freq :2.0 9.99 800
-    shape  :(345, 800)
-    tau :26.7186992365 99.5048504397
-    dist :8.01560977094 29.8514551319
-    Friis factor -j c/(4 pi f) has been applied
+    ''
 
 
 
@@ -386,11 +512,19 @@ information about the content of the antenna object.
 
     S.tx.A.info()
 
-.. parsed-literal::
 
-    defant.vsh3
-    type :  vsh
-    No vsh coefficient calculated yet
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-24-405e831617c9> in <module>()
+    ----> 1 S.tx.A.info()
+    
+
+    AttributeError: 'RadioNode' object has no attribute 'A'
 
 
 The figure below plot on a same graph all the tansfer function in
@@ -401,6 +535,22 @@ If a realistic antenna is applied it gives
 .. code:: python
 
     sca = C.prop2tran(S.tx.A,S.rx.A)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-25-a14d4505d552> in <module>()
+    ----> 1 sca = C.prop2tran(S.tx.A,S.rx.A)
+    
+
+    NameError: name 'C' is not defined
+
+
 Calculate UWB Channel Impulse Response
 --------------------------------------
 
@@ -410,17 +560,39 @@ waveform with the channel impulse response to get the received waveform.
 .. code:: python
 
     r = sca.applywavB(S.wav.sfg)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-26-d44add68b43a> in <module>()
+    ----> 1 r = sca.applywavB(S.wav.sfg)
+    
+
+    AttributeError: 'function' object has no attribute 'applywavB'
+
+
 .. code:: python
 
     r.y
 
 
+::
 
-.. parsed-literal::
 
-    array([  0.00000000e+00,   0.00000000e+00,   0.00000000e+00, ...,
-            -1.24043824e-13,   8.30460833e-14,   2.32608932e-14])
+    ---------------------------------------------------------------------------
 
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-27-4953123faa92> in <module>()
+    ----> 1 r.y
+    
+
+    NameError: name 'r' is not defined
 
 
 .. code:: python
@@ -430,15 +602,20 @@ waveform with the channel impulse response to get the received waveform.
     plt.title(u'Received Waveform $r(t)$')
 
 
-
-.. parsed-literal::
-
-    <matplotlib.text.Text at 0x2af06e5a7e10>
+::
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-28-59cb5c50134a> in <module>()
+    ----> 1 fig,ax = r.plot(typ=['l20'])
+          2 plt.axis([15,90,-120,-60])
+          3 plt.title(u'Received Waveform $r(t)$')
 
 
-.. image:: Signal_files/Signal_51_1.png
+    NameError: name 'r' is not defined
 
 
 .. code:: python
@@ -448,15 +625,20 @@ waveform with the channel impulse response to get the received waveform.
     plt.title(u'Received Waveform $r(t)$')
 
 
-
-.. parsed-literal::
-
-    <matplotlib.text.Text at 0x2af06e42e190>
+::
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-29-dec00a202aac> in <module>()
+    ----> 1 r.plot(typ=['v'])
+          2 #plt.axis([15,60,-0.3,0.3])
+          3 plt.title(u'Received Waveform $r(t)$')
 
 
-.. image:: Signal_files/Signal_52_1.png
+    NameError: name 'r' is not defined
 
 
 Hermitian symetry enforcment
@@ -483,6 +665,26 @@ indexation either in time or in frequency domain.
     tau  = Y.taud
     dod = Y.dod
     doa = Y.doa
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-30-3c9fdd777ddd> in <module>()
+          1 wgam = S.wav.sfg
+    ----> 2 Y    = sc.apply(wgam)
+          3 tau  = Y.taud
+          4 dod = Y.dod
+          5 doa = Y.doa
+
+
+    NameError: name 'sc' is not defined
+
+
 The transmission channel has a member data which is the time delay of
 each path in nano seconds. Notice that by default those delay are not
 sorted.
@@ -491,12 +693,23 @@ sorted.
 
     print 'tau =', tau[0:20]
 
+
 .. parsed-literal::
 
-    tau = [ 26.71869924  27.93842436  29.10708199  29.64889324  30.03048589
-      30.075433    36.72255959  30.75261837  31.12068041  31.1640552
-      31.81807982  32.17395555  32.21591227  32.36081306  32.66533294
-      33.05244038  34.35921355  37.6193175   37.62655033  37.86521462]
+    tau =
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-31-b39f17c8cbc1> in <module>()
+    ----> 1 print 'tau =', tau[0:20]
+    
+
+    NameError: name 'tau' is not defined
 
 
 .. code:: python
@@ -504,7 +717,18 @@ sorted.
     h = plt.hist(tau,20)
 
 
-.. image:: Signal_files/Signal_59_0.png
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-32-daaa7a3adee0> in <module>()
+    ----> 1 h = plt.hist(tau,20)
+    
+
+    NameError: name 'tau' is not defined
 
 
 Direction of arrival :math:`(\theta_r,\phi_r)` in radians
@@ -513,17 +737,23 @@ Direction of arrival :math:`(\theta_r,\phi_r)` in radians
 
     print "doa = ", doa[1:10,:]
 
+
 .. parsed-literal::
 
-    doa =  [[ 1.8736812  -3.14159265]
-     [ 1.15838589 -3.14159265]
-     [ 1.62703943  2.69865609]
-     [ 1.62632401 -3.14087348]
-     [ 1.62624094 -2.65738656]
-     [ 1.61619728  0.01122758]
-     [ 1.84520693  2.69865609]
-     [ 1.84187905 -3.14087348]
-     [ 1.84149225 -2.65738656]]
+     doa = 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-33-70fae1c8afa3> in <module>()
+    ----> 1 print "doa = ", doa[1:10,:]
+    
+
+    NameError: name 'doa' is not defined
 
 
 .. code:: python
@@ -547,5 +777,24 @@ Direction of arrival :math:`(\theta_r,\phi_r)` in radians
     plt.tight_layout()
 
 
-.. image:: Signal_files/Signal_62_0.png
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-34-cfe931a2177d> in <module>()
+          1 plt.subplot(221)
+    ----> 2 ht = plt.hist(doa[:,0],20)
+          3 plt.xlabel(u'$\\theta_r$')
+          4 plt.ylabel('#')
+          5 plt.subplot(222)
+
+
+    NameError: name 'doa' is not defined
+
+
+
+.. image:: Signal_files/Signal_76_1.png
 

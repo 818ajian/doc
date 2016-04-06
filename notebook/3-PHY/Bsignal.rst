@@ -24,59 +24,25 @@ energy. To do so there exist a specialized function :
 
 .. code:: python
 
-    E=EnImpulse(fe=40)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-3-aa7406c5738b> in <module>()
-    ----> 1 E=EnImpulse(fe=40)
-    
-
-    NameError: name 'EnImpulse' is not defined
-
-
-.. code:: python
-
-    print E.energy()
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-4-8dbb63703b88> in <module>()
-    ----> 1 print E.energy()
-    
-
-    NameError: name 'E' is not defined
-
+    E=TUsignal()
+    E.EnImpulse(feGHz=40)
 
 .. code:: python
 
     E.plot(typ='v')
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    (<matplotlib.figure.Figure at 0x2b9d0558e790>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d055a12d0>]], dtype=object))
 
-    <ipython-input-5-9f7a16f65703> in <module>()
-    ----> 1 E.plot(typ='v')
-    
 
-    NameError: name 'E' is not defined
+
+
+.. image:: Bsignal_files/Bsignal_7_1.png
 
 
 .. code:: python
@@ -84,21 +50,15 @@ energy. To do so there exist a specialized function :
     E.energy()
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-6-0fd52b52ad32> in <module>()
-    ----> 1 E.energy()
-    
-
-    NameError: name 'E' is not defined
+    array([ 1.00000008])
 
 
-The Fourier transform of this signal has the hermitian Symmetry.
+
+The Fourier transform of this signal exhibits the Hermitian Symmetry.
 
 .. code:: python
 
@@ -106,38 +66,17 @@ The Fourier transform of this signal has the hermitian Symmetry.
     F.plot(typ='m')
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-7-d6500b4ff58a> in <module>()
-    ----> 1 F = E.fft()
-          2 F.plot(typ='m')
+    (<matplotlib.figure.Figure at 0x2b9d07c0f410>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d07c87f10>]], dtype=object))
 
 
-    NameError: name 'E' is not defined
 
 
-.. code:: python
-
-    F.y[0]
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-8-a3ec08f56226> in <module>()
-    ----> 1 F.y[0]
-    
-
-    NameError: name 'F' is not defined
+.. image:: Bsignal_files/Bsignal_10_1.png
 
 
 We then extract the non redundant part of the signal with the ``ft``
@@ -147,81 +86,26 @@ method
 
     G=E.ft()
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-9-d4e4ca97ebda> in <module>()
-    ----> 1 G=E.ft()
-    
-
-    NameError: name 'E' is not defined
-
-
 .. code:: python
 
     GH=G.symHz(100,scale='extract')
 
+.. code:: python
 
-::
+    print GH.y[0,1]
+    print GH.y[0,-1]
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-10-e9dc0e1ba8d8> in <module>()
-    ----> 1 GH=G.symHz(100,scale='extract')
-    
-
-    NameError: name 'G' is not defined
+    (-0.0014441784194-4.88037298122e-05j)
+    (-0.0014441784194+4.88037298122e-05j)
 
 
 .. code:: python
 
-    print GH.y[1]
-    print GH.y[-1]
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-11-93f5cb675c6d> in <module>()
-    ----> 1 print GH.y[1]
-          2 print GH.y[-1]
-
-
-    NameError: name 'GH' is not defined
-
-
-.. code:: python
-
-    ip=F.ifft()
-    ip2=GH.ifft()
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-12-a11b54673c68> in <module>()
-    ----> 1 ip=F.ifft()
-          2 ip2=GH.ifft()
-
-
-    NameError: name 'F' is not defined
-
+    ip = F.ifft()
+    ip2= GH.ifft()
 
 .. code:: python
 
@@ -231,21 +115,16 @@ method
     title('extract mode')
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-13-883c18d72357> in <module>()
-    ----> 1 f,a=E.plot(typ='v',labels=['original'])
-          2 f,a=ip.plot(typ='v',fig=f,ax=a[0][0],labels=['no zero padding'])
-          3 f,a=ip2.plot(typ='v',fig=f,ax=a[0][0],labels=['zero padding'])
-          4 title('extract mode')
+    <matplotlib.text.Text at 0x2b9d07de6710>
 
 
-    NameError: name 'E' is not defined
+
+
+.. image:: Bsignal_files/Bsignal_16_1.png
 
 
 .. code:: python
@@ -253,18 +132,12 @@ method
     ip.energy()
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    array([ 1.00000008])
 
-    <ipython-input-14-381d0b727c74> in <module>()
-    ----> 1 ip.energy()
-    
-
-    NameError: name 'ip' is not defined
 
 
 .. code:: python
@@ -272,41 +145,20 @@ method
     ip2.energy()
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    array([ 3.18478273])
 
-    <ipython-input-15-78dac4d4a6c8> in <module>()
-    ----> 1 ip2.energy()
-    
-
-    NameError: name 'ip2' is not defined
 
 
 .. code:: python
 
     Y=E.esd()
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-16-67b72beeca17> in <module>()
-    ----> 1 Y=E.esd()
-    
-
-    NameError: name 'E' is not defined
-
-
-FHsignal for in CIR mode
-------------------------
+FHsignal in CIR mode
+--------------------
 
 We create a Fusignal which corresponds to the signal
 
@@ -316,34 +168,32 @@ We create a Fusignal which corresponds to the signal
 
 .. code:: python
 
-    f = np.arange(2,10,0.01)
-    y = 2*np.ones(len(f))*np.exp(-2*1j*np.pi*f*3)
-    N = len(f)
-    Hu = FUsignal(f,y)
-    print N
-
-
-.. parsed-literal::
-
-    800
-
+    fGHz = np.arange(2,10,0.01)
+    tau = 20
+    y = 2*np.ones(len(fGHz))*np.exp(-2*1j*np.pi*fGHz*tau)
+    Hu = FUsignal(fGHz,y)
 
 .. code:: python
 
     Hu.plot(typ='m')
+    Hu.plot(typ='r')
 
 
 
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b78e57acdd0>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b78e580cc10>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b9d07d09d10>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d083a92d0>]], dtype=object))
 
 
 
 
-.. image:: Bsignal_files/Bsignal_27_1.png
+.. image:: Bsignal_files/Bsignal_25_1.png
+
+
+
+.. image:: Bsignal_files/Bsignal_25_2.png
 
 
 .. code:: python
@@ -362,13 +212,13 @@ The inverse Fourier transform allows to recover perfectly the amplitude
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b78e58e3650>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b78e5862850>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b9d07d6a590>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d07cfed50>]], dtype=object))
 
 
 
 
-.. image:: Bsignal_files/Bsignal_30_1.png
+.. image:: Bsignal_files/Bsignal_28_1.png
 
 
 .. code:: python
@@ -377,69 +227,6 @@ The inverse Fourier transform allows to recover perfectly the amplitude
     u = np.where(hu.y==max(hu.y))[0]
     tau = hu.x[u]
     alpha = abs(hu.y[u])
-    print alpha,tau
-
-
-.. parsed-literal::
-
-    [[  4.27928449e-14   4.45602724e-14   4.66296795e-14 ...,   3.83028329e-14
-        3.93775414e-14   4.10699754e-14]
-     [  4.27928449e-14   4.45602724e-14   4.66296795e-14 ...,   3.83028329e-14
-        3.93775414e-14   4.10699754e-14]
-     [  4.27928449e-14   4.45602724e-14   4.66296795e-14 ...,   3.83028329e-14
-        3.93775414e-14   4.10699754e-14]
-     ..., 
-     [  4.27928449e-14   4.45602724e-14   4.66296795e-14 ...,   3.83028329e-14
-        3.93775414e-14   4.10699754e-14]
-     [  4.27928449e-14   4.45602724e-14   4.66296795e-14 ...,   3.83028329e-14
-        3.93775414e-14   4.10699754e-14]
-     [  4.27928449e-14   4.45602724e-14   4.66296795e-14 ...,   3.83028329e-14
-        3.93775414e-14   4.10699754e-14]] [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-      0.  0.  0.  0.  0.  0.  0.  0.]
-
 
 .. code:: python
 
@@ -454,13 +241,13 @@ The inverse Fourier transform allows to recover perfectly the amplitude
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b78e59613d0>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b78e5ad04d0>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b9d084c7810>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d08477390>]], dtype=object))
 
 
 
 
-.. image:: Bsignal_files/Bsignal_33_1.png
+.. image:: Bsignal_files/Bsignal_31_1.png
 
 
 .. code:: python
@@ -476,13 +263,13 @@ The inverse Fourier transform allows to recover perfectly the amplitude
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b78e5a34d10>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b78e5a8ac90>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b9d085f3cd0>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d08535590>]], dtype=object))
 
 
 
 
-.. image:: Bsignal_files/Bsignal_35_1.png
+.. image:: Bsignal_files/Bsignal_33_1.png
 
 
 .. code:: python
@@ -491,26 +278,6 @@ The inverse Fourier transform allows to recover perfectly the amplitude
     u = np.where(h.y==max(h.y))[0]
     tau = h.x[u]
     alpha = abs(h.y[u])
-    print alpha,tau
-
-
-.. parsed-literal::
-
-    [[  4.26036983e-14   5.77312005e-03   1.92248178e-02 ...,   2.34781108e-03
-        1.91361122e-02   1.16994371e-03]
-     [  4.26036983e-14   5.77312005e-03   1.92248178e-02 ...,   2.34781108e-03
-        1.91361122e-02   1.16994371e-03]
-     [  4.26036983e-14   5.77312005e-03   1.92248178e-02 ...,   2.34781108e-03
-        1.91361122e-02   1.16994371e-03]
-     ..., 
-     [  4.26036983e-14   5.77312005e-03   1.92248178e-02 ...,   2.34781108e-03
-        1.91361122e-02   1.16994371e-03]
-     [  4.26036983e-14   5.77312005e-03   1.92248178e-02 ...,   2.34781108e-03
-        1.91361122e-02   1.16994371e-03]
-     [  4.26036983e-14   5.77312005e-03   1.92248178e-02 ...,   2.34781108e-03
-        1.91361122e-02   1.16994371e-03]] [-49.97728305 -49.97728305 -49.97728305 ..., -49.97728305 -49.97728305
-     -49.97728305]
-
 
 .. code:: python
 
@@ -521,36 +288,34 @@ The inverse Fourier transform allows to recover perfectly the amplitude
 
 .. parsed-literal::
 
-    array([[ -1.93565190e-15 -1.70240923e-19j,
-              2.62295322e-04 -3.27871407e-19j,
-              8.73458329e-04 -4.09839258e-20j, ...,
-             -1.06670199e-04 +2.90350482e-19j,
-             -8.69428086e-04 -1.58117458e-18j,
-             -5.31550980e-05 -2.71727936e-20j]])
+    array([[ -1.50593859e-15 -6.41964563e-20j,
+              1.22745263e-04 -1.36427337e-19j,
+              8.94216494e-05 -1.03247967e-19j, ...,
+              1.05839739e-05 +7.80645228e-20j,
+             -1.37135712e-04 -1.94405223e-19j,
+              8.17123442e-05 +3.02799103e-19j]])
 
 
 
 .. code:: python
 
-    print H.y[203]
-    print H.y[-203]
+    print H.y[...,203]
+    print H.y[...,-203]
     len(H.y)
 
 
-::
+.. parsed-literal::
+
+    [-0.10108118-0.07343977j]
+    [-0.10108118+0.07343977j]
 
 
-    ---------------------------------------------------------------------------
-
-    IndexError                                Traceback (most recent call last)
-
-    <ipython-input-28-4b5e7dcf9b6a> in <module>()
-    ----> 1 print H.y[203]
-          2 print H.y[-203]
-          3 len(H.y)
 
 
-    IndexError: index 203 is out of bounds for axis 0 with size 1
+.. parsed-literal::
+
+    1
+
 
 
 .. code:: python
@@ -566,11 +331,11 @@ The inverse Fourier transform allows to recover perfectly the amplitude
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b78e5c57ad0>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b78e5c57110>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b9d086b7050>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b9d086919d0>]], dtype=object))
 
 
 
 
-.. image:: Bsignal_files/Bsignal_40_1.png
+.. image:: Bsignal_files/Bsignal_38_1.png
 

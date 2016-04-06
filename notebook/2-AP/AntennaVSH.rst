@@ -14,30 +14,6 @@ Vector Spherical Harmonics Representation of Antennas
     WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
 
 
-::
-
-
-    ---------------------------------------------------------------------------
-
-    ImportError                               Traceback (most recent call last)
-
-    <ipython-input-1-8b1bd9b086f4> in <module>()
-          1 from pylayers.antprop.antenna import *
-    ----> 2 from pylayers.antprop.antvsh import *
-          3 get_ipython().magic(u'matplotlib inline')
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/antvsh.py in <module>()
-         12 import pylayers.antprop.antenna as ant
-         13 from pylayers.antprop.spharm import *
-    ---> 14 from sphere import spherepack, Wrapec, mathtogeo
-         15 import numpy as np
-         16 
-
-
-    ImportError: No module named sphere
-
-
 Loading an Antenna from a Matlab file
 
 .. code:: python
@@ -119,8 +95,16 @@ Then an electrical delay of :math:`4.185ns` is applied on the
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2b4a0af26250>
+    <matplotlib.text.Text at 0x2b9288417090>
 
+
+
+
+.. image:: AntennaVSH_files/AntennaVSH_13_1.png
+
+
+
+.. image:: AntennaVSH_files/AntennaVSH_13_2.png
 
 
 .. code:: python
@@ -142,8 +126,16 @@ Then an electrical delay of :math:`4.185ns` is applied on the
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x2b4a0b0d4790>]
+    [<matplotlib.lines.Line2D at 0x2b928843b8d0>]
 
+
+
+
+.. image:: AntennaVSH_files/AntennaVSH_15_1.png
+
+
+
+.. image:: AntennaVSH_files/AntennaVSH_15_2.png
 
 
 Display of the radiation pattern for all frequencies
@@ -154,6 +146,11 @@ Display of the radiation pattern for all frequencies
     plt.figure(figsize=(10,10))
     for nf in range(104):
         plt.polar(A.phi,abs(A.Ft[45,:,nf]))
+
+
+
+.. image:: AntennaVSH_files/AntennaVSH_17_0.png
+
 
 .. code:: python
 
@@ -186,21 +183,6 @@ At that stage we compute the Vector Spherical Harmonics coefficients
 
     A=vsh(A)
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-13-aab26d118494> in <module>()
-    ----> 1 A=vsh(A)
-    
-
-    NameError: name 'vsh' is not defined
-
-
 .. code:: python
 
     A.info()
@@ -227,38 +209,43 @@ At that stage we compute the Vector Spherical Harmonics coefficients
 
     A.C.s1tos2(30)
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-15-98aa5dfbfef3> in <module>()
-    ----> 1 A.C.s1tos2(30)
-    
-
-    AttributeError: 'Antenna' object has no attribute 'C'
-
-
 .. code:: python
 
     A.C
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-16-ea02b37ef526> in <module>()
-    ----> 1 A.C
+    Br
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
     
+    Bi
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
+    
+    Cr
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
+    
+    Ci
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
 
-    AttributeError: 'Antenna' object has no attribute 'C'
 
 
 .. code:: python
@@ -267,57 +254,55 @@ At that stage we compute the Vector Spherical Harmonics coefficients
     A.C.show('s2',k=300)
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-17-a2dac715dfe4> in <module>()
-          1 fig = plt.figure(figsize=(8,8))
-    ----> 2 A.C.show('s2',k=300)
-    
-
-    AttributeError: 'Antenna' object has no attribute 'C'
+.. image:: AntennaVSH_files/AntennaVSH_25_0.png
 
 
 .. code:: python
 
     A.C.s2tos3()
 
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-18-34ddad199ddd> in <module>()
-    ----> 1 A.C.s2tos3()
-    
-
-    AttributeError: 'Antenna' object has no attribute 'C'
-
-
 .. code:: python
 
     A.C
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-19-ea02b37ef526> in <module>()
-    ----> 1 A.C
+    Br
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
+    Ncoeff s3 : 145
     
+    Bi
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
+    Ncoeff s3 : 145
+    
+    Cr
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
+    Ncoeff s3 : 145
+    
+    Ci
+    -------------
+    L1  : 90
+    M1  : 89
+    Ncoeff s1 8010
+    NCoeff s2  : 495
+    Ncoeff s3 : 145
 
-    AttributeError: 'Antenna' object has no attribute 'C'
 
 
 .. code:: python
@@ -327,18 +312,6 @@ At that stage we compute the Vector Spherical Harmonics coefficients
     plt.tight_layout()
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-20-627adf1c1577> in <module>()
-          1 fig = plt.figure(figsize=(8,8))
-    ----> 2 A.C.show('s3')
-          3 plt.tight_layout()
-
-
-    AttributeError: 'Antenna' object has no attribute 'C'
+.. image:: AntennaVSH_files/AntennaVSH_28_0.png
 

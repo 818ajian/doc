@@ -89,14 +89,7 @@ following :
 
 .. parsed-literal::
 
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/__init__.py:872: UserWarning: axes.color_cycle is deprecated and replaced with axes.prop_cycle; please use the latter.
-      warnings.warn(self.msg_depr % (key, alt_key))
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
-
-.. parsed-literal::
-
-    Warning : OSM Parser seems to be not installed
+    Layout:Mayavi is not installed
 
 
 Reading an exiting Layout
@@ -179,6 +172,7 @@ The structure of the ``.osm`` file is shown below
 .. parsed-literal::
 
     Jimmy.osm
+    nonconvex.osm
 
 
 .. code:: python
@@ -233,7 +227,7 @@ To read a new layout in osm format :
     number of Sub-Segments : 30
     Gs Nodes :  229
     Gs Edges :  248
-    Gt Nodes :  0
+    Gt Nodes :  20
     Gt Edges :  0
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
@@ -251,24 +245,37 @@ The different graphs associated with the layout are then built
 
 .. parsed-literal::
 
-    WARNING:root:punctual contact detected proceed in reverse order
-    CRITICAL:root:contact detected reconsider the layout description 
-    WARNING:root:punctual contact detected proceed in reverse order
-    CRITICAL:root:contact detected reconsider the layout description 
-    CRITICAL:root:second decompose run failed
-
-
-.. parsed-literal::
-
-    merge
-    merge
-    merge
-    merge
-    merge
-    merge
-    merge
-    merge
-    merge
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    split
+    check len(ncycles) == 2 passed
 
 
 The topological graph :math:`\mathcal{G}_t` or graph of non overlapping
@@ -361,11 +368,11 @@ The display options dictionnary
     Gs Nodes :  238
     Gs Edges :  266
     Gt Nodes :  30
-    Gt Edges :  75
+    Gt Edges :  76
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
-    Gr Nodes    : 23
-    Gr Edges    : 22
+    Gr Nodes    : 24
+    Gr Edges    : 21
     Nc  = Gr.node[nroom]['cycles']  
 
 
@@ -550,15 +557,15 @@ a filename. In that case the file is stored in
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b5273dfca10>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b5273dc2090>)
+    (<matplotlib.figure.Figure at 0x2abeff449690>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2abeff549990>)
 
 
 
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b5273dfca90>
+    <matplotlib.figure.Figure at 0x2abeff54e4d0>
 
 
 
