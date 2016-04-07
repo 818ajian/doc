@@ -1,12 +1,3 @@
----
-!!python/unicode 'latex_envs':
-  !!python/unicode 'bibliofile': !!python/unicode 'biblio.bib'
-  !!python/unicode 'cite_by': !!python/unicode 'apalike'
-  !!python/unicode 'current_citInitial': 1
-  !!python/unicode 'eqLabelWithNumbers': true
-  !!python/unicode 'eqNumInitial': 0
----
-
 ## Example of a trajectory synthesis in the DLR WHERE2 environment
 
 The document describing the measurement performed in the DLR environment is

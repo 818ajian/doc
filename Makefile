@@ -138,3 +138,12 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
+
+clean:
+	rm $(BUILDDIR)/html/notebook/1-GIS/*.html
+	rm $(BUILDDIR)/html/notebook/2-AP/*.html
+	rm $(BUILDDIR)/html/notebook/3-PHY/*.html
+	rm $(BUILDDIR)/html/notebook/4-MOB/*.html
+	rm $(BUILDDIR)/html/notebook/5-SIM/*.html
+	rm $(BUILDDIR)/html/notebook/7-APP/*.html
+	rm $(BUILDDIR)/html/notebook/8-MISC/*.html

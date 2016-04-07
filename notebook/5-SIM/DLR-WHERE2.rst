@@ -25,9 +25,13 @@ Conditions <http://www.kn-s.dlr.de/where2/documents/Deliverables/Deliverable-D4.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
+
 .. parsed-literal::
 
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+    Layout:Mayavi is not installed
+    mayavi not installed
+    Layout:Mayavi is not installed
+    Layout:Mayavi is not installed
 
 
 This function has to be moved in simulem module. It is a temporary
@@ -64,7 +68,7 @@ run a full simulation and returns a list of channel impulse response.
         tcir[kt+1] = {}
         t = np.array([S.tx.position[0,kt+1],S.tx.position[1,kt+1],S.tx.position[2,kt+1]])
         for kr in range(Nrx-1):
-            if (mod(kr,10)==0):
+            if (np.mod(kr,10)==0):
                 print kr+1
             r = np.array([S.rx.position[0,kr+1],S.rx.position[1,kr+1],S.rx.position[2,kr+1]])
             ctx = S.L.pt2cy(t)
@@ -86,6 +90,7 @@ run a full simulation and returns a list of channel impulse response.
             cir = sca.applywavB(wav.sfg)
             tcir[kt+1][kr+1]=cir
         return(tcir)
+
 Loading the Layout
 ^^^^^^^^^^^^^^^^^^
 
@@ -100,9 +105,11 @@ Loading the Layout
         S.L.build()
         S.L.dumpw()
 
+
 .. parsed-literal::
 
-    new file WHERE1.str
+    check len(ncycles) == 2 ... passed !
+    check x,y = Gs.node[seg]['ncycles'] ; seg in Gt[x][y]['segment'] ... passed !
 
 
 .. code:: python
@@ -114,12 +121,14 @@ Loading the Layout
     fig,ax = S.L.showGs()
 
 
+
 .. image:: DLR-WHERE2_files/DLR-WHERE2_7_0.png
 
 
 .. code:: python
 
     S.show3()
+
 We have a list of static Anchor Nodes. Those values correspond to the
 actual anchor nodes coordinates of the WHERE2 project DLR measurement
 campaign.
@@ -134,6 +143,7 @@ campaign.
                    400:{'name':'MT_ACO_02','coord':[30.574,2.8,1.291]},
                    1:{'name':'MT_DLR_RTDSlave','coord':[0.85,0,1.18]}
                   }
+
 .. code:: python
 
     S.tx.clear()
@@ -142,6 +152,7 @@ campaign.
     S.rx.filant='def.vsh3'
     da ={}
     dm ={}
+
 Vizualization of the simulated scenario
 
 .. code:: python
@@ -164,9 +175,10 @@ Vizualization of the simulated scenario
 
 
 
+
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x2b378de56a10>]
+    [<matplotlib.lines.Line2D at 0x2b4c94771d90>]
 
 
 
@@ -184,6 +196,7 @@ along direction ``vec``.
     S.rx.linevect(npt=290, step=0.1, ptt=[0, 0, 1.275], vec=[1, 0, 0], mode='subst')
     ps = S.rx.position[:,-1]
     S.rx.linevect(npt=60, step=0.1, ptt=ps,vec=[0,1,0],mode='append')
+
 Looking what is does
 
 .. code:: python
@@ -194,6 +207,7 @@ Looking what is does
     S.L.display['title']='Trajectory to be simulated'
     S.show(s=20)
 
+
 .. parsed-literal::
 
     Warning : no furniture file loaded
@@ -203,8 +217,8 @@ Looking what is does
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b378dad5350>,
-     <matplotlib.axes.AxesSubplot at 0x2b378de86550>)
+    (<matplotlib.figure.Figure at 0x2b4c944617d0>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2b4c944ca850>)
 
 
 
@@ -220,6 +234,7 @@ Choosing a UWB waveform for the simulation
     wav.show()
 
 
+
 .. image:: DLR-WHERE2_files/DLR-WHERE2_20_0.png
 
 
@@ -227,7 +242,36 @@ running the simulation
 
 .. code:: python
 
-    #tcir = evalcir(S,wav,cutoff=4)
+    tcir = evalcir(S,wav,cutoff=4)
+
+
+.. parsed-literal::
+
+    1
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-12-efbe84644bc4> in <module>()
+    ----> 1 tcir = evalcir(S,wav,cutoff=4)
+    
+
+    <ipython-input-2-3dd30752409b> in evalcir(S, wav, cutoff)
+         36             ctxp = ctx
+         37             crxp = crx
+    ---> 38             Si.run5(cutoff=cutoff,algo
+         39 ='old')
+         40         r2d = Si.rays(t,r)
+
+
+    AttributeError: 'Signatures' object has no attribute 'run5'
+
+
 Saving the data in pickle format
 
 .. code:: python
@@ -235,6 +279,7 @@ Saving the data in pickle format
     #file = open("tcir5.pickle","w")
     #pickle.dump(tcir,file)
     #file.close()
+
 Reading the data from the above file
 
 .. code:: python
@@ -252,10 +297,12 @@ Reading the data from the above file
             ttcir=np.vstack((ttcir,cir.y))
         except:
             ttcir=cir.y
+
 .. code:: python
 
     tcir[1][1].x
     tcir[1][102].x
+
 
 
 
@@ -284,6 +331,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 
 
+
 .. parsed-literal::
 
     (0.0, 150.0, 1.0, 69.0)
@@ -300,10 +348,11 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 
 
+
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b378e71ac90>,
-     array([[<matplotlib.axes.AxesSubplot object at 0x2b378de92790>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2b4c97873850>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b4c97873ad0>]], dtype=object))
 
 
 
@@ -318,6 +367,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
     xlabel('Delay (ns)')
     ylabel('Level (V)')
     title('Received Waveform')
+
 
 ::
 
@@ -340,7 +390,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b378df08510>
+    <matplotlib.figure.Figure at 0x2b4c9437ca10>
 
 
 
@@ -353,6 +403,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
     xlabel('Delay (ns)')
     ylabel('Level (V)')
     title('Received Waveform')
+
 
 ::
 
