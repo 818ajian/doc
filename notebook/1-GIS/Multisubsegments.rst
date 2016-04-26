@@ -1,10 +1,20 @@
 
+.. code:: python
+
+    !date
+
+
+.. parsed-literal::
+
+    mardi 26 avril 2016, 13:24:26 (UTC+0200)
+
+
 Effect of Modyfiying the Nature of Sub-Segments
 ===============================================
 
-This notebook illustrates a simple ray tracing simulation with diffeent
+This notebook illustrates a simple ray tracing simulation with different
 material properties for a single segment separating 2 rooms which
-contains multi-subsegments. The noteboook illustrates in details the
+contains multi subsegments. The noteboook illustrates in details the
 whole steps.
 
 .. code:: python
@@ -37,8 +47,13 @@ subsegment is materialized by a segment.
     f,a=L.showG('s',subseg=True,figsize=(10,10))
 
 
+.. parsed-literal::
 
-.. image:: Multisubsegments_files/Multisubsegments_4_0.png
+    Rebuilding Layout
+
+
+
+.. image:: Multisubsegments_files/Multisubsegments_5_1.png
 
 
 The studied configuration is composed of a simple 2 rooms building
@@ -63,38 +78,7 @@ structure.
 
 .. parsed-literal::
 
-    check len(ncycles) == 2 passed
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-4-de0401164687> in <module>()
-          1 L.build()
-    ----> 2 L.save()
-    
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
-       5203             _fileini = racine + '.ini'
-       5204             self.savestr2(_filename)
-    -> 5205             self.saveini(_fileini)
-       5206             print "structure saved in ", _filename
-       5207             print "structure saved in ", _fileini
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
-       1282             d['vnodes']=vnodes
-       1283             d['ss_slab']=[]
-    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
-       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
-       1286             config.set("cycles",str(c),d)
-
-
-    KeyError: 'ss_slab'
+    structure saved in  defstr.ini
 
 
 The :math:`\mathcal{G}_s` graph dictionnary has the following structure
@@ -108,18 +92,21 @@ The :math:`\mathcal{G}_s` graph dictionnary has the following structure
 
 .. parsed-literal::
 
-    {-8: {},
-     -7: {},
-     -6: {},
-     -5: {},
-     -4: {},
-     -3: {},
-     -2: {},
-     -1: {},
+    {-12: {'ncycles': [3, 4]},
+     -11: {'ncycles': [4, 5]},
+     -10: {'ncycles': [5, 6]},
+     -9: {'ncycles': [3, 6]},
+     -8: {'ncycles': [1, 2]},
+     -7: {'ncycles': [1, 2]},
+     -6: {'ncycles': [2, 3, 4]},
+     -5: {'ncycles': [1, 2, 4]},
+     -4: {'ncycles': [1, 4, 5]},
+     -3: {'ncycles': [1, 5, 6]},
+     -2: {'ncycles': [1, 2, 6]},
+     -1: {'ncycles': [2, 3, 6]},
      1: {'connect': [-8, -7],
       'name': 'PARTITION',
-      'ncycles': [1, 2],
-      'norm': array([-0.999982  , -0.00599989,  0.        ]),
+      'norm': array([-1.,  0.,  0.]),
       'offset': 0,
       'ss_name': ['WOOD', 'AIR', 'WOOD'],
       'ss_offset': [0, 0, 0],
@@ -128,60 +115,108 @@ The :math:`\mathcal{G}_s` graph dictionnary has the following structure
       'z': (0.0, 3.0)},
      2: {'connect': [-8, -2],
       'name': 'WALL',
-      'ncycles': [1, 2],
-      'norm': array([ 0.99997778,  0.00666652,  0.        ]),
+      'norm': array([ 1.,  0.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
      3: {'connect': [-7, -5],
       'name': 'WALL',
-      'ncycles': [1, 2],
-      'norm': array([-0.99997775, -0.00667097,  0.        ]),
+      'norm': array([-1.,  0.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
      4: {'connect': [-6, -1],
       'name': 'WALL',
-      'ncycles': [1, 0],
-      'norm': array([ 0.99997888,  0.00649986,  0.        ]),
+      'norm': array([ 1.,  0.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
      5: {'connect': [-6, -5],
       'name': 'WALL',
-      'ncycles': [1, 0],
-      'norm': array([-0.00619988,  0.99998078,  0.        ]),
+      'norm': array([ 0.,  1.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
      6: {'connect': [-5, -4],
       'name': 'WALL',
-      'ncycles': [2, 0],
-      'norm': array([-0.00639987,  0.99997952,  0.        ]),
+      'norm': array([ 0.,  1.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
      7: {'connect': [-4, -3],
       'name': 'WALL',
-      'ncycles': [2, 0],
-      'norm': array([ 0.99997887,  0.00650149,  0.        ]),
+      'norm': array([ 1.,  0.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
      8: {'connect': [-3, -2],
       'name': 'WALL',
-      'ncycles': [2, 0],
-      'norm': array([ 0.00639987, -0.99997952,  0.        ]),
+      'norm': array([ 0., -1.,  0.]),
       'offset': 0,
       'transition': False,
       'z': (0.0, 3.0)},
-     9: {'connect': [-1, -2],
+     9: {'connect': [-2, -1],
       'name': 'WALL',
-      'ncycles': [1, 0],
-      'norm': array([-0.00639987,  0.99997952,  0.        ]),
+      'norm': array([ 0., -1.,  0.]),
       'offset': 0,
       'transition': False,
-      'z': (0.0, 3.0)}}
+      'z': (0.0, 3.0)},
+     10: {'connect': [-9, -10],
+      'name': 'AIR',
+      'ncycles': [6, 0],
+      'norm': array([ 0., -1.,  0.]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     11: {'connect': [-10, -11],
+      'name': 'AIR',
+      'ncycles': [5, 0],
+      'norm': array([ 1.,  0.,  0.]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     12: {'connect': [-11, -12],
+      'name': 'AIR',
+      'ncycles': [4, 0],
+      'norm': array([ 0.,  1.,  0.]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     13: {'connect': [-12, -9],
+      'name': 'AIR',
+      'ncycles': [3, 0],
+      'norm': array([ 1.,  0.,  0.]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     16: {'connect': [-1, -9],
+      'name': 'AIR',
+      'ncycles': [3, 6],
+      'norm': array([ 0.70710678, -0.70710678,  0.        ]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     17: {'connect': [-10, -3],
+      'name': 'AIR',
+      'ncycles': [5, 6],
+      'norm': array([ 0.70710678,  0.70710678,  0.        ]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     20: {'connect': [-12, -6],
+      'name': 'AIR',
+      'ncycles': [3, 4],
+      'norm': array([-0.70710678, -0.70710678,  0.        ]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]},
+     21: {'connect': [-4, -11],
+      'name': 'AIR',
+      'ncycles': [4, 5],
+      'norm': array([-0.70710678,  0.70710678,  0.        ]),
+      'offset': 0,
+      'transition': True,
+      'z': [0.0, 3.0]}}
 
 
 
@@ -198,133 +233,132 @@ We define now two points which are the termination of a radio link.
 
     L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
     L.save()
+
+
+.. parsed-literal::
+
+    structure saved in  defstr.ini
+
+
+.. code:: python
+
     fGHz=np.linspace(1,11,100)
     #Aa = Antenna('S1R1.vsh3')
     #Ab = Antenna('S1R1.vsh3')
-    #Aa = Antenna('Gauss',fGHz=fGHz)
-    #Ab = Antenna('Gauss',fGHz=fGHz)
-    Aa = AntArray(N=[8,1,1],fGHz=fGHz)
-    Ab = AntArray(N=[4,1,1],fGHz=fGHz)
-    Lk = DLink(L=L,a=tx,b=rx,Aa=Aa,Ab=Ab,fGHz=np.linspace(1,11,100))
+    Aa = Antenna('Gauss',fGHz=fGHz)
+    Ab = Antenna('Gauss',fGHz=fGHz)
+    Ab.eval()
+    Aa.eval()
+    #Aa = AntArray(N=[8,1,1],fGHz=fGHz)
+    #Ab = AntArray(N=[4,1,1],fGHz=fGHz)
+    Lk = DLink(L=L,a=tx,b=rx,Aa=Aa,Ab=Ab,fGHz=fGHz,cutoff=5)
+    ak,tauk=Lk.eval(force=True,verbose=False)
 
 
-::
+.. parsed-literal::
+
+    Rebuilding Layout
 
 
-    ---------------------------------------------------------------------------
+.. code:: python
 
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-7-fd2986e5b29e> in <module>()
-          1 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
-    ----> 2 L.save()
-          3 fGHz=np.linspace(1,11,100)
-          4 #Aa = Antenna('S1R1.vsh3')
-          5 #Ab = Antenna('S1R1.vsh3')
+    ak.shape
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
-       5203             _fileini = racine + '.ini'
-       5204             self.savestr2(_filename)
-    -> 5205             self.saveini(_fileini)
-       5206             print "structure saved in ", _filename
-       5207             print "structure saved in ", _fileini
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
-       1282             d['vnodes']=vnodes
-       1283             d['ss_slab']=[]
-    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
-       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
-       1286             config.set("cycles",str(c),d)
+.. parsed-literal::
+
+    (120, 1, 100)
 
 
-    KeyError: 'ss_slab'
+
+.. code:: python
+
+    plt.stem(tauk,ak[:,0,0])
+
+
+
+
+.. parsed-literal::
+
+    <Container object of 3 artists>
+
+
+
+
+.. image:: Multisubsegments_files/Multisubsegments_17_1.png
 
 
 A link is the set of a layout and 2 termination points.
 
 .. code:: python
 
+    Aa.eval()
     Aa.plotG()
 
 
-::
+
+.. image:: Multisubsegments_files/Multisubsegments_19_0.png
 
 
-    ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-8-5cb5df1cbc48> in <module>()
-    ----> 1 Aa.plotG()
-    
+.. parsed-literal::
 
-    NameError: name 'Aa' is not defined
+    (<matplotlib.figure.Figure at 0x2ac0b9d12090>,
+     <matplotlib.projections.polar.PolarAxes at 0x2ac0b98e3390>)
+
+
+
+.. code:: python
+
+    Lk.C.Ctt
+
+
+
+
+.. parsed-literal::
+
+    FUsignal :  (100,)  (120, 100) 
+
 
 
 .. code:: python
 
     #f,a=Lk.show(rays=True)
-    f,a=Lk.show(rays=True)
+    f,a=Lk.show(rays=True,aw=0)
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-9-7ecd8f980a4c> in <module>()
-          1 #f,a=Lk.show(rays=True)
-    ----> 2 f,a=Lk.show(rays=True)
-    
-
-    NameError: name 'Lk' is not defined
+.. image:: Multisubsegments_files/Multisubsegments_21_0.png
 
 
 On the figure above, we can see the Tx and Rx each placed in a different
-room appart from a wall with a subsegement placed in the middle. Then
-for evaluating the radio link, simply type:
-
+room apart from a wall with a subsegement placed in the middle. Then for
+evaluating the radio link, simply type:
 
 .. code:: python
 
     ak,tauk=Lk.eval(force=True,a=tx,b=rx,applywav=True)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-10-d9efa0c5005d> in <module>()
-    ----> 1 ak,tauk=Lk.eval(force=True,a=tx,b=rx,applywav=True)
-    
-
-    NameError: name 'Lk' is not defined
-
 
 .. code:: python
 
     Lk.C
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
+    Ctilde : Ray Propagation Channel Matrices
+    ---------
+    (120, 100)
+    Nray : 120
+    fmin(GHz) : 1.0
+    fmax(GHz): 11.0
+    Nfreq : 100
 
-    <ipython-input-11-08f49e889d34> in <module>()
-    ----> 1 Lk.C
-    
-
-    NameError: name 'Lk' is not defined
 
 
 .. code:: python
@@ -333,73 +367,24 @@ for evaluating the radio link, simply type:
     f,a=Lk.C.show(cmap='jet',fig=f,typ='l20',vmin=-120,vmax=-10)
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-12-ef1e84aff51a> in <module>()
-          1 f = plt.figure(figsize=(10,10))
-    ----> 2 f,a=Lk.C.show(cmap='jet',fig=f,typ='l20',vmin=-120,vmax=-10)
-    
-
-    NameError: name 'Lk' is not defined
-
-
-
-.. parsed-literal::
-
-    <matplotlib.figure.Figure at 0x2b6d7fef2210>
+.. image:: Multisubsegments_files/Multisubsegments_25_0.png
 
 
 .. code:: python
 
-    fGHz=np.arange(2,6,0.5)
+    fGHz=np.arange(2,6,0.1)
     wav = wvf.Waveform(fcGHz=4,bandGHz=1.5)
     wav.show()
 
 
 
-.. image:: Multisubsegments_files/Multisubsegments_22_0.png
+.. image:: Multisubsegments_files/Multisubsegments_26_0.png
 
 
 .. code:: python
 
-    wav.st.y.shape
-
-
-
-
-.. parsed-literal::
-
-    (1, 251)
-
-
-
-.. code:: python
-
-    len(Lk.fGHz)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-15-00ef4b2c8627> in <module>()
-    ----> 1 len(Lk.fGHz)
-    
-
-    NameError: name 'Lk' is not defined
-
-
-.. code:: python
-
-    Lk = DLink(L=L,a=tx,b=rx)
+    Lk = DLink(L=L,a=tx,b=rx,fGHz=fGHz)
 
 .. code:: python
 
@@ -444,46 +429,16 @@ for evaluating the radio link, simply type:
     Lk.L.Gs.node[1]['ss_name']=layer
     Lk.L.g2npy()
     Lk.L.save()
-    fGHz=np.linspace(2,11,181)
     #Aa = Antenna('Omni',fGHz=fGHz)
     #Aa = Antenna('Omni',fGHz=fGHz)
-    ak,tauk=Lk.eval(force=True)
-    plt.stem(Lk.H.taud,Lk.H.ak)
-    plt.stem(Lk.H.taud,Lk.H.ak[:,0,50])
+    ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
+    #plt.stem(Lk.H.taud,Lk.H.ak)
+    #plt.stem(Lk.H.taud,Lk.H.ak[:,0,50])
 
 
-::
+.. parsed-literal::
 
-
-    ---------------------------------------------------------------------------
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-20-ae5fc4f64f59> in <module>()
-          3 Lk.L.Gs.node[1]['ss_name']=layer
-          4 Lk.L.g2npy()
-    ----> 5 Lk.L.save()
-          6 fGHz=np.linspace(2,11,181)
-          7 #Aa = Antenna('Omni',fGHz=fGHz)
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
-       5203             _fileini = racine + '.ini'
-       5204             self.savestr2(_filename)
-    -> 5205             self.saveini(_fileini)
-       5206             print "structure saved in ", _filename
-       5207             print "structure saved in ", _fileini
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
-       1282             d['vnodes']=vnodes
-       1283             d['ss_slab']=[]
-    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
-       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
-       1286             config.set("cycles",str(c),d)
-
-
-    KeyError: 'ss_slab'
+    structure saved in  defstr.ini
 
 
 .. code:: python
@@ -491,18 +446,12 @@ for evaluating the radio link, simply type:
     Lk.H.ak.shape
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    AttributeError                            Traceback (most recent call last)
+    (75, 1, 40)
 
-    <ipython-input-21-1ef58d341060> in <module>()
-    ----> 1 Lk.H.ak.shape
-    
-
-    AttributeError: 'Tchannel' object has no attribute 'ak'
 
 
 .. code:: python
@@ -524,41 +473,26 @@ for evaluating the radio link, simply type:
     Lk.L.save()
     Lk.eval(force=True)
     cirmet = Lk.H.applywavB(wav.sf)
-    cirmet.plot(typ=['v'],xmin=20,xmax=80)
+    cirmet.plot(typ=['v'],xmin=20,xmax=180)
 
 
-::
+.. parsed-literal::
+
+    structure saved in  defstr.ini
+    WARNING : Tchannel.applywavB is going to be replaced by Tchannel.applywav
 
 
-    ---------------------------------------------------------------------------
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-23-02ef6687144f> in <module>()
-          3 Lk.L.Gs.node[1]['ss_name']=layer
-          4 Lk.L.g2npy()
-    ----> 5 Lk.L.save()
-          6 Lk.eval(force=True)
-          7 cirmet = Lk.H.applywavB(wav.sf)
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in save(self, _filename)
-       5203             _fileini = racine + '.ini'
-       5204             self.savestr2(_filename)
-    -> 5205             self.saveini(_fileini)
-       5206             print "structure saved in ", _filename
-       5207             print "structure saved in ", _fileini
+.. parsed-literal::
+
+    (<matplotlib.figure.Figure at 0x2ac0b98eb9d0>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2ac0cb0e00d0>]], dtype=object))
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in saveini(self, _fileini)
-       1282             d['vnodes']=vnodes
-       1283             d['ss_slab']=[]
-    -> 1284             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][0])
-       1285             d['ss_slab'].append(self.Gt.node[c]['ss_slab'][-1])
-       1286             config.set("cycles",str(c),d)
 
 
-    KeyError: 'ss_slab'
+.. image:: Multisubsegments_files/Multisubsegments_34_2.png
 
 
 .. code:: python
@@ -568,34 +502,25 @@ for evaluating the radio link, simply type:
     plt.axis([0,120,-120,-40])
     plt.title('A simple illustration of shadowing effect')
     plt.legend(['air'])
-    f,a=cirpart.plot(typ=['l20'],color='k')
-    plt.axis([0,120,-120,-40])
-    plt.legend(['wood'])
     f,a=cirmet.plot(typ=['l20'],color='r')
     plt.axis([0,120,-120,-40])
     plt.legend(['metal'])
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-24-e1d90729636b> in <module>()
-          4 plt.title('A simple illustration of shadowing effect')
-          5 plt.legend(['air'])
-    ----> 6 f,a=cirpart.plot(typ=['l20'],color='k')
-          7 plt.axis([0,120,-120,-40])
-          8 plt.legend(['wood'])
-
-
-    NameError: name 'cirpart' is not defined
+    <matplotlib.legend.Legend at 0x2ac0cb2852d0>
 
 
 
-.. image:: Multisubsegments_files/Multisubsegments_33_1.png
+
+.. image:: Multisubsegments_files/Multisubsegments_35_1.png
+
+
+
+.. image:: Multisubsegments_files/Multisubsegments_35_2.png
 
 
 We have modified successively the nature of the 3 surfaces in the sub
@@ -603,3 +528,21 @@ segment placed in the sepataion partition. The first was AIR, the second
 WOOD and the third METAL. As the subsegment is placed on the LOS path
 the blockage effect is clearly visible. The chosen antennas were
 omnidirectional ``Antenna('Omni')``
+
+.. code:: python
+
+    Lk.ir.plot(typ='v')
+
+
+
+
+.. parsed-literal::
+
+    (<matplotlib.figure.Figure at 0x2ac0cb628490>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2ac0cb0c4590>]], dtype=object))
+
+
+
+
+.. image:: Multisubsegments_files/Multisubsegments_37_1.png
+

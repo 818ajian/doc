@@ -6,9 +6,6 @@
     import numpy as np
     import seaborn as sns
     from matplotlib import cm
-
-.. code:: python
-
     %matplotlib inline
 
 Geographical Information and the Earth Zone class : ``Ezone``
@@ -17,9 +14,10 @@ Geographical Information and the Earth Zone class : ``Ezone``
 The ``Ezone`` class handles an earth zone which corresponds to the
 ``strm`` or ``aster`` DEM data. It has the same naming convention as
 ``srtm`` files and corresponds to a portion of earth corresponding to 1
-latitude and 1 of longitude. An ``Ezone`` is an heterogeneous dataset
-stored in ``hdf5`` format. Let see an example with the file
-``N48W002.h5``.
+° latitude and 1° of longitude. An ``Ezone`` is an heterogeneous dataset
+stored in ``hdf5`` format.
+
+Let consider an example with the file ``N48W002.h5``.
 
 By default files are placed in directory ``gis/h5`` of the current
 project tree.
@@ -40,8 +38,8 @@ The command h5ls allows to see the hierarchical structure of the file
 
 Invoquing an earth zone requires to specify the tile prefix with the
 same naming convention as with SRTM files. For example let consider the
-earth zone from -2 to -1 in west longitude and from 48 to 49 in North
-latitude this corresponds to the ``N48W002`` tile, so the ezone ``z`` is
+earth zone from -2 to -1 in longitude west and from 48 to 49 in latitude
+North this corresponds to the ``N48W002`` tile, so the ezone ``z`` is
 invoqued as :
 
 .. code:: python
@@ -95,14 +93,14 @@ method.
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2aad8810c410>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2aad8810c850>,
-     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2aad8a90d150>)
+    (<matplotlib.figure.Figure at 0x2b89aecafb90>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2b89aecafb10>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2b89b3ec8ad0>)
 
 
 
 
-.. image:: Ezone_files/Ezone_14_1.png
+.. image:: Ezone_files/Ezone_13_1.png
 
 
 The ``Ezone`` object has a member extent which gives
@@ -161,14 +159,14 @@ The aster DEM can also be shown.
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2aad8810c290>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2aad8ae3d990>,
-     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2aad8b09fc10>)
+    (<matplotlib.figure.Figure at 0x2b89b16ccbd0>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2b89aecaf910>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2b89b4675610>)
 
 
 
 
-.. image:: Ezone_files/Ezone_21_1.png
+.. image:: Ezone_files/Ezone_20_1.png
 
 
 An earth zone has an attached dictionnary of buildings, which contains
@@ -211,14 +209,14 @@ the ``show`` method for zooming in the map.
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2aad8810c250>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2aad8aed8650>,
-     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2aad8b8371d0>)
+    (<matplotlib.figure.Figure at 0x2b89b3e57350>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2b89b44f44d0>,
+     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2b89b7f73b90>)
 
 
 
 
-.. image:: Ezone_files/Ezone_28_1.png
+.. image:: Ezone_files/Ezone_27_1.png
 
 
 .. code:: python
@@ -235,7 +233,7 @@ the ``show`` method for zooming in the map.
 
 
 
-.. image:: Ezone_files/Ezone_29_0.png
+.. image:: Ezone_files/Ezone_28_0.png
 
 
 .. code:: python
@@ -252,7 +250,7 @@ the ``show`` method for zooming in the map.
 
 
 
-.. image:: Ezone_files/Ezone_30_0.png
+.. image:: Ezone_files/Ezone_29_0.png
 
 
 The maps diplayed above are labeled in longitude (horizontal axis) and
@@ -273,7 +271,7 @@ cartesian coordinates as below
 
 
 
-.. image:: Ezone_files/Ezone_33_0.png
+.. image:: Ezone_files/Ezone_32_0.png
 
 
 Let zoom to the University of Rennes 1 campus in the North-East region
@@ -304,7 +302,7 @@ of the city.
 
 
 
-.. image:: Ezone_files/Ezone_36_0.png
+.. image:: Ezone_files/Ezone_35_0.png
 
 
 .. code:: python
@@ -318,7 +316,7 @@ of the city.
 
 
 
-.. image:: Ezone_files/Ezone_37_0.png
+.. image:: Ezone_files/Ezone_36_0.png
 
 
 Ground Height Profile Extraction
@@ -351,7 +349,7 @@ be expressed in (lon,lat) coordinates in WGS84 system.
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-23-583563e25255> in <module>()
+    <ipython-input-22-583563e25255> in <module>()
     ----> 1 f = plt.figure(figsize=(15,5))
           2 a=plt.plot(d,dh,'r',d,h,'b',d,m[0,:],'g',d,LOS,'k')
           3 plt.xlabel('distance (meters)')
@@ -376,7 +374,7 @@ be expressed in (lon,lat) coordinates in WGS84 system.
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-24-819ed69f01ef> in <module>()
+    <ipython-input-23-819ed69f01ef> in <module>()
     ----> 1 f = plt.figure(figsize=(15,5))
           2 a=plt.plot(d,nu)
           3 a = plt.axis([0,25000,-2,2])
