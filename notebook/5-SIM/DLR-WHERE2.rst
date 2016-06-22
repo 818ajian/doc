@@ -1,4 +1,14 @@
 
+.. code:: python
+
+    !date
+
+
+.. parsed-literal::
+
+    mardi 26 avril 2016, 14:23:16 (UTC+0200)
+
+
 Example of a trajectory synthesis in the DLR WHERE2 environment
 ---------------------------------------------------------------
 
@@ -77,8 +87,7 @@ run a full simulation and returns a list of channel impulse response.
                 Si  = Signatures(S.L,ctx,crx)
                 ctxp = ctx
                 crxp = crx
-                Si.run5(cutoff=cutoff,algo
-    ='old')
+                Si.run(cutoff=cutoff)
             r2d = Si.rays(t,r)
             #r2d.show(S.L)
     
@@ -105,13 +114,6 @@ Loading the Layout
         S.L.build()
         S.L.dumpw()
 
-
-.. parsed-literal::
-
-    check len(ncycles) == 2 ... passed !
-    check x,y = Gs.node[seg]['ncycles'] ; seg in Gt[x][y]['segment'] ... passed !
-
-
 .. code:: python
 
     S.L.display['ednodes']=False
@@ -122,12 +124,12 @@ Loading the Layout
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_7_0.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_8_0.png
 
 
 .. code:: python
 
-    S.show3()
+    #S.show3()
 
 We have a list of static Anchor Nodes. Those values correspond to the
 actual anchor nodes coordinates of the WHERE2 project DLR measurement
@@ -178,12 +180,12 @@ Vizualization of the simulated scenario
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x2b4c94771d90>]
+    [<matplotlib.lines.Line2D at 0x2ac3752e1f10>]
 
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_13_1.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_14_1.png
 
 
 In the following a trajectory for the receiver is defined.
@@ -217,13 +219,13 @@ Looking what is does
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b4c944617d0>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b4c944ca850>)
+    (<matplotlib.figure.Figure at 0x2ac374ee1550>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2ac3751bef50>)
 
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_18_2.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_19_2.png
 
 
 Choosing a UWB waveform for the simulation
@@ -235,7 +237,7 @@ Choosing a UWB waveform for the simulation
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_20_0.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_21_0.png
 
 
 running the simulation
@@ -257,19 +259,27 @@ running the simulation
 
     AttributeError                            Traceback (most recent call last)
 
-    <ipython-input-12-efbe84644bc4> in <module>()
+    <ipython-input-13-efbe84644bc4> in <module>()
     ----> 1 tcir = evalcir(S,wav,cutoff=4)
     
 
-    <ipython-input-2-3dd30752409b> in evalcir(S, wav, cutoff)
-         36             ctxp = ctx
+    <ipython-input-3-dcdd07e668b5> in evalcir(S, wav, cutoff)
          37             crxp = crx
-    ---> 38             Si.run5(cutoff=cutoff,algo
-         39 ='old')
-         40         r2d = Si.rays(t,r)
+         38             Si.run(cutoff=cutoff)
+    ---> 39         r2d = Si.rays(t,r)
+         40         #r2d.show(S.L)
+         41 
 
 
-    AttributeError: 'Signatures' object has no attribute 'run5'
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/signature.pyc in rays(self, ptx, prx)
+       3659                     # --> sig2ray
+       3660 
+    -> 3661                     isray,Yi  = s.sig2ray(self.L, ptx[:2], prx[:2])
+       3662 
+       3663                     if isray:
+
+
+    AttributeError: 'Signature' object has no attribute 'sig2ray'
 
 
 Saving the data in pickle format
@@ -339,7 +349,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_29_1.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_30_1.png
 
 
 .. code:: python
@@ -351,13 +361,13 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2b4c97873850>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b4c97873ad0>]], dtype=object))
+    (<matplotlib.figure.Figure at 0x2ac3753917d0>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2ac3753a7c90>]], dtype=object))
 
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_30_1.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_31_1.png
 
 
 .. code:: python
@@ -376,7 +386,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-18-029939bf9a94> in <module>()
+    <ipython-input-19-029939bf9a94> in <module>()
           1 plt.figure(figsize=(10,5))
           2 tcir[1][1].plot(typ=['v'])
     ----> 3 xlabel('Delay (ns)')
@@ -390,11 +400,11 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b4c9437ca10>
+    <matplotlib.figure.Figure at 0x2ac37860f750>
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_31_2.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_32_2.png
 
 
 .. code:: python
@@ -412,7 +422,7 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-19-c4ff825d50c0> in <module>()
+    <ipython-input-20-c4ff825d50c0> in <module>()
           1 tcir[1][11].plot(typ=['v'])
     ----> 2 xlabel('Delay (ns)')
           3 ylabel('Level (V)')
@@ -423,5 +433,5 @@ Aggregated CIR along a synthetic trajectory (line in the corridor)
 
 
 
-.. image:: DLR-WHERE2_files/DLR-WHERE2_32_1.png
+.. image:: DLR-WHERE2_files/DLR-WHERE2_33_1.png
 

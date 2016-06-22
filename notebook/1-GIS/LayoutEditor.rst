@@ -82,9 +82,9 @@ following :
 
 .. code:: python
 
-    from pylayers.gis.layout import *
-    from pylayers.util.project import *
-    %matplotlib inline
+    >>> from pylayers.gis.layout import *
+    >>> from pylayers.util.project import *
+    >>> %matplotlib inline
 
 
 .. parsed-literal::
@@ -103,7 +103,8 @@ environment variable.
 
 .. code:: python
 
-    print pstruc['DIRSTRUC']
+    >>> print pstruc['DIRSTRUC']
+    struc/str
 
 
 .. parsed-literal::
@@ -111,12 +112,27 @@ environment variable.
     struc/str
 
 
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-2-ec9ba75a5513> in <module>()
+          1 print pstruc['DIRSTRUC']
+    ----> 2 struc/str
+    
+
+    NameError: name 'struc' is not defined
+
+
 ``pstruc`` is a dictionnary which gathers all directories which are used
 in ``PyLayers``
 
 .. code:: python
 
-    pstruc
+    >>> pstruc
 
 
 
@@ -163,25 +179,26 @@ The structure of the ``.osm`` file is shown below
 
 .. code:: python
 
-    %%bash
-    
+    >>> %%bash
         cd $BASENAME/struc
         ls *.osm
 
 
+
 .. parsed-literal::
 
+    convexity.osm
     Jimmy.osm
     nonconvex.osm
 
 
 .. code:: python
 
-    %%bash
-        cd $BASENAME/struc
-        head DLR.osm
-        echo '---'
-        tail -17 DLR.osm
+    >>> %%bash
+         cd $BASENAME/struc
+         head DLR.osm
+         echo '---'
+         tail -17 DLR.osm
 
 
 .. parsed-literal::
@@ -199,20 +216,20 @@ To read a new layout in osm format :
 
 .. code:: python
 
-    L=Layout('DLR.ini')
+    >>> L=Layout('DLR.ini')
 
 .. code:: python
 
-    fig,ax=L.showGs()
+    >>> fig,ax=L.showGs()
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_35_0.png
+.. image:: LayoutEditor_files/LayoutEditor_11_0.png
 
 
 .. code:: python
 
-    L.info()
+    >>> L.info()
 
 
 .. parsed-literal::
@@ -221,18 +238,18 @@ To read a new layout in osm format :
     filematini :  matDB.ini
     fileslabini :  slabDB.ini
     filegeom :  DLR.off
-    boundaries  [-6.571295099826252, 38.37510026097863, -11.339789148099044, 11.170751733658253]
-    number of Points : 105
-    number of Segments : 124
+    boundaries  (-10.505, 42.586, -18.277, 18.878)
+    number of Points : 109
+    number of Segments : 138
     number of Sub-Segments : 30
-    Gs Nodes :  229
-    Gs Edges :  248
-    Gt Nodes :  20
-    Gt Edges :  0
+    Gs Nodes :  247
+    Gs Edges :  276
+    Gt Nodes :  31
+    Gt Edges :  79
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
-    Gr Nodes    : 0
-    Gr Edges    : 0
+    Gr Nodes    : 21
+    Gr Edges    : 21
     Nc  = Gr.node[nroom]['cycles']  
 
 
@@ -240,42 +257,45 @@ The different graphs associated with the layout are then built
 
 .. code:: python
 
-    L.build()
+    >>> L.build()
 
 
-.. parsed-literal::
+::
 
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    split
-    check len(ncycles) == 2 passed
+
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-9-63002b766909> in <module>()
+    ----> 1 L.build()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4682             if verbose:
+       4683                 print "Gr"
+    -> 4684             self.buildGr()
+       4685             self.lbltg.extend('r')
+       4686 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGr(self)
+       8783                     pass
+       8784                 else:
+    -> 8785                     self.Gr.remove_node(cy)
+       8786                     self.Gr.pos.pop(cy)
+       8787 
+
+
+    /home/uguen/anaconda/lib/python2.7/site-packages/networkx/classes/graph.pyc in remove_node(self, n)
+        569             raise NetworkXError("The node %s is not in the graph." % (n,))
+        570         for u in nbrs:
+    --> 571             del adj[u][n]   # remove all edges n-u in graph
+        572         del adj[n]          # now remove node
+        573 
+
+
+    KeyError: 13
 
 
 The topological graph :math:`\mathcal{G}_t` or graph of non overlapping
@@ -283,12 +303,12 @@ cycles.
 
 .. code:: python
 
-    f,a=L.showG('t')
-    b=plt.axis('off')
+    >>> f,a=L.showG('t')
+    >>> b=plt.axis('off')
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_40_0.png
+.. image:: LayoutEditor_files/LayoutEditor_16_0.png
 
 
 The graph of room :math:`\mathcal{G}_r`. Two rooms which share at least
@@ -297,12 +317,51 @@ connection) are not connected
 
 .. code:: python
 
-    f,a=L.showG('r')
-    b=plt.axis('off')
+    >>> f,a=L.showG('r')
+    >>> b=plt.axis('off')
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-11-691b11b3fe3c> in <module>()
+    ----> 1 f,a=L.showG('r')
+          2 b=plt.axis('off')
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in showG(self, graph, **kwargs)
+       7769             else:
+       7770                 kwargs['labels']=False
+    -> 7771             fig,ax = gru.draw(G,**kwargs)
+       7772             kwargs['fig']=fig
+       7773             kwargs['ax']=ax
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/util/graphutil.pyc in draw(G, **kwargs)
+        157                                width = kwargs['width'],
+        158                                arrows= kwargs['arrows'],
+    --> 159                                alpha = kwargs['alphae'],ax=ax)
+        160         if kwargs['airwalls']:
+        161             try:
+
+
+    /home/uguen/anaconda/lib/python2.7/site-packages/networkx/drawing/nx_pylab.pyc in draw_networkx_edges(G, pos, edgelist, width, edge_color, style, alpha, edge_cmap, edge_vmin, edge_vmax, ax, arrows, label, **kwds)
+        513 
+        514     # set edge positions
+    --> 515     edge_pos = numpy.asarray([(pos[e[0]], pos[e[1]]) for e in edgelist])
+        516 
+        517     if not cb.iterable(width):
+
+
+    KeyError: 0
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_42_0.png
+.. image:: LayoutEditor_files/LayoutEditor_18_1.png
 
 
 The graph of waypath :math:`\mathcal{G}_w`. This graph is used for agent
@@ -312,24 +371,24 @@ yet
 
 .. code:: python
 
-    f,a=L.showG('w')
-    b=plt.axis('off')
+    >>> f,a=L.showG('w')
+    >>> b=plt.axis('off')
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_44_0.png
+.. image:: LayoutEditor_files/LayoutEditor_20_0.png
 
 
 The graph of visibility :math:`\mathcal{G_v}`
 
 .. code:: python
 
-    f,a=L.showG('v')
-    b=plt.axis('off')
+    >>> f,a=L.showG('v')
+    >>> b=plt.axis('off')
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_46_0.png
+.. image:: LayoutEditor_files/LayoutEditor_22_0.png
 
 
 The graph of interactions :math:`\mathcal{G}_i` used to determine the
@@ -337,14 +396,14 @@ ray signatures.
 
 .. code:: python
 
-    f=plt.figure(figsize=(15,15))
-    a = f.gca()
-    f,a=L.showG('i',fig=f,ax=a)
-    b= plt.axis('off')
+    >>> f=plt.figure(figsize=(15,15))
+    >>> a = f.gca()
+    >>> f,a=L.showG('i',fig=f,ax=a)
+    >>> b= plt.axis('off')
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_48_0.png
+.. image:: LayoutEditor_files/LayoutEditor_24_0.png
 
 
 The display options dictionnary
@@ -352,7 +411,7 @@ The display options dictionnary
 
 .. code:: python
 
-    L.info()
+    >>> L.info()
 
 
 .. parsed-literal::
@@ -361,28 +420,28 @@ The display options dictionnary
     filematini :  matDB.ini
     fileslabini :  slabDB.ini
     filegeom :  DLR.off
-    boundaries  [-6.571295099826252, 38.37510026097863, -11.339789148099044, 11.170751733658253]
-    number of Points : 105
-    number of Segments : 133
+    boundaries  (-10.505, 42.586, -18.277, 18.878)
+    number of Points : 109
+    number of Segments : 138
     number of Sub-Segments : 30
-    Gs Nodes :  238
-    Gs Edges :  266
-    Gt Nodes :  30
-    Gt Edges :  76
+    Gs Nodes :  247
+    Gs Edges :  276
+    Gt Nodes :  31
+    Gt Edges :  140
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
-    Gr Nodes    : 24
-    Gr Edges    : 21
+    Gr Nodes    : 26
+    Gr Edges    : 114
     Nc  = Gr.node[nroom]['cycles']  
 
 
-The layout can be displayed using matplotlib ploting primitive. Several
-display options are specified in the display dictionnary. Those options
-are exploited in ``showGs()`` vizualisation method.
+The layout can be displayed using matplotlib plotting primitive. Several
+display options are specified in the display dictionary. Those options
+are exploited in ``showGs()`` visualization method.
 
 .. code:: python
 
-    L.display
+    >>> L.display
 
 
 
@@ -391,10 +450,7 @@ are exploited in ``showGs()`` vizualisation method.
 
     {'activelayer': 'WALL',
      'alpha': 0.5,
-     'box': [-6.571295099826252,
-      38.37510026097863,
-      -11.339789148099044,
-      11.170751733658253],
+     'box': (-10.505, 42.586, -18.277, 18.878),
      'clear': True,
      'edges': True,
      'edlabel': False,
@@ -454,7 +510,6 @@ Layers
 -  'layerset',list, list of available layers
 -  'layers', list , []
 -  'activelayer', str , 'WINDOW\_GLASS'
-
 -  'alpha', float , 0.5 , overlay transparency
 -  'box', tuple , (-20,20,-10,10), (xmin xmax,ymin,ymax)
 
@@ -495,15 +550,13 @@ The command L.editor() launches an interactive editor. The state machine
 is implemented in module ``pylayers.gis.selectl.py``.
 
 To have an idea of all available options, look in the
+
 ```pylayers.gis.SelectL`` <http://pylayers.github.io/pylayers/_modules/pylayers/gis/selectl.html#SelectL.new_state>`__
 module
 
-All bug correction and ergonomic improvement of this editor is welcome.
-Just pull request your modifications.
-
 PyLayers comes along with a low level structure editor based on
-``matplotlib`` which can be invoqued using the ``editor()`` method. This
-editor is more suited for modyfing constitutive properties of walls. In
+``matplotlib`` which can be invoked using the ``editor()`` method. This
+editor is more suited for modifying constitutive properties of walls. In
 the future a dedicated plugin in ``JOSM`` could be a much better
 solution.
 
@@ -511,11 +564,22 @@ There are two different modes of edition
 
 -  A create points mode CP
 
-::
+.. code:: python
 
     + left clic   : free point
     + right clic  : same x point
     + center clic : same y point
+
+
+::
+
+
+      File "<ipython-input-17-3fbadf730daa>", line 1
+        + left clic   : free point
+                  ^
+    SyntaxError: invalid syntax
+
+
 
 -  A create segments mode
 
@@ -536,40 +600,40 @@ a filename. In that case the file is stored in
 
 .. code:: python
 
-    L=Layout()
-    L.display['fileoverlay']='http://images.wikia.com/theoffice/images/9/9e/Layout.jpg'
+    >>> L=Layout()
+    >>> L.display['fileoverlay']='http://images.wikia.com/theoffice/images/9/9e/Layout.jpg'
 
 .. code:: python
 
-    L.display['overlay']=True
-    L.display['alpha']=1
-    L.display['scaled']=False
-    L.display['ticksoff']=False
-    L.display['inverse']=True
+    >>> L.display['overlay']=True
+    >>> L.display['alpha']=1
+    >>> L.display['scaled']=False
+    >>> L.display['ticksoff']=False
+    >>> L.display['inverse']=True
 
 .. code:: python
 
-    plt.figure(figsize=(10,10))
-    L.showGs()
+    >>> plt.figure(figsize=(10,10))
+    >>> L.showGs()
 
 
 
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2abeff449690>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2abeff549990>)
+    (<matplotlib.figure.Figure at 0x2abb60121a50>,
+     <matplotlib.axes._subplots.AxesSubplot at 0x2abb6077b790>)
 
 
 
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2abeff54e4d0>
+    <matplotlib.figure.Figure at 0x2abb60121910>
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_77_2.png
+.. image:: LayoutEditor_files/LayoutEditor_34_2.png
 
 
 Scaling the figure overlay
@@ -598,38 +662,49 @@ In that sequence of operation it is useful to rescale the figure with
 
 At that stage, it is possible to start creating points
 
+.. code:: python
+
+    'b'  : selct a segment
+    'l'  : select activelayer
+    'i'  : back to init state
+    'e'  : edit segment
+    't'  : translate  structure
+    'h'  : add subsegment
+    'd'  : delete subsegment
+    'r'  : refresh
+    'o'  : toggle overlay
+    'm'  : toggle mode (point or segment)
+    'z'  : change display parameters
+    'q'  : quit interactive mode
+    'x'  : save .str2 file
+    'w'  : display all layers
+
+
 ::
 
+
+      File "<ipython-input-21-f38a305b0b72>", line 1
         'b'  : selct a segment
-        'l'  : select activelayer
-        'i'  : back to init state
-        'e'  : edit segment
-        't'  : translate  structure
-        'h'  : add subsegment
-        'd'  : delete subsegment
-        'r'  : refresh
-        'o'  : toggle overlay
-        'm'  : toggle mode (point or segment)
-        'z'  : change display parameters
-        'q'  : quit interactive mode
-        'x'  : save .str2 file
-        'w'  : display all layers
+             ^
+    SyntaxError: invalid syntax
+
+
 
 Vizualisation of the layout
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
-    L = Layout('TA-Office.ini')
-    L.dumpr()
-    fig = plt.figure(figsize=(25,25))
-    ax = fig.gca()
-    fig,ax = L.showG(fig=fig,ax=ax,graph='s',labels=True,font_size=9,node_size=220,node_color='c')
-    a = plt.axis('off')
+    >>> L = Layout('TA-Office.ini')
+    >>> L.dumpr()
+    >>> fig = plt.figure(figsize=(25,25))
+    >>> ax = fig.gca()
+    >>> fig,ax = L.showG(fig=fig,ax=ax,graph='s',labels=True,font_size=9,node_size=220,node_color='c')
+    >>> a = plt.axis('off')
 
 
 
-.. image:: LayoutEditor_files/LayoutEditor_87_0.png
+.. image:: LayoutEditor_files/LayoutEditor_38_0.png
 
 
 Each node of :math:`\mathcal{G}_s` with a negative index is a point.
@@ -639,4 +714,4 @@ a segment (wall,door,window,...).
 
 The segment name is the key of the **slab** dictionnary.
 
-`Multi Subsegments <./Multisubsegments.ipynb>`__
+`Multi Subsegments <./Multisubsegments.html>`__

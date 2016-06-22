@@ -5,7 +5,7 @@
 
 ## Example of TDOA
 
-First, it is necesary to define Anchor nodes and associated Reference Anchor Nodes. This is important to be very specific about what exactly the TDOA is. In the example the Blin node is draw randomly as well as anchor nodes.
+First, it is necessary to define Anchor nodes and associated Reference Anchor Nodes. This is important to be very specific about what exactly the TDOA is. In the example the Blin node is draw randomly as well as anchor nodes.
 
 ```python
 >>> nodes = {}
@@ -20,20 +20,14 @@ First, it is necesary to define Anchor nodes and associated Reference Anchor Nod
 
 ```python
 >>> AN_TDOA
-array([[ 0.79438925,  0.89384558,  0.29912065,  0.32742084,  0.37672174],
-       [ 0.0331368 ,  0.63918785,  0.78616551,  0.39510656,  0.42003313]])
 ```
 
 ```python
 >>> AN_TDOAr1
-array([[ 0.],
-       [ 0.]])
 ```
 
 ```python
 >>> AN_TDOAr2
-array([[ 0.37672174],
-       [ 0.42003313]])
 ```
 
 The figure below illustrates the situation, in red the anchor nodes, the blue star is the blind node.
@@ -43,7 +37,6 @@ The figure below illustrates the situation, in red the anchor nodes, the blue st
 >>> plot(AN_TDOAr2[0,:],AN_TDOAr2[1,:],'ok')
 >>> plot(BN[0,:],BN[1,:],'*b')
 >>> axis([-1,2,-1,2])
-[-1, 2, -1, 2]
 ```
 
 ```python
@@ -60,10 +53,6 @@ The figure below illustrates the situation, in red the anchor nodes, the blue st
 >>> print cumsum(tdoa0)
 >>> print tdoa1
 >>> print tdoa2
-[  1.45972021e+00   1.86227671e+00   9.41784562e-01  -1.82102405e-01
-  -2.77555756e-17]
-[ 0.96997561  1.37253211  0.45203997 -0.671847   -0.48974459]
-[ 1.45972021  1.86227671  0.94178456 -0.1821024   0.        ]
 ```
 
 ```python
@@ -82,12 +71,6 @@ The figure below illustrates the situation, in red the anchor nodes, the blue st
 
 ```python
 >>> S.info()
-Nodes :  {'RN_TDOA': array([[ 0.79438925,  0.89384558,  0.29912065,  0.32742084,  0.37672174],
-       [ 0.0331368 ,  0.63918785,  0.78616551,  0.39510656,  0.42003313]]), 'BN': array([[ 0.2],
-       [ 0.3]]), 'RNr_TDOA': array([[ 0.37672174],
-       [ 0.42003313]])}
-Location dependent parameters :  {'TDOA': array([  1.45972021e+00,   1.86227671e+00,   9.41784562e-01,
-        -1.82102405e-01,  -2.77555756e-17]), 'TDOA_std': array([ 1.,  1.,  1.,  1.,  1.])}
 ```
 
 ```python
@@ -96,16 +79,8 @@ Location dependent parameters :  {'TDOA': array([  1.45972021e+00,   1.86227671e
 
 ```python
 >>> S.ls_locate(tdoa=True,toa=False,rss=False)
-array([[ 0.2002061 ],
-       [ 0.30006662]])
 ```
 
 ```python
 >>> nodes['BN']
-array([[ 0.2],
-       [ 0.3]])
-```
-
-```python
-
 ```

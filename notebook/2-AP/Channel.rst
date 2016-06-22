@@ -4,20 +4,20 @@ The transmission channel
 
 .. code:: python
 
-    %matplotlib inline
+    >>> %matplotlib inline
 
 .. code:: python
 
-    from pylayers.antprop.rays import *
-    import scipy.fftpack as fft
-    from pylayers.gis.layout import *
-    from pylayers.antprop.signature import *
-    from pylayers.simul.link import *
-    import pylayers.signal.bsignal as bs
-    import pylayers.signal.waveform as wvf
-    from pylayers.simul.simulem import *
-    import matplotlib.pyplot as plt
-    import time
+    >>> from pylayers.antprop.rays import *
+    >>> import scipy.fftpack as fft
+    >>> from pylayers.gis.layout import *
+    >>> from pylayers.antprop.signature import *
+    >>> from pylayers.simul.link import *
+    >>> import pylayers.signal.bsignal as bs
+    >>> import pylayers.signal.waveform as wvf
+    >>> from pylayers.simul.simulem import *
+    >>> import matplotlib.pyplot as plt
+    >>> import time
 
 
 .. parsed-literal::
@@ -27,157 +27,25 @@ The transmission channel
 
 We start by constructing a propagation channel with the dedicated class
 ``DLink``. We specify a Layout as well as the two extremities of the
-link. Antennas are also specified.
+link. Antennas are also specified. The frequency range is determined by
+the frequency range of antennas.
 
 .. code:: python
 
-    L = Layout('defstr3.ini')
-    L.Gs.node[1]['ss_name']=['WOOD','AIR','METAL']
-    L.build()
-    tx=array([759,1114,1.0])
-    rx=array([761,1114,1.5])
-    Lk = DLink(a=tx,b=rx,Aa=Antenna('Omni'),Ab=Antenna('Omni'))
+    >>> L = Layout('defstr3.ini')
+    >>> L.Gs.node[1]['ss_name']=['WOOD','AIR','METAL']
+    >>> L.build()
+    >>> tx=array([759,1114,1.0])
+    >>> rx=array([761,1114,1.5])
+    >>> fGHz = np.linspace(2,6,401)
+    >>> Aa = Antenna('Omni',fGHz=fGHz)
+    >>> Ab = Antenna('Omni',fGHz=fGHz)
+    >>> Lk = DLink(a=tx,b=rx,Aa=Aa,Ab=Ab)
 
 
 .. parsed-literal::
 
-    check len(ncycles) == 2 passed
-
-
-The full evaluation and hdf5 storage of the channel is done with the
-eval function. The ``force`` option is for recalculating everything
-whatever what has been previously calculated.
-
-.. code:: python
-
-    ak,tauk=Lk.eval()
-
-
-.. parsed-literal::
-
-    checkh5
-    Start Signatures
-    run
-    algo 2 ( ex 7)
-    Signatures'> from 2_2_3 saved
-    Stop signature 0.098562002182
-    Start Rays
-    Rays'> from 3_2_3 saved
-    Stop rays 0.330257892609
-    Ctilde'> from 2_3_1 saved
-    Tchannel'> from 2_3_1_0_0_0_0 saved
-
-
-.. code:: python
-
-    f = plt.figure(figsize=(15,15))
-    f,a=Lk.C.show(cmap='jet',typ='l20',fig=f,vmin=-100,vmax=-20,fontsize=22)
-
-
-
-.. image:: Channel_files/Channel_7_0.png
-
-
-The transmission channel is stored in ``H``
-
-.. code:: python
-
-    Lk.H
-
-
-
-
-.. parsed-literal::
-
-    Tchannel : Ray transfer function (Nray x Nr x Nt x Nf)
-    -----------------------------------------------------
-    freq : 2.4 2.4 1
-    shape  : (1216, 1, 1, 1)
-    tau (min, max) : 6.87184270936 92.947720014
-    dist (min,max) : 2.06155281281 27.8843160042
-    Friis factor -j c/(4 pi f) has been applied
-     calibrated : No
-     windowed : No
-
-
-
-Once the channel has been calculated, we define an IR-UWB waveform.
-
-.. code:: python
-
-    fGHz=np.arange(2,12,.1)
-    wav = wvf.Waveform(fcGHz=5,bandGHz=3)
-
-.. code:: python
-
-    wav.show()
-
-
-
-.. image:: Channel_files/Channel_12_0.png
-
-
-Cwood is an object which contains all the information about the
-propagation channel.
-
-.. code:: python
-
-    Lk.show()
-
-
-
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2ae159523250>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2ae155c45550>)
-
-
-
-
-.. image:: Channel_files/Channel_14_1.png
-
-
-The ``Ctilde`` channel can be sorted with respect to delay
-
-.. code:: python
-
-    Lk.H
-
-
-
-
-.. parsed-literal::
-
-    Tchannel : Ray transfer function (Nray x Nr x Nt x Nf)
-    -----------------------------------------------------
-    freq : 2.4 2.4 1
-    shape  : (1216, 1, 1, 1)
-    tau (min, max) : 6.87184270936 92.947720014
-    dist (min,max) : 2.06155281281 27.8843160042
-    Friis factor -j c/(4 pi f) has been applied
-     calibrated : No
-     windowed : No
-
-
-
-.. code:: python
-
-    len(Lk.fGHz)
-
-
-
-
-.. parsed-literal::
-
-    2
-
-
-
-.. code:: python
-
-    f = plt.figure(figsize=(20,10))
-    f,a =Lk.H.show(fig=f,cmap='jet')
+    new file defstr3.ini
 
 
 ::
@@ -185,42 +53,234 @@ The ``Ctilde`` channel can be sorted with respect to delay
 
     ---------------------------------------------------------------------------
 
-    IndexError                                Traceback (most recent call last)
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-3-5fb46505a749> in <module>()
+          1 L = Layout('defstr3.ini')
+          2 L.Gs.node[1]['ss_name']=['WOOD','AIR','METAL']
+    ----> 3 L.build()
+          4 tx=array([759,1114,1.0])
+          5 rx=array([761,1114,1.5])
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4691             if verbose:
+       4692                 print "Gt"
+    -> 4693             self.buildGt()
+       4694             self.lbltg.extend('t')
+       4695 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGt(self, check)
+       5462 
+       5463 
+    -> 5464         self._find_diffractions()
+       5465         #
+       5466         #   VIII -  Construct the list of interactions associated to each cycle
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in _find_diffractions(self, tol)
+       8467 
+       8468         """
+    -> 8469         dangles = self.get_Gt_angles()
+       8470 
+       8471         #
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in get_Gt_angles(self)
+       1985         dangles = {}
+       1986         for cy in self.Gt.nodes():
+    -> 1987             uc,ac = self.get_singlGt_angles(cy,inside=True)
+       1988             dangles[cy]=np.array(([uc,ac]))
+       1989         return dangles
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in get_singlGt_angles(self, cy, unit, inside)
+       1927         # rupt=np.roll(upt,1)         # for debug
+       1928         # rupt2=np.roll(upt,-1)         # for debug
+    -> 1929         pt = self.pt[:,self.iupnt[-upt]]
+       1930         if geu.SignedArea(pt)<0:
+       1931             upt = upt[::-1]
+
+
+    AttributeError: 'Layout' object has no attribute 'pt'
+
+
+The full evaluation and hdf5 storage of the channel is done with the
+``eval`` function. The ``force`` option is for forcing a full
+reevaluation.
+
+.. code:: python
+
+    >>> ak,tauk=Lk.eval()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-4-93695eef2a3c> in <module>()
+    ----> 1 ak,tauk=Lk.eval()
+    
+
+    NameError: name 'Lk' is not defined
+
+
+.. code:: python
+
+    >>> f = plt.figure(figsize=(15,15))
+    >>> f,a=Lk.C.show(cmap='jet',typ='l20',fig=f,vmin=-100,vmax=-20,fontsize=22)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-5-b4eee5c9d035> in <module>()
+          1 f = plt.figure(figsize=(15,15))
+    ----> 2 f,a=Lk.C.show(cmap='jet',typ='l20',fig=f,vmin=-100,vmax=-20,fontsize=22)
+    
+
+    NameError: name 'Lk' is not defined
+
+
+
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x2b22b93ed2d0>
+
+
+The transmission channel is stored in ``H``
+
+.. code:: python
+
+    >>> Lk.H
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-6-345dfe201bf5> in <module>()
+    ----> 1 Lk.H
+    
+
+    NameError: name 'Lk' is not defined
+
+
+Once the channel has been calculated, we define an Impulse Radio
+Waveform.
+
+.. code:: python
+
+    >>> fGHz=np.arange(2,12,.1)
+    >>> wav = wvf.Waveform(fcGHz=5,bandGHz=3)
+
+.. code:: python
+
+    >>> wav.show()
+
+
+
+.. image:: Channel_files/Channel_12_0.png
+
+
+is an object which contains all the information about the propagation
+channel.
+
+.. code:: python
+
+    >>> f,a=Lk.show()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-9-5e7aed51dc8f> in <module>()
+    ----> 1 f,a=Lk.show()
+    
+
+    NameError: name 'Lk' is not defined
+
+
+The ``Ctilde`` channel can be sorted with respect to delay
+
+.. code:: python
+
+    >>> Lk.H
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-10-345dfe201bf5> in <module>()
+    ----> 1 Lk.H
+    
+
+    NameError: name 'Lk' is not defined
+
+
+.. code:: python
+
+    >>> len(Lk.fGHz)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-11-00ef4b2c8627> in <module>()
+    ----> 1 len(Lk.fGHz)
+    
+
+    NameError: name 'Lk' is not defined
+
+
+.. code:: python
+
+    >>> f = plt.figure(figsize=(20,10))
+    >>> f,a =Lk.H.show(fig=f,cmap='jet')
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-12-f5a32547e4dd> in <module>()
           1 f = plt.figure(figsize=(20,10))
     ----> 2 f,a =Lk.H.show(fig=f,cmap='jet')
     
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in show(self, **kwargs)
-       3220 
-       3221         ax1 = fig.add_subplot(121)
-    -> 3222         fig,ax1 = self.imshow(typ='l20',fig=fig,ax=ax1,**kwargs)
-       3223         ax2 = fig.add_subplot(122)
-       3224         if 'vmin' in kwargs:
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in imshow(self, **kwargs)
-        727 
-        728         if self.y.ndim>1:
-    --> 729             dt,ylabels = self.cformat(**kwargs)
-        730 
-        731             if 'vmin' not in kwargs:
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in cformat(self, **kwargs)
-        603             # whole range
-        604             vs = 0
-    --> 605             vf = shy[ax[1]]
-        606         else:
-        607             # subset of values
-
-
-    IndexError: tuple index out of range
+    NameError: name 'Lk' is not defined
 
 
 
-.. image:: Channel_files/Channel_18_1.png
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x2b22b93dcb10>
 
 
 The Friis factor
@@ -230,43 +290,13 @@ The Friis factor is :
 
 .. math:: \alpha=\frac{-jc}{4\pi f}
 
-This factor is fundamental and should be applied only once. The energy
-method has a parameter ``Friis`` which indicates if this factor has to
-be used for the calculation of the energy. By default the link is
-evaluated with the Friis factor. This can be checked at the end of the
-**repr** of ``H``.
+This factor is fundamental and has to be applied only once. By default
+the link is evaluated with the Friis factor :  ``isFriis=True``. This
+can be checked at the end of the **repr** of ``H``.
 
 .. code:: python
 
-    Lk.H
-
-
-
-
-.. parsed-literal::
-
-    Tchannel : Ray transfer function (Nray x Nr x Nt x Nf)
-    -----------------------------------------------------
-    freq : 2.4 2.4 1
-    shape  : (1216, 1, 1, 1)
-    tau (min, max) : 6.87184270936 92.947720014
-    dist (min,max) : 2.06155281281 27.8843160042
-    Friis factor -j c/(4 pi f) has been applied
-     calibrated : No
-     windowed : No
-
-
-
-If this factor has already been applied the energy function should be
-called with the option ``Friis`` set to False
-
-.. code:: python
-
-    Emean=Lk.H.energy(Friis=False,mode='mean')
-    Eint=Lk.H.energy(Friis=False,mode='integ')
-    Ecenter=Lk.H.energy(Friis=False,mode='center')
-    Efirst=Lk.H.energy(Friis=False,mode='first')
-    Elast=Lk.H.energy(Friis=False,mode='last')
+    >>> Lk.H
 
 
 ::
@@ -274,38 +304,45 @@ called with the option ``Friis`` set to False
 
     ---------------------------------------------------------------------------
 
-    IndexError                                Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-14-2c8aff483b42> in <module>()
-          1 Emean=Lk.H.energy(Friis=False,mode='mean')
-    ----> 2 Eint=Lk.H.energy(Friis=False,mode='integ')
-          3 Ecenter=Lk.H.energy(Friis=False,mode='center')
-          4 Efirst=Lk.H.energy(Friis=False,mode='first')
-          5 Elast=Lk.H.energy(Friis=False,mode='last')
+    <ipython-input-13-345dfe201bf5> in <module>()
+    ----> 1 Lk.H
+    
 
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/channel.pyc in energy(self, mode, Friis, sumray)
-       2129         #  axis 1 : frequency
-       2130         #
-    -> 2131         Etot = bs.FUsignal.energy(self,axis=1,mode=mode,Friis=Friis)
-       2132         if sumray:
-       2133             Etot = np.sum(Etot,axis=0)
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in energy(self, axis, Friis, mode)
-       2829 
-       2830         if mode=='integ':
-    -> 2831             EMH2  = MH2.sum(axis=-1)*(self.x[1]-self.x[0])
-       2832 
-       2833         if mode=='center':
-
-
-    IndexError: index 1 is out of bounds for axis 0 with size 1
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
-    print Efirst[0],Elast[0]
+    >>> Emean=Lk.H.energy(mode='mean')
+    >>> Eint=Lk.H.energy(mode='integ')
+    >>> Ecenter=Lk.H.energy(mode='center')
+    >>> Efirst=Lk.H.energy(mode='first')
+    >>> Elast=Lk.H.energy(mode='last')
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-14-86decd824c1e> in <module>()
+    ----> 1 Emean=Lk.H.energy(mode='mean')
+          2 Eint=Lk.H.energy(mode='integ')
+          3 Ecenter=Lk.H.energy(mode='center')
+          4 Efirst=Lk.H.energy(mode='first')
+          5 Elast=Lk.H.energy(mode='last')
+
+
+    NameError: name 'Lk' is not defined
+
+
+.. code:: python
+
+    >>> print Efirst[0],Elast[0]
 
 
 ::
@@ -331,39 +368,7 @@ level.
 
 .. code:: python
 
-    Lk.H.y.shape
-
-
-
-
-.. parsed-literal::
-
-    (1216, 1, 1, 1)
-
-
-
-.. code:: python
-
-    f1 = 2
-    f2 = 10
-    f3 = 6
-    fig = plt.figure(figsize=(10,5))
-    a = plt.semilogx(Lk.H.taud,10*np.log10(Efirst),'.r',label='f=2GHz')
-    a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
-    a = plt.semilogx(Lk.H.taud,10*np.log10(Elast),'.g',label='f=10GHz')
-    a = plt.semilogx(Lk.H.taud,10*np.log10(Eint),'.k',label='integral')
-    a = plt.semilogx(Lk.H.taud,10*np.log10(Ecenter),'.c',label='6GHz')
-    plt.xlabel(r'$\tau$ (ns)')
-    plt.ylabel('Path Loss (dB)')
-    LOS1 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f1)
-    LOS2 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f2)
-    LOS3 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f3)
-    plt.semilogx(Lk.H.taud,LOS1,'r')
-    plt.semilogx(Lk.H.taud,LOS2,'g')
-    plt.semilogx(Lk.H.taud,LOS3,'c')
-    plt.semilogx(tauk,20*np.log10(ak),'+')
-    plt.ylim([-120,0])
-    plt.legend()
+    >>> Lk.H.y.shape
 
 
 ::
@@ -373,29 +378,35 @@ level.
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-17-75aafd70e74e> in <module>()
-          3 f3 = 6
-          4 fig = plt.figure(figsize=(10,5))
-    ----> 5 a = plt.semilogx(Lk.H.taud,10*np.log10(Efirst),'.r',label='f=2GHz')
-          6 a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
-          7 a = plt.semilogx(Lk.H.taud,10*np.log10(Elast),'.g',label='f=10GHz')
+    <ipython-input-16-3fd9ccc926f4> in <module>()
+    ----> 1 Lk.H.y.shape
+    
 
-
-    NameError: name 'Efirst' is not defined
-
-
-
-.. parsed-literal::
-
-    <matplotlib.figure.Figure at 0x2ae15626f150>
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
-    a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
-    plt.semilogx(tauk,20*np.log10(ak),'+')
-    plt.ylim([-120,0])
-    plt.legend()
+    >>> f1 = 2
+    >>> f2 = 10
+    >>> f3 = 6
+    >>> fig = plt.figure(figsize=(10,5))
+    >>> a = plt.semilogx(Lk.H.taud,10*np.log10(Efirst[:,0,0]),'.r',label='f=2GHz')
+    >>> a = plt.semilogx(Lk.H.taud,10*np.log10(Emean[:,0,0]),'.b',label='mean')
+    >>> a = plt.semilogx(Lk.H.taud,10*np.log10(Elast[:,0,0]),'.g',label='f=10GHz')
+    >>> a = plt.semilogx(Lk.H.taud,10*np.log10(Eint[:,0,0]),'.k',label='integral')
+    >>> a = plt.semilogx(Lk.H.taud,10*np.log10(Ecenter[:,0,0]),'.c',label='6GHz')
+    >>> plt.xlabel(r'$\tau$ (ns)')
+    >>> plt.ylabel('Path Loss (dB)')
+    >>> LOS1 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f1)
+    >>> LOS2 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f2)
+    >>> LOS3 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f3)
+    >>> plt.semilogx(Lk.H.taud,LOS1,'r')
+    >>> plt.semilogx(Lk.H.taud,LOS2,'g')
+    >>> plt.semilogx(Lk.H.taud,LOS3,'c')
+    >>> plt.semilogx(tauk,20*np.log10(ak),'+')
+    >>> plt.ylim([-120,0])
+    >>> plt.legend()
 
 
 ::
@@ -403,7 +414,39 @@ level.
 
     ---------------------------------------------------------------------------
 
-    ValueError                                Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-17-22c3e61e964c> in <module>()
+          3 f3 = 6
+          4 fig = plt.figure(figsize=(10,5))
+    ----> 5 a = plt.semilogx(Lk.H.taud,10*np.log10(Efirst[:,0,0]),'.r',label='f=2GHz')
+          6 a = plt.semilogx(Lk.H.taud,10*np.log10(Emean[:,0,0]),'.b',label='mean')
+          7 a = plt.semilogx(Lk.H.taud,10*np.log10(Elast[:,0,0]),'.g',label='f=10GHz')
+
+
+    NameError: name 'Lk' is not defined
+
+
+
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x2b22bbbba4d0>
+
+
+.. code:: python
+
+    >>> a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
+    >>> plt.semilogx(tauk,20*np.log10(ak),'+')
+    >>> plt.ylim([-120,0])
+    >>> plt.legend()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-18-79fa43f184e0> in <module>()
     ----> 1 a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
@@ -412,75 +455,15 @@ level.
           4 plt.legend()
 
 
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/pyplot.pyc in semilogx(*args, **kwargs)
-       3266         ax.hold(hold)
-       3267     try:
-    -> 3268         ret = ax.semilogx(*args, **kwargs)
-       3269     finally:
-       3270         ax.hold(washold)
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/axes/_axes.pyc in semilogx(self, *args, **kwargs)
-       1614         b = self._hold
-       1615         self._hold = True  # we've already processed the hold
-    -> 1616         l = self.plot(*args, **kwargs)
-       1617         self._hold = b  # restore the hold
-       1618         return l
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/__init__.pyc in inner(ax, *args, **kwargs)
-       1810                     warnings.warn(msg % (label_namer, func.__name__),
-       1811                                   RuntimeWarning, stacklevel=2)
-    -> 1812             return func(ax, *args, **kwargs)
-       1813         pre_doc = inner.__doc__
-       1814         if pre_doc is None:
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/axes/_axes.pyc in plot(self, *args, **kwargs)
-       1422             kwargs['color'] = c
-       1423 
-    -> 1424         for line in self._get_lines(*args, **kwargs):
-       1425             self.add_line(line)
-       1426             lines.append(line)
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/axes/_base.pyc in _grab_next_args(self, *args, **kwargs)
-        384                 return
-        385             if len(remaining) <= 3:
-    --> 386                 for seg in self._plot_args(remaining, kwargs):
-        387                     yield seg
-        388                 return
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/axes/_base.pyc in _plot_args(self, tup, kwargs)
-        362             x, y = index_of(tup[-1])
-        363 
-    --> 364         x, y = self._xy_from_xy(x, y)
-        365 
-        366         if self.command == 'plot':
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/axes/_base.pyc in _xy_from_xy(self, x, y)
-        223             raise ValueError("x and y must have same first dimension")
-        224         if x.ndim > 2 or y.ndim > 2:
-    --> 225             raise ValueError("x and y can be no greater than 2-D")
-        226 
-        227         if x.ndim == 1:
-
-
-    ValueError: x and y can be no greater than 2-D
-
-
-
-.. image:: Channel_files/Channel_29_1.png
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
-    CIR=bs.TUsignal(tauk,np.zeros(len(tauk)))
-    CIR.aggcir(ak,tauk)
-    CIR.stem()
-    plt.title('Infinite bandwidth CIR')
+    >>> CIR=bs.TUsignal(tauk,np.zeros(len(tauk)))
+    >>> CIR.aggcir(ak,tauk)
+    >>> CIR.stem()
+    >>> plt.title('Infinite bandwidth CIR')
 
 
 ::
@@ -488,23 +471,40 @@ level.
 
     ---------------------------------------------------------------------------
 
-    AttributeError                            Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-19-e688100b13ed> in <module>()
-          1 CIR=bs.TUsignal(tauk,np.zeros(len(tauk)))
-    ----> 2 CIR.aggcir(ak,tauk)
+    ----> 1 CIR=bs.TUsignal(tauk,np.zeros(len(tauk)))
+          2 CIR.aggcir(ak,tauk)
           3 CIR.stem()
           4 plt.title('Infinite bandwidth CIR')
 
 
-    AttributeError: 'TUsignal' object has no attribute 'aggcir'
+    NameError: name 'tauk' is not defined
 
 
 .. code:: python
 
-    MeanDelay = CIR.tau_moy()
-    DelaySpread = CIR.tau_rms()
-    print MeanDelay,DelaySpread
+    >>> MeanDelay = CIR.tau_moy()
+    >>> DelaySpread = CIR.tau_rms()
+    >>> print MeanDelay,DelaySpread
+    37.3831958728 18.5606177248
+
+
+::
+
+
+      File "<ipython-input-20-239d3c420603>", line 4
+        37.3831958728 18.5606177248
+                                  ^
+    SyntaxError: invalid syntax
+
+
+
+.. code:: python
+
+    >>> f = plt.figure(figsize=(20,10))
+    >>> f=Lk.H.show(cmap='jet',fig=f)
 
 
 ::
@@ -512,64 +512,20 @@ level.
 
     ---------------------------------------------------------------------------
 
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-20-6f04a248436b> in <module>()
-    ----> 1 MeanDelay = CIR.tau_moy()
-          2 DelaySpread = CIR.tau_rms()
-          3 print MeanDelay,DelaySpread
-
-
-    AttributeError: 'TUsignal' object has no attribute 'tau_moy'
-
-
-.. code:: python
-
-    f = plt.figure(figsize=(20,10))
-    f=Lk.H.show(cmap='jet',fig=f)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    IndexError                                Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-21-61834b1cbc3e> in <module>()
           1 f = plt.figure(figsize=(20,10))
     ----> 2 f=Lk.H.show(cmap='jet',fig=f)
     
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in show(self, **kwargs)
-       3220 
-       3221         ax1 = fig.add_subplot(121)
-    -> 3222         fig,ax1 = self.imshow(typ='l20',fig=fig,ax=ax1,**kwargs)
-       3223         ax2 = fig.add_subplot(122)
-       3224         if 'vmin' in kwargs:
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in imshow(self, **kwargs)
-        727 
-        728         if self.y.ndim>1:
-    --> 729             dt,ylabels = self.cformat(**kwargs)
-        730 
-        731             if 'vmin' not in kwargs:
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in cformat(self, **kwargs)
-        603             # whole range
-        604             vs = 0
-    --> 605             vf = shy[ax[1]]
-        606         else:
-        607             # subset of values
-
-
-    IndexError: tuple index out of range
+    NameError: name 'Lk' is not defined
 
 
 
-.. image:: Channel_files/Channel_32_1.png
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x2b22bbaca490>
 
 
 The cut method applies an energy thresholding on the transmission
@@ -577,12 +533,7 @@ channel.
 
 .. code:: python
 
-    Lk.H.cut()
-
-.. code:: python
-
-    f = plt.figure(figsize=(20,10))
-    f=Lk.H.show(cmap='jet',fig=f)
+    >>> Lk.H.cut()
 
 
 ::
@@ -590,42 +541,40 @@ channel.
 
     ---------------------------------------------------------------------------
 
-    IndexError                                Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-22-c50272a814d0> in <module>()
+    ----> 1 Lk.H.cut()
+    
+
+    NameError: name 'Lk' is not defined
+
+
+.. code:: python
+
+    >>> f = plt.figure(figsize=(20,10))
+    >>> f=Lk.H.show(cmap='jet',fig=f)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-23-61834b1cbc3e> in <module>()
           1 f = plt.figure(figsize=(20,10))
     ----> 2 f=Lk.H.show(cmap='jet',fig=f)
     
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in show(self, **kwargs)
-       3220 
-       3221         ax1 = fig.add_subplot(121)
-    -> 3222         fig,ax1 = self.imshow(typ='l20',fig=fig,ax=ax1,**kwargs)
-       3223         ax2 = fig.add_subplot(122)
-       3224         if 'vmin' in kwargs:
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in imshow(self, **kwargs)
-        727 
-        728         if self.y.ndim>1:
-    --> 729             dt,ylabels = self.cformat(**kwargs)
-        730 
-        731             if 'vmin' not in kwargs:
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/bsignal.pyc in cformat(self, **kwargs)
-        603             # whole range
-        604             vs = 0
-    --> 605             vf = shy[ax[1]]
-        606         else:
-        607             # subset of values
-
-
-    IndexError: tuple index out of range
+    NameError: name 'Lk' is not defined
 
 
 
-.. image:: Channel_files/Channel_35_1.png
+.. parsed-literal::
+
+    <matplotlib.figure.Figure at 0x2b22bbaca9d0>
 
 
 The tap method
@@ -648,17 +597,17 @@ htap has 4 axes.
 
 .. code:: python
 
-    Va = 10
-    Vb = 10
-    fcGHz = 4.5
-    Nm = 50
-    Ns = 10
-    WMHz = 20
-    Ntap = 10
+    >>> Va = 10
+    >>> Vb = 10
+    >>> fcGHz = 4.5
+    >>> Nm = 50
+    >>> Ns = 10
+    >>> WMHz = 20
+    >>> Ntap = 10
 
 .. code:: python
 
-    htap,b,c,d = Lk.H.tap(WMHz=WMHz,Ns=Ns,Nm=Nm,Va=Va,Vb=Vb,Ntap=Ntap)
+    >>> htap,b,c,d = Lk.H.tap(WMHz=WMHz,Ns=Ns,Nm=Nm,Va=Va,Vb=Vb,Ntap=Ntap)
 
 
 ::
@@ -666,26 +615,18 @@ htap has 4 axes.
 
     ---------------------------------------------------------------------------
 
-    ValueError                                Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-25-1e46705dbeb0> in <module>()
     ----> 1 htap,b,c,d = Lk.H.tap(WMHz=WMHz,Ns=Ns,Nm=Nm,Va=Va,Vb=Vb,Ntap=Ntap)
     
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/channel.pyc in tap(self, **kwargs)
-       2464 
-       2465         # f x s  x m x tap
-    -> 2466         htap  = htap.reshape(Nf,Ns,Nm,Ntap)
-       2467         Et_htap = np.sqrt(np.sum(htap*np.conj(htap),axis=2))/Nm
-       2468         Er_htap = np.sum(htap,axis=1)/Ns
-
-
-    ValueError: total size of new array must be unchanged
+    NameError: name 'Lk' is not defined
 
 
 .. code:: python
 
-    np.shape(htap)
+    >>> np.shape(htap)
 
 
 ::
@@ -710,7 +651,8 @@ The second parameter is the time integration of htap
 
 .. code:: python
 
-    b.shape
+    >>> b.shape
+    (161, 10, 10)
 
 
 ::
@@ -720,16 +662,18 @@ The second parameter is the time integration of htap
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-27-82ed078d10e8> in <module>()
+    <ipython-input-27-9be9b775c895> in <module>()
     ----> 1 b.shape
-    
+          2 (161, 10, 10)
+
 
     NameError: name 'b' is not defined
 
 
 .. code:: python
 
-    np.shape(c)
+    >>> np.shape(c)
+    (161, 50, 10)
 
 
 ::
@@ -739,16 +683,18 @@ The second parameter is the time integration of htap
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-28-cc55a9cc958f> in <module>()
+    <ipython-input-28-0e61c3a383ad> in <module>()
     ----> 1 np.shape(c)
-    
+          2 (161, 50, 10)
+
 
     NameError: name 'c' is not defined
 
 
 .. code:: python
 
-    d.shape
+    >>> d.shape
+    (99,)
 
 
 ::
@@ -758,9 +704,10 @@ The second parameter is the time integration of htap
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-29-68023ae9b3bd> in <module>()
+    <ipython-input-29-50f043f5a600> in <module>()
     ----> 1 d.shape
-    
+          2 (99,)
+
 
     NameError: name 'd' is not defined
 
@@ -770,11 +717,11 @@ for the first channel tap. :exit
 
 .. code:: python
 
-    img = plt.imshow(abs(b[:,:,0]),interpolation='nearest',extent=(0,1000,fGHz[-1],fGHz[0]))
-    plt.axis('tight')
-    plt.colorbar()
-    plt.xlabel('spatial realizations')
-    plt.ylabel('Frequency GHz')
+    >>> img = plt.imshow(abs(b[:,:,0]),interpolation='nearest',extent=(0,1000,fGHz[-1],fGHz[0]))
+    >>> plt.axis('tight')
+    >>> plt.colorbar()
+    >>> plt.xlabel('spatial realizations')
+    >>> plt.ylabel('Frequency GHz')
 
 
 ::
@@ -797,8 +744,8 @@ for the first channel tap. :exit
 
 .. code:: python
 
-    f = plt.figure(figsize=(10,4))
-    h = plt.hist(np.real(b[0,:,0])*1e5,40,normed=True)
+    >>> f = plt.figure(figsize=(10,4))
+    >>> h = plt.hist(np.real(b[0,:,0])*1e5,40,normed=True)
 
 
 ::
@@ -819,18 +766,18 @@ for the first channel tap. :exit
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2ae158e6a550>
+    <matplotlib.figure.Figure at 0x2b22bbbba150>
 
 
 .. code:: python
 
-    mmax = 0.3*WMHz*1e6/(2*fcGHz*(Va+Vb))
-    tmaxms = 1000*mmax/(WMHz*1e6)
-    plt.imshow(abs(c[:,:,1]),interpolation='nearest',extent=(0,tmaxms,fGHz[-1],fGHz[0]))
-    plt.axis('tight')
-    plt.colorbar()
-    plt.xlabel('Discrete Time (ms)')
-    plt.ylabel('frequency (GHz)')
+    >>> mmax = 0.3*WMHz*1e6/(2*fcGHz*(Va+Vb))
+    >>> tmaxms = 1000*mmax/(WMHz*1e6)
+    >>> plt.imshow(abs(c[:,:,1]),interpolation='nearest',extent=(0,tmaxms,fGHz[-1],fGHz[0]))
+    >>> plt.axis('tight')
+    >>> plt.colorbar()
+    >>> plt.xlabel('Discrete Time (ms)')
+    >>> plt.ylabel('frequency (GHz)')
 
 
 ::
@@ -853,7 +800,7 @@ for the first channel tap. :exit
 
 .. code:: python
 
-    plt.plot(abs(c[0,:,0]))
+    >>> plt.plot(abs(c[0,:,0]))
 
 
 ::
@@ -872,7 +819,7 @@ for the first channel tap. :exit
 
 .. code:: python
 
-    h = c[:,:,2]
+    >>> h = c[:,:,2]
 
 
 ::
@@ -891,11 +838,11 @@ for the first channel tap. :exit
 
 .. code:: python
 
-    import scipy.fftpack as fft
+    >>> import scipy.fftpack as fft
 
 .. code:: python
 
-    H = fft.fft(h,axis=1)
+    >>> H = fft.fft(h,axis=1)
 
 
 ::
@@ -914,8 +861,7 @@ for the first channel tap. :exit
 
 .. code:: python
 
-    plt.imshow(fft.fftshift(abs(H)))
-    plt.axis('tight')
+    >>> plt.imshow(fft.fftshift(abs(H)))
 
 
 ::
@@ -925,16 +871,15 @@ for the first channel tap. :exit
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-37-dfddc57fe5a3> in <module>()
+    <ipython-input-37-6325b7c4882e> in <module>()
     ----> 1 plt.imshow(fft.fftshift(abs(H)))
-          2 plt.axis('tight')
-
+    
 
     NameError: name 'H' is not defined
 
 
 .. code:: python
 
-    #from pylayers.util.mayautil import *
-    #m=VolumeSlicer(data=abs(htap[:,0,:,:]))
-    #m.configure_traits()
+    >>> #from pylayers.util.mayautil import *
+    ... #m=VolumeSlicer(data=abs(htap[:,0,:,:]))
+    ... #m.configure_traits()

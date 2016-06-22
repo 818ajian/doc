@@ -78,90 +78,23 @@ struc/str
 
 ```python
 >>> pstruc
-{'DIRANT': 'ant',
- 'DIRBODY': 'body',
- 'DIRC3D': 'body/c3d',
- 'DIRCIR': 'output',
- 'DIRCT': 'output/Ct',
- 'DIRFUR': 'struc/furnitures',
- 'DIRGEOM': 'geom',
- 'DIRGIS': 'gis',
- 'DIRH': 'output/H',
- 'DIRIMAGE': 'struc/images',
- 'DIRINI': 'struc/ini',
- 'DIRLCH': 'output',
- 'DIRLNK': 'output',
- 'DIRMAT': 'ini',
- 'DIRMAT2': 'ini',
- 'DIRMES': 'meas',
- 'DIRNETSAVE': 'netsave',
- 'DIROOSM': 'gis/osm',
- 'DIROSM': 'struc/osm',
- 'DIRPICKLE': 'struc/gpickle',
- 'DIRR2D': 'output/r2d',
- 'DIRR3D': 'output/r3d',
- 'DIRSIG': 'output/sig',
- 'DIRSIMUL': 'ini',
- 'DIRSLAB': 'ini',
- 'DIRSLAB2': 'ini',
- 'DIRSTRUC': 'struc/str',
- 'DIRSTRUC2': 'struc/str',
- 'DIRTRA': 'output',
- 'DIRTUD': 'output',
- 'DIRTx': 'output/Tx001',
- 'DIRWEAR': 'body/wear',
- 'DIRWRL': 'struc/wrl'}
 ```
 
 The structure of the `.osm` file is shown below
 
 ```python
 >>> %%bash
-... 
-...     cd $BASENAME/struc
-...     ls *.osm
-DLR.osm
-MADRID-METIS.osm
-MOCAP2.osm
-MOCAP3.osm
-MOCAP-small2.osm
-TA-Office.osm
+    cd $BASENAME/struc
+    ls *.osm
+
 ```
 
 ```python
 >>> %%bash
-...     cd $BASENAME/struc
-...     head DLR.osm
-...     echo '---'
-...     tail -17 DLR.osm
-<?xml version='1.0' encoding='UTF-8'?>
-<osm version='0.6' upload='false' generator='PyLayers'>
-<node id='-212' action='modify' visible='true' lat='47.0100855114' lon='-1.98980710934' />
-<node id='-210' action='modify' visible='true' lat='47.0100789151' lon='-1.9897910381' />
-<node id='-208' action='modify' visible='true' lat='47.0100738861' lon='-1.98977878545' />
-<node id='-206' action='modify' visible='true' lat='47.0100616861' lon='-1.98982814281' />
-<node id='-204' action='modify' visible='true' lat='47.0101583649' lon='-1.98982436917' />
-<node id='-202' action='modify' visible='true' lat='47.0101656174' lon='-1.98981796656' />
-<node id='-200' action='modify' visible='true' lat='47.0101843662' lon='-1.98977935424' />
-<node id='-198' action='modify' visible='true' lat='47.0101791636' lon='-1.98982426816' />
----
-<tag k='transition' v='False' />
-</way>
-<way id='-10000123' action='modify' visible='true'>
-<nd ref='-200' />
-<nd ref='-100' />
-<tag k='name' v='WALL' />
-<tag k='z' v="('0.0', '3.0')" />
-<tag k='transition' v='False' />
-</way>
-<way id='-10000124' action='modify' visible='true'>
-<nd ref='-166' />
-<nd ref='-188' />
-<tag k='name' v='WALL' />
-<tag k='z' v="('0.0', '3.0')" />
-<tag k='transition' v='False' />
-</way>
-</osm>
+     cd $BASENAME/struc
+     head DLR.osm
+     echo '---'
+     tail -17 DLR.osm
 ```
 
 To read a new layout in osm format :
@@ -176,23 +109,6 @@ To read a new layout in osm format :
 
 ```python
 >>> L.info()
-filestr :  DLR.ini
-filematini :  matDB.ini
-fileslabini :  slabDB.ini
-filegeom :  DLR.off
-boundaries  (-0.505, 32.586, -8.277, 8.878)
-number of Points : 105
-number of Segments : 124
-number of Sub-Segments : 30
-Gs Nodes :  229
-Gs Edges :  248
-Gt Nodes :  0
-Gt Edges :  0
-vnodes = Gt.node[Nc]['cycles'].cycle 
-poly = Gt.node[Nc]['cycle'].polyg 
-Gr Nodes    : 0
-Gr Edges    : 0
-Nc  = Gr.node[nroom]['cycles']
 ```
 
 The different graphs associated with the layout are then built
@@ -243,77 +159,12 @@ The graph of interactions $\mathcal{G}_i$ used to determine the ray signatures.
 
 ```python
 >>> L.info()
-filestr :  DLR.ini
-filematini :  matDB.ini
-fileslabini :  slabDB.ini
-filegeom :  DLR.off
-boundaries  (-0.505, 32.586, -8.277, 8.878)
-number of Points : 105
-number of Segments : 124
-number of Sub-Segments : 30
-Gs Nodes :  229
-Gs Edges :  248
-Gt Nodes :  21
-Gt Edges :  52
-vnodes = Gt.node[Nc]['cycles'].cycle 
-poly = Gt.node[Nc]['cycle'].polyg 
-Gr Nodes    : 18
-Gr Edges    : 18
-Nc  = Gr.node[nroom]['cycles']
 ```
 
-The layout can be displayed using matplotlib ploting primitive. Several display options are specified in the display dictionnary. Those options are exploited in `showGs()` vizualisation method.
+The layout can be displayed using matplotlib plotting primitive. Several display options are specified in the display dictionary. Those options are exploited in `showGs()` visualization method.
 
 ```python
 >>> L.display
-{'activelayer': 'WALL',
- 'alpha': 0.5,
- 'box': (-0.505, 32.586, -8.277, 8.878),
- 'clear': True,
- 'edges': True,
- 'edlabel': False,
- 'edlblsize': 20,
- 'ednodes': True,
- 'fileoverlay': 'DLR4991.png',
- 'fontsize': 10,
- 'inverse': False,
- 'layer': [],
- 'layers': ['WALL', 'PARTITION', 'AIR', 'WINDOW_GLASS', '3D_WINDOW_GLASS'],
- 'layerset': ['WINDOW_GLASS',
-  'PLASTERBOARD_7CM',
-  'WALL',
-  'AIR',
-  'WINDOW',
-  'METALIC',
-  'PLASTERBOARD_14CM',
-  'DOOR',
-  'FLOOR',
-  'METAL',
-  'PARTITION',
-  'CONCRETE_20CM3D',
-  'PLASTERBOARD_10CM',
-  'CEIL',
-  'CONCRETE_6CM3D',
-  'CONCRETE_15CM3D',
-  '3D_WINDOW_GLASS',
-  'WALLS',
-  'WOOD',
-  'CONCRETE_7CM3D',
-  'PILLAR',
-  'ABSORBENT'],
- 'ndlabel': False,
- 'ndlblsize': 20,
- 'ndsize': 10,
- 'nodes': True,
- 'overlay': False,
- 'scaled': True,
- 'subseg': True,
- 'subsegnb': True,
- 'thin': False,
- 'ticksoff': True,
- 'title': 'Init',
- 'transition': True,
- 'visu': False}
 ```
 
 #### Layers
@@ -322,8 +173,6 @@ The layout can be displayed using matplotlib ploting primitive. Several display 
  + 'layerset',list, list of available layers
  + 'layers', list , []
  + 'activelayer', str , 'WINDOW_GLASS'
-
-
  + 'alpha', float , 0.5 , overlay transparency
  + 'box', tuple , (-20,20,-10,10), (xmin xmax,ymin,ymax)
 
@@ -358,13 +207,12 @@ The layout can be displayed using matplotlib ploting primitive. Several display 
 
 The command L.editor() launches an interactive editor. The state machine is implemented in module `pylayers.gis.selectl.py`.
 
-To have an idea of all available options, look in the [`pylayers.gis.SelectL`](
-http://pylayers.github.io/pylayers/_modules/pylayers/gis/selectl.html#SelectL.new_state) module
+To have an idea of all available options, look in the 
 
-All bug correction and ergonomic improvement of this editor is welcome. Just pull request your modifications.
+[`pylayers.gis.SelectL`](http://pylayers.github.io/pylayers/_modules/pylayers/gis/selectl.html#SelectL.new_state) module
 
-PyLayers comes along with a low level structure editor based on `matplotlib` which can be invoqued using the `editor()` method.
-This editor is more suited for modyfing constitutive properties of walls. In the future a dedicated plugin in `JOSM`
+PyLayers comes along with a low level structure editor based on `matplotlib` which can be invoked using the `editor()` method.
+This editor is more suited for modifying constitutive properties of walls. In the future a dedicated plugin in `JOSM`
 could be a much better solution.
 
 
@@ -460,4 +308,4 @@ Each node of $\mathcal{G}_s$ with a positive index corresponds to a segment (wal
 
 The segment name is the key of the **slab** dictionnary.
 
-[Multi Subsegments](./Multisubsegments.ipynb)
+[Multi Subsegments](./Multisubsegments.html)

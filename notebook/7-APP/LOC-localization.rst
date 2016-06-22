@@ -1,26 +1,28 @@
 
 .. code:: python
 
-    from pylayers.location.algebraic.algebraic import *
-    from pylayers.util.geomutil import dist
+    >>> from pylayers.location.algebraic.algebraic import *
+    >>> from pylayers.util.geomutil import dist
+
 Example of TDOA
 ---------------
 
-First, it is necesary to define Anchor nodes and associated Reference
+First, it is necessary to define Anchor nodes and associated Reference
 Anchor Nodes. This is important to be very specific about what exactly
 the TDOA is. In the example the Blin node is draw randomly as well as
 anchor nodes.
 
 .. code:: python
 
-    nodes = {}
-    N = 5
-    AN_TDOA = np.random.rand(2,N)
-    #AN_TDOA1=np.array([[0, 0, 1, 1],[0,1,1,0]])
-    #AN_TDOAr1 = np.roll(AN_TDOA,1,axis=1)
-    AN_TDOAr1 = np.zeros((2,1))
-    AN_TDOAr2 = AN_TDOA[:,-1][:,newaxis]
-    BN = np.array([[0.2],[0.3]])
+    >>> nodes = {}
+    >>> N = 5
+    >>> AN_TDOA = np.random.rand(2,N)
+    >>> #AN_TDOA1=np.array([[0, 0, 1, 1],[0,1,1,0]])
+    ... #AN_TDOAr1 = np.roll(AN_TDOA,1,axis=1)
+    ... AN_TDOAr1 = np.zeros((2,1))
+    >>> AN_TDOAr2 = AN_TDOA[:,-1][:,newaxis]
+    >>> BN = np.array([[0.2],[0.3]])
+
 
 ::
 
@@ -41,20 +43,22 @@ anchor nodes.
 
 .. code:: python
 
-    AN_TDOA
+    >>> AN_TDOA
+
 
 
 
 .. parsed-literal::
 
-    array([[ 0.1172917 ,  0.85299383,  0.2289946 ,  0.17593613,  0.56199628],
-           [ 0.09755558,  0.25577299,  0.16259968,  0.09864148,  0.51069025]])
+    array([[ 0.55876239,  0.08363696,  0.4812062 ,  0.11405118,  0.09545324],
+           [ 0.89561928,  0.70859709,  0.03454619,  0.93278095,  0.09827916]])
 
 
 
 .. code:: python
 
-    AN_TDOAr1
+    >>> AN_TDOAr1
+
 
 
 
@@ -67,7 +71,8 @@ anchor nodes.
 
 .. code:: python
 
-    AN_TDOAr2
+    >>> AN_TDOAr2
+
 
 ::
 
@@ -88,10 +93,11 @@ blue star is the blind node.
 
 .. code:: python
 
-    plot(AN_TDOA[0,:],AN_TDOA[1,:],'or')
-    plot(AN_TDOAr2[0,:],AN_TDOAr2[1,:],'ok')
-    plot(BN[0,:],BN[1,:],'*b')
-    axis([-1,2,-1,2])
+    >>> plot(AN_TDOA[0,:],AN_TDOA[1,:],'or')
+    >>> plot(AN_TDOAr2[0,:],AN_TDOAr2[1,:],'ok')
+    >>> plot(BN[0,:],BN[1,:],'*b')
+    >>> axis([-1,2,-1,2])
+
 
 ::
 
@@ -112,9 +118,10 @@ blue star is the blind node.
 
 .. code:: python
 
-    d = dist(AN_TDOA,BN,0)
-    dr1= dist(AN_TDOAr1,BN,0)
-    dr2= dist(AN_TDOAr2,BN,0)
+    >>> d = dist(AN_TDOA,BN,0)
+    >>> dr1= dist(AN_TDOAr1,BN,0)
+    >>> dr2= dist(AN_TDOAr2,BN,0)
+
 
 ::
 
@@ -134,13 +141,14 @@ blue star is the blind node.
 
 .. code:: python
 
-    tdoa1 = (d-dr1)/0.3
-    tdoa2 = (d-dr2)/0.3
-    tdoa0 = (d-roll(d,1))/0.3
-    
-    print cumsum(tdoa0)
-    print tdoa1
-    print tdoa2
+    >>> tdoa1 = (d-dr1)/0.3
+    >>> tdoa2 = (d-dr2)/0.3
+    >>> tdoa0 = (d-roll(d,1))/0.3
+    >>> 
+    >>> print cumsum(tdoa0)
+    >>> print tdoa1
+    >>> print tdoa2
+
 
 ::
 
@@ -162,13 +170,14 @@ blue star is the blind node.
 
 .. code:: python
 
-    node={}
-    nodes['BN']=BN
-    nodes['RN_TDOA']=AN_TDOA
-    nodes['RNr_TDOA']=AN_TDOAr2
-    ldp = {}
-    ldp['TDOA']=cumsum(tdoa0)
-    ldp['TDOA_std']=np.ones(N)
+    >>> node={}
+    >>> nodes['BN']=BN
+    >>> nodes['RN_TDOA']=AN_TDOA
+    >>> nodes['RNr_TDOA']=AN_TDOAr2
+    >>> ldp = {}
+    >>> ldp['TDOA']=cumsum(tdoa0)
+    >>> ldp['TDOA_std']=np.ones(N)
+
 
 ::
 
@@ -190,7 +199,8 @@ blue star is the blind node.
 
 .. code:: python
 
-    S=algloc(nodes,ldp)
+    >>> S=algloc(nodes,ldp)
+
 
 ::
 
@@ -208,7 +218,8 @@ blue star is the blind node.
 
 .. code:: python
 
-    S.info()
+    >>> S.info()
+
 
 ::
 
@@ -226,7 +237,8 @@ blue star is the blind node.
 
 .. code:: python
 
-    S = algloc(nodes,ldp)
+    >>> S = algloc(nodes,ldp)
+
 
 ::
 
@@ -244,7 +256,8 @@ blue star is the blind node.
 
 .. code:: python
 
-    S.ls_locate(tdoa=True,toa=False,rss=False)
+    >>> S.ls_locate(tdoa=True,toa=False,rss=False)
+
 
 ::
 
@@ -262,7 +275,8 @@ blue star is the blind node.
 
 .. code:: python
 
-    nodes['BN']
+    >>> nodes['BN']
+
 
 ::
 
@@ -276,5 +290,4 @@ blue star is the blind node.
     
 
     KeyError: 'BN'
-
 

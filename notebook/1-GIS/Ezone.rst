@@ -1,12 +1,25 @@
 
 .. code:: python
 
-    import pylayers.gis.ezone as ez
-    from pylayers.gis.gisutil import ent,ext2qt
-    import numpy as np
-    import seaborn as sns
-    from matplotlib import cm
-    %matplotlib inline
+    >>> !date
+
+
+.. parsed-literal::
+
+    samedi 7 mai 2016, 15:07:17 (UTC+0200)
+
+
+.. code:: python
+
+    >>> import pylayers.gis.ezone as ez
+    >>> from pylayers.gis.gisutil import ent,ext2qt
+    >>> import matplotlib.pyplot as plt
+    >>> import numpy as np
+    >>> import seaborn as sns
+
+.. code:: python
+
+    >>> %matplotlib inline
 
 Geographical Information and the Earth Zone class : ``Ezone``
 =============================================================
@@ -14,10 +27,9 @@ Geographical Information and the Earth Zone class : ``Ezone``
 The ``Ezone`` class handles an earth zone which corresponds to the
 ``strm`` or ``aster`` DEM data. It has the same naming convention as
 ``srtm`` files and corresponds to a portion of earth corresponding to 1
-° latitude and 1° of longitude. An ``Ezone`` is an heterogeneous dataset
-stored in ``hdf5`` format.
-
-Let consider an example with the file ``N48W002.h5``.
+latitude and 1 of longitude. An ``Ezone`` is an heterogeneous dataset
+stored in ``hdf5`` format. Let see an example with the file
+``N48W002.h5``.
 
 By default files are placed in directory ``gis/h5`` of the current
 project tree.
@@ -26,7 +38,7 @@ The command h5ls allows to see the hierarchical structure of the file
 
 .. code:: python
 
-    !h5ls $BASENAME/gis/h5/N48W002.h5
+    >>> !h5ls $BASENAME/gis/h5/N48W002.h5
 
 
 .. parsed-literal::
@@ -36,15 +48,15 @@ The command h5ls allows to see the hierarchical structure of the file
     extent                   Dataset {4}
 
 
-Invoquing an earth zone requires to specify the tile prefix with the
-same naming convention as with SRTM files. For example let consider the
-earth zone from -2 to -1 in longitude west and from 48 to 49 in latitude
-North this corresponds to the ``N48W002`` tile, so the ezone ``z`` is
-invoqued as :
+Invoking an earth zone requires to specify the tile prefix with the same
+naming convention as with SRTM files. For example let consider the earth
+zone from -2 to -1 in west longitude and from 48 to 49 in North latitude
+this corresponds to the ``N48W002`` tile, so the ezone ``z`` is invoked
+as :
 
 .. code:: python
 
-    z = ez.Ezone('N48W002')
+    >>> z = ez.Ezone('N48W002')
 
 In this initial phase no data is loaded yet, to load all the data
 gathered for this ``Ezone`` in an existing HDF5 file let invoque the
@@ -52,11 +64,11 @@ gathered for this ``Ezone`` in an existing HDF5 file let invoque the
 
 .. code:: python
 
-    z.loadh5()
+    >>> z.loadh5()
 
 .. code:: python
 
-    z
+    >>> z
 
 
 
@@ -75,32 +87,19 @@ gathered for this ``Ezone`` in an existing HDF5 file let invoque the
 
 
 
-This object contains the srtm DEM data, the aster data and a filtration
-of the ``open street map`` database selecting only the ways with
-``building`` attribute. Let's have a look to the data with the ``show``
-method.
+This object contains the ``srtm`` DEM data, the aster data and a
+filtration of the ``open street map`` database selecting only the ways
+with ``building`` attribute. Let's have a look to the data with the
+``show`` method.
 
 .. code:: python
 
-    ltiles = ext2qt(z.extent,z.lL0)
-
-.. code:: python
-
-    z.show(source='srtm',bldg=False,height=True,clim=[0,350],cmap=cm.hsv,alpha=1)
+    >>> f,a,axd=z.show(source='srtm',bldg=False,height=True,clim=[150,350],cmap=plt.cm.hot,alpha=1)
 
 
 
 
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b89aecafb90>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b89aecafb10>,
-     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2b89b3ec8ad0>)
-
-
-
-
-.. image:: Ezone_files/Ezone_13_1.png
+.. image:: Ezone_files/Ezone_11_0.png
 
 
 The ``Ezone`` object has a member extent which gives
@@ -108,7 +107,7 @@ The ``Ezone`` object has a member extent which gives
 
 .. code:: python
 
-    z.extent
+    >>> z.extent
 
 
 
@@ -124,7 +123,7 @@ The shape of hgta data is larger (3601,3601) than the srtm data
 
 .. code:: python
 
-    z.hgta.shape
+    >>> z.hgta.shape
 
 
 
@@ -137,7 +136,7 @@ The shape of hgta data is larger (3601,3601) than the srtm data
 
 .. code:: python
 
-    z.hgts.shape
+    >>> z.hgts.shape
 
 
 
@@ -152,24 +151,14 @@ The aster DEM can also be shown.
 
 .. code:: python
 
-    z.show(source='aster',bldg=False,clim=[0,320])
+    >>> f,a,axd=z.show(source='aster',bldg=False,clim=[0,320])
 
 
 
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b89b16ccbd0>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b89aecaf910>,
-     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2b89b4675610>)
+.. image:: Ezone_files/Ezone_18_0.png
 
 
-
-
-.. image:: Ezone_files/Ezone_20_1.png
-
-
-An earth zone has an attached dictionnary of buildings, which contains
+An earth zone has an attached dictionary of buildings, which contains
 the data of all the set of building footprints of the city extracted out
 of open street map data. Below is shown an example for the city of
 Rennes in Brittany (France).
@@ -177,18 +166,18 @@ Rennes in Brittany (France).
 Zooming in
 ----------
 
-For zooming into a smaller region, we define the zone to vizualize a
+For zooming into a smaller region, we define the zone to visualize a
 given rectangular region with ``(lonmin,lonmax,latmin,latmax)``.
 
-This region can be converted into cartesian coordinates with the
+This region can be converted into Cartesian coordinates with the
 ``conv`` method.
 
 .. code:: python
 
-    extent1 = (-1.8,-1.6,48.05,48.15)
-    extent1_cart  = ez.conv(extent1,z.m)
-    print "latlon extent :",extent1
-    print "Cartesian extent (meters):",extent1_cart
+    >>> extent1 = (-1.8,-1.6,48.05,48.15)
+    >>> extent1_cart  = ez.conv(extent1,z.m)
+    >>> print "latlon extent :",extent1
+    >>> print "Cartesian extent (meters):",extent1_cart
 
 
 .. parsed-literal::
@@ -202,55 +191,32 @@ the ``show`` method for zooming in the map.
 
 .. code:: python
 
-    z.show()
+    >>> f,a,axd = z.show(title='Rennes City Center (ASTER data)',
+    ...              extent=extent1,
+    ...              bldg=True,
+    ...              height=True,
+    ...              contour=False,
+    ...              source='aster',
+    ...              clim=[0,105],
+    ...              figsize=(20,20)
+    ...              )
+    >>> f,a,axd = z.show(title='Rennes City Center (SRTM data)',
+    ...              extent=extent1,
+    ...              bldg=True,
+    ...              height=True,
+    ...              contour=False,
+    ...              source='srtm',
+    ...              clim=[0,105],
+    ...              figsize=(20,20)
+    ...              )
 
 
 
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b89b3e57350>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2b89b44f44d0>,
-     <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x2b89b7f73b90>)
+.. image:: Ezone_files/Ezone_22_0.png
 
 
 
-
-.. image:: Ezone_files/Ezone_27_1.png
-
-
-.. code:: python
-
-    f,a,c= z.show(title='Rennes City Center (ASTER data)',
-                 extent=extent1,
-                 bldg=True,
-                 height=True,
-                 contour=False,
-                 source='aster',
-                 clim=[0,105]
-                 )
-
-
-
-
-.. image:: Ezone_files/Ezone_28_0.png
-
-
-.. code:: python
-
-    f,a,c = z.show(title='Rennes City Center (SRTM data)',
-                 extent=extent1,
-                 bldg=True,
-                 height=True,
-                 contour=False,
-                 source='srtm',
-                 clim=[0,105],
-                 figsize=(20,20)
-                 )
-
-
-
-.. image:: Ezone_files/Ezone_29_0.png
+.. image:: Ezone_files/Ezone_22_1.png
 
 
 The maps diplayed above are labeled in longitude (horizontal axis) and
@@ -259,19 +225,19 @@ cartesian coordinates as below
 
 .. code:: python
 
-    z.rebase('srtm')
-    z.tocart()
+    >>> z.rebase()
+    >>> z.tocart()
 
 .. code:: python
 
-    f,a,c = z.show(title='Rennes City Center',
-                 extent=extent1_cart,coord='cartesian',
-                 bldg=True,height=True,
-                 clim=[0,100])
+    >>> f,a,axd = z.show(title='Rennes City Center',
+    ...              extent=extent1_cart,coord='cartesian',
+    ...              bldg=True,height=True,
+    ...              clim=[0,100])
 
 
 
-.. image:: Ezone_files/Ezone_32_0.png
+.. image:: Ezone_files/Ezone_25_0.png
 
 
 Let zoom to the University of Rennes 1 campus in the North-East region
@@ -279,10 +245,10 @@ of the city.
 
 .. code:: python
 
-    extent2 = (-1.645,-1.62,48.111,48.125)
-    extent2_cart = ez.conv(extent2,z.m)
-    print extent2
-    print extent2_cart
+    >>> extent2 = (-1.645,-1.62,48.111,48.125)
+    >>> extent2_cart = ez.conv(extent2,z.m)
+    >>> print extent2
+    >>> print extent2_cart
 
 
 .. parsed-literal::
@@ -293,30 +259,30 @@ of the city.
 
 .. code:: python
 
-    f,a,c = z.show(title='Beaulieu Campus',
-                 extent=extent2_cart,
-                 coord='cartesian',
-                 height=False,
-                 bldg=True,
-                 clim=[0,40])
+    >>> f,a,axd = z.show(title='Beaulieu Campus',
+                  extent=extent2_cart,
+                  coord='cartesian',
+                  height=False,
+                  bldg=True,
+                  clim=[0,40])
 
 
 
-.. image:: Ezone_files/Ezone_35_0.png
+.. image:: Ezone_files/Ezone_28_0.png
 
 
 .. code:: python
 
-    f,a,c = z.show(title='Beaulieu Campus',
-                 extent=extent2_cart,
-                 coord='cartesian',
-                 bldg=True,
-                 height=True,
-                 clim=[0,80])
+    >>> f,a,axd = z.show(title='Beaulieu Campus',
+                  extent=extent2_cart,
+                  coord='cartesian',
+                  bldg=True,
+                  height=True,
+                  clim=[0,80])
 
 
 
-.. image:: Ezone_files/Ezone_36_0.png
+.. image:: Ezone_files/Ezone_29_0.png
 
 
 Ground Height Profile Extraction
@@ -330,57 +296,47 @@ be expressed in (lon,lat) coordinates in WGS84 system.
 
 .. code:: python
 
-    h,d,dh,nu,num,m,LOS = z.profile(pa=(-1.645,48.111),
-                                    pb=(-1.62,48.325),
-                                    fGHz=0.3,
-                                    source='srtm')
+    >>> h,d,dh,nu,num,m,LOS = z.profile(pa=(-1.645,48.111),
+                                     pb=(-1.62,48.325),
+                                     fGHz=0.3,
+                                     source='srtm')
 
 .. code:: python
 
-    f = plt.figure(figsize=(15,5))
-    a=plt.plot(d,dh,'r',d,h,'b',d,m[0,:],'g',d,LOS,'k')
-    plt.xlabel('distance (meters)')
+    >>> f = plt.figure(figsize=(15,5))
+    >>> a=plt.plot(d,dh,'r',d,h,'b',d,m[0,:],'g',d,LOS,'k')
+    >>> plt.xlabel('distance (meters)')
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-22-583563e25255> in <module>()
-    ----> 1 f = plt.figure(figsize=(15,5))
-          2 a=plt.plot(d,dh,'r',d,h,'b',d,m[0,:],'g',d,LOS,'k')
-          3 plt.xlabel('distance (meters)')
+    <matplotlib.text.Text at 0x2b8f4229fed0>
 
 
-    NameError: name 'plt' is not defined
+
+
+.. image:: Ezone_files/Ezone_32_1.png
 
 
 .. code:: python
 
-    f = plt.figure(figsize=(15,5))
-    a=plt.plot(d,nu)
-    a = plt.axis([0,25000,-2,2])
-    plt.title(r'Fresnel parameter $\nu$')
-    plt.xlabel('Distance (meters)')
+    >>> f = plt.figure(figsize=(15,5))
+    >>> a=plt.plot(d,nu)
+    >>> a = plt.axis([0,25000,-2,2])
+    >>> plt.title(r'Fresnel parameter $\nu$')
+    >>> plt.xlabel('Distance (meters)')
 
 
-::
 
 
-    ---------------------------------------------------------------------------
+.. parsed-literal::
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-23-819ed69f01ef> in <module>()
-    ----> 1 f = plt.figure(figsize=(15,5))
-          2 a=plt.plot(d,nu)
-          3 a = plt.axis([0,25000,-2,2])
-          4 plt.title(r'Fresnel parameter $\nu$')
-          5 plt.xlabel('Distance (meters)')
+    <matplotlib.text.Text at 0x2b8f425b8c10>
 
 
-    NameError: name 'plt' is not defined
+
+
+.. image:: Ezone_files/Ezone_33_1.png
 

@@ -4,15 +4,18 @@ RST= $(SRC:.md=.rst)
 
 clean:
 	rm *.ipynb
-	rm *.rst 
 
 ipynb: $(IPYNB) 
 
 rst: $(RST)
 
 %.ipynb: %.md
-	ipymd --from markdown --to notebook $<
+	notedown $< --to notebook > $@
 
 %.rst: %.ipynb
-	runipy -o --skip-exception $<  >/dev/null 2> /dev/null
+	echo "====================" >> ../errors.log
+	echo $< >> ../errors.log
+	echo "====================" >> ../errors.log
+	runipy -o --skip-exception $<  >/dev/null 2>> ../errors.log
 	jupyter nbconvert $< --to rst 
+	rm $<

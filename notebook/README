@@ -1,3 +1,9 @@
 for building notebooks 
 
 make all
+
+Workflow: 
+
+The master is the markdown file. 
+
+Each directory contains its own Makefile

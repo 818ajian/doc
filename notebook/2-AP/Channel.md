@@ -18,7 +18,7 @@
 ```
 
 We start by constructing a propagation channel with the dedicated class `DLink`.
-We specify a Layout as well as the two extremities of the link. Antennas are also specified.
+We specify a Layout as well as the two extremities of the link. Antennas are also specified. The frequency range is determined by the frequency range of antennas.
 
 ```python
 >>> L = Layout('defstr3.ini')
@@ -26,17 +26,16 @@ We specify a Layout as well as the two extremities of the link. Antennas are als
 >>> L.build()
 >>> tx=array([759,1114,1.0])
 >>> rx=array([761,1114,1.5])
->>> Lk = DLink(a=tx,b=rx,Aa=Antenna('Omni'),Ab=Antenna('Omni'))
+>>> fGHz = np.linspace(2,6,401)
+>>> Aa = Antenna('Omni',fGHz=fGHz)
+>>> Ab = Antenna('Omni',fGHz=fGHz)
+>>> Lk = DLink(a=tx,b=rx,Aa=Aa,Ab=Ab)
 ```
 
-The full evaluation and hdf5 storage of the channel is done with the eval function. The `force` option is for recalculating everything whatever what has been previously calculated.
+The full evaluation and hdf5 storage of the channel is done with the `eval` function. The `force` option is for forcing a full reevaluation.
 
 ```python
 >>> ak,tauk=Lk.eval()
-Signatures'> from 2_2_3 loaded
-Rays'> from 3_2_6 loaded
-Ctilde'> from 2_6_0 loaded
-Tchannel'> from 2_6_0_0_0_1_1 loaded
 ```
 
 ```python
@@ -48,13 +47,9 @@ The transmission channel is stored in `H`
 
 ```python
 >>> Lk.H
-freq :2.0 10.0 161
-shape  :(136, 161)
-tau :6.87184270936 92.5890113665
-dist :2.06155281281 27.7767034099
 ```
 
-Once the channel has been calculated, we define an IR-UWB waveform.
+Once the channel has been calculated, we define an Impulse Radio Waveform.
 
 ```python
 >>> fGHz=np.arange(2,12,.1)
@@ -65,28 +60,21 @@ Once the channel has been calculated, we define an IR-UWB waveform.
 >>> wav.show()
 ```
 
-Cwood is an object which contains all the information about the
+is an object which contains all the information about the
 propagation channel.
 
 ```python
->>> Lk.show()
-(<matplotlib.figure.Figure at 0x7fd3d1959650>,
- <matplotlib.axes.AxesSubplot at 0x7fd3d194e790>)
+>>> f,a=Lk.show()
 ```
 
 The `Ctilde` channel can be sorted with respect to delay
 
 ```python
 >>> Lk.H
-freq :2.0 10.0 161
-shape  :(136, 161)
-tau :6.87184270936 92.5890113665
-dist :2.06155281281 27.7767034099
 ```
 
 ```python
 >>> len(Lk.fGHz)
-181
 ```
 
 ```python
@@ -98,36 +86,28 @@ dist :2.06155281281 27.7767034099
 
 The Friis factor is : $$\alpha=\frac{-jc}{4\pi f}$$
 
-This factor is fundamental and should be applied only once. The energy method has a parameter `Friis` which indicates if this factor has to be used for the calculation of the energy. By default the link is evaluated with the Friis factor. This can be checked at the end of the __repr__ of `H`.
+This factor is fundamental and has to be applied only once. By default the link is evaluated with the Friis factor :  `isFriis=True`. This can be checked at the end of the __repr__ of `H`.
 
 ```python
 >>> Lk.H
-freq :2.0 10.0 161
-shape  :(136, 161)
-tau :6.87184270936 92.5890113665
-dist :2.06155281281 27.7767034099
 ```
 
-If this factor has already been applied the energy function should be called with the option `Friis` set to False
-
 ```python
->>> Emean=Lk.H.energy(Friis=False,mode='mean')
->>> Eint=Lk.H.energy(Friis=False,mode='integ')
->>> Ecenter=Lk.H.energy(Friis=False,mode='center')
->>> Efirst=Lk.H.energy(Friis=False,mode='first')
->>> Elast=Lk.H.energy(Friis=False,mode='last')
+>>> Emean=Lk.H.energy(mode='mean')
+>>> Eint=Lk.H.energy(mode='integ')
+>>> Ecenter=Lk.H.energy(mode='center')
+>>> Efirst=Lk.H.energy(mode='first')
+>>> Elast=Lk.H.energy(mode='last')
 ```
 
 ```python
 >>> print Efirst[0],Elast[0]
-3.35253916464e-05 1.34101566585e-06
 ```
 
 On the figure below we have selected a LOS situation and we compare the energy for each path with the LOS values (the straight line). The 3 straight lines coresponds to the Free space path loss formula for 3 frequencies (f = 2GHz,f=6GHz,f=10GHz). For those 3 frequencies the first path is perfectly on the curve, which is a validation the observed level.
 
 ```python
 >>> Lk.H.y.shape
-(136, 161)
 ```
 
 ```python
@@ -135,11 +115,11 @@ On the figure below we have selected a LOS situation and we compare the energy f
 >>> f2 = 10
 >>> f3 = 6
 >>> fig = plt.figure(figsize=(10,5))
->>> a = plt.semilogx(Lk.H.taud,10*np.log10(Efirst),'.r',label='f=2GHz')
->>> a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
->>> a = plt.semilogx(Lk.H.taud,10*np.log10(Elast),'.g',label='f=10GHz')
->>> a = plt.semilogx(Lk.H.taud,10*np.log10(Eint),'.k',label='integral')
->>> a = plt.semilogx(Lk.H.taud,10*np.log10(Ecenter),'.c',label='6GHz')
+>>> a = plt.semilogx(Lk.H.taud,10*np.log10(Efirst[:,0,0]),'.r',label='f=2GHz')
+>>> a = plt.semilogx(Lk.H.taud,10*np.log10(Emean[:,0,0]),'.b',label='mean')
+>>> a = plt.semilogx(Lk.H.taud,10*np.log10(Elast[:,0,0]),'.g',label='f=10GHz')
+>>> a = plt.semilogx(Lk.H.taud,10*np.log10(Eint[:,0,0]),'.k',label='integral')
+>>> a = plt.semilogx(Lk.H.taud,10*np.log10(Ecenter[:,0,0]),'.c',label='6GHz')
 >>> plt.xlabel(r'$\tau$ (ns)')
 >>> plt.ylabel('Path Loss (dB)')
 >>> LOS1 = -32.4-20*np.log10(Lk.H.taud*0.3)-20*np.log10(f1)
@@ -224,7 +204,6 @@ htap has 4 axes.
 
 ```python
 >>> np.shape(htap)
-(161, 10, 50, 10)
 ```
 
 The second parameter is the time integration of htap
@@ -275,7 +254,6 @@ The figure below illustrates the joint frequency and spatial fluctuation for the
 
 ```python
 >>> plt.plot(abs(c[0,:,0]))
-[<matplotlib.lines.Line2D at 0x7fd3d1756950>]
 ```
 
 ```python
@@ -292,8 +270,6 @@ The figure below illustrates the joint frequency and spatial fluctuation for the
 
 ```python
 >>> plt.imshow(fft.fftshift(abs(H)))
->>> plt.axis('tight')
-(-0.5, 49.5, 160.5, -0.5)
 ```
 
 ```python

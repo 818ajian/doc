@@ -4,11 +4,11 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    %matplotlib inline
+    >>> %matplotlib inline
 
 .. code:: python
 
-    from pylayers.antprop.coverage import *
+    >>> from pylayers.antprop.coverage import *
 
 
 .. parsed-literal::
@@ -18,7 +18,7 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    C = Coverage('cnes.ini')
+    >>> C = Coverage('cnes.ini')
 
 
 ::
@@ -53,7 +53,7 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    C
+    >>> C
 
 
 ::
@@ -72,8 +72,8 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    fig=figure(figsize=(10,10))
-    f,a=C.L.showGs(fig=fig)
+    >>> fig=figure(figsize=(10,10))
+    >>> f,a=C.L.showGs(fig=fig)
 
 
 ::
@@ -93,7 +93,7 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    C.L.sl.mat
+    >>> C.L.sl.mat
 
 
 ::
@@ -112,7 +112,7 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    C.L.sl
+    >>> C.L.sl
 
 
 ::
@@ -131,7 +131,7 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    C.L.sla
+    >>> C.L.sla
 
 
 ::
@@ -150,7 +150,7 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    C.cover()
+    >>> C.cover()
 
 
 ::
@@ -169,11 +169,11 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    fig=plt.figure(figsize=(14,8))
-    a1 = fig.add_subplot(121)
-    a2 = fig.add_subplot(122)
-    f,a = C.show(typ='pr',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
-    f,a = C.show(typ='pr',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
+    >>> fig=plt.figure(figsize=(14,8))
+    >>> a1 = fig.add_subplot(121)
+    >>> a2 = fig.add_subplot(122)
+    >>> f,a = C.show(typ='pr',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
+    >>> f,a = C.show(typ='pr',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
 
 
 ::
@@ -199,11 +199,11 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    fig=plt.figure(figsize=(14,8))
-    a1 = fig.add_subplot(121)
-    a2 = fig.add_subplot(122)
-    f,a = C.show(typ='loss',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
-    f,a = C.show(typ='loss',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
+    >>> fig=plt.figure(figsize=(14,8))
+    >>> a1 = fig.add_subplot(121)
+    >>> a2 = fig.add_subplot(122)
+    >>> f,a = C.show(typ='loss',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
+    >>> f,a = C.show(typ='loss',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
 
 
 ::
@@ -229,11 +229,11 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    fig=plt.figure(figsize=(14,8))
-    a1 = fig.add_subplot(121)
-    a2 = fig.add_subplot(122)
-    f,a = C.show(typ='snr',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
-    f,a = C.show(typ='snr',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
+    >>> fig=plt.figure(figsize=(14,8))
+    >>> a1 = fig.add_subplot(121)
+    >>> a2 = fig.add_subplot(122)
+    >>> f,a = C.show(typ='snr',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
+    >>> f,a = C.show(typ='snr',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
 
 
 ::
@@ -259,11 +259,11 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    fig=plt.figure(figsize=(14,8))
-    a1 = fig.add_subplot(121)
-    a2 = fig.add_subplot(122)
-    f,a = C.show(typ='sinr',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
-    f,a = C.show(typ='sinr',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
+    >>> fig=plt.figure(figsize=(14,8))
+    >>> a1 = fig.add_subplot(121)
+    >>> a2 = fig.add_subplot(122)
+    >>> f,a = C.show(typ='sinr',best=False,polar='o',vmin=-90,fig=fig,ax=a1)
+    >>> f,a = C.show(typ='sinr',best=False,polar='p',vmin=-90,fig=fig,ax=a2)
 
 
 ::
@@ -289,11 +289,11 @@ Example of Utilisation of Coverage
 
 .. code:: python
 
-    fig=plt.figure(figsize=(14,8))
-    a1 = fig.add_subplot(121)
-    a2 = fig.add_subplot(122)
-    f,a = C.show(typ='capacity',best=False,polar='o',vmin=0,fig=fig,ax=a1)
-    f,a = C.show(typ='capacity',best=False,polar='p',vmin=0,fig=fig,ax=a2)
+    >>> fig=plt.figure(figsize=(14,8))
+    >>> a1 = fig.add_subplot(121)
+    >>> a2 = fig.add_subplot(122)
+    >>> f,a = C.show(typ='capacity',best=False,polar='o',vmin=0,fig=fig,ax=a1)
+    >>> f,a = C.show(typ='capacity',best=False,polar='p',vmin=0,fig=fig,ax=a2)
 
 
 ::
@@ -315,5 +315,4 @@ Example of Utilisation of Coverage
 
 
 .. image:: CNES_files/CNES_14_1.png
-
 

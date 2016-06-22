@@ -80,46 +80,75 @@ Overview
 ########
 
 Pylayers is a site-specific radio channel simulator.
-It is organized in different python classes and functions. 
+It is organized in different python modules. 
+
+The source code is distributed in the following directories
+
++ gis
+    Handle geographical information system
++ antprop
+    Antenna and Propagation related modules
++ measures
+    Measurement related tools 
++ simul 
+    High level simulation tools
++ mobility 
+    Human and vehicular mobility modules 
++ signal
+    Signal and PHY tools
++ location 
+    Location and positioning tools
++ util 
+    Utility functions
+
+
 The basic usage is first to build a description of the radio propagation 
 scene. This means : 
 
-1. Describing a propagation environement 
+1. Describing a propagation environment 
 2. Setting a Transmitter and a Receiver and a given standard. 
-3. Producing Output for Upper Layer simulation or analysis.   
+3. Producing Output for further analysis.   
 
-There are mostly two kind of situations : Indoor environement situations and
-outdoor situations. For now Pylayers handles only indoor scenario. 
-Outdoor and Indoor/Outdoor propagation model will be gradually added in future version.  
-   
+There are mostly two kind of situations : 
+
+Indoor environment situations and outdoor situations.
 
 
 
 Radio Propagation Simulation 
 ############################
 
-Environement Description 
+Environment Description 
 ************************ 
 
-Indoor
-======
+Indoor and Outdoor Layout
+=========================
 
 .. toctree::
   :maxdepth: 2
 
   1-GIS/Layout.rst 
+  
   1-GIS/LayoutEditor.rst
-  2-AP/SlabsMaterials.rst
+
   1-GIS/Multisubsegments.rst
 
-Outdoor
-=======
+GIS and DEM
+===========
 
 .. toctree::
   :maxdepth: 2
 
   1-GIS/Ezone.rst
+  1-GIS/Coverage.rst
 
+Handling Material Properties of Layout
+======================================
+
+.. toctree::
+  :maxdepth: 2
+  
+  2-AP/SlabsMaterials.rst
 
 Description of Antennas
 ***********************
@@ -189,9 +218,20 @@ Algorithms for Localization
 .. toctree::
   :maxdepth: 2
 
-  7-APP/LOC-alhebraic.rst
+  7-APP/LOC-algebraic.rst
   7-APP/LOC-rgpa.rst
-  
+  7-APP/LOC-localisation.rst
+
+
+Measurements Tools 
+############################
+
+.. toctree::
+  :maxdepth: 2
+
+  A-MES/VNA.rst
+  A-MES/scanner.rst
+
 PyLayers Tools 
 ############################
 
@@ -208,5 +248,3 @@ PyLayers Tools
 
   <\div>
 
-
-.. _Sphinx link: http://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html#restructured-text-rest-and-sphinx-cheatsheet

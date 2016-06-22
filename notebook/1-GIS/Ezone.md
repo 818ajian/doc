@@ -1,4 +1,8 @@
 ```python
+>>> !date
+```
+
+```python
 >>> import pylayers.gis.ezone as ez
 >>> from pylayers.gis.gisutil import ent,ext2qt
 >>> import matplotlib.pyplot as plt
@@ -22,14 +26,13 @@ By default files are placed in directory `gis/h5` of the current project tree.
 The command h5ls allows to see the hierarchical structure of the file
 
 ```python
->>> !h5ls $BASENAME/gis/h5/N48W002.h5ls
-/home/mbalde/Pylayers_project/gis/h5/N48W002.h5ls: unable to open file
+>>> !h5ls $BASENAME/gis/h5/N48W002.h5
 ```
 
-Invoquing an earth zone requires to specify the tile prefix with the same
+Invoking an earth zone requires to specify the tile prefix with the same
 naming convention as with SRTM files. For example let consider the earth zone
 from -2 to -1 in west longitude and from 48 to 49 in North latitude this
-corresponds to the `N48W002` tile, so the ezone `z` is invoqued as :
+corresponds to the `N48W002` tile, so the ezone `z` is invoked as :
 
 ```python
 >>> z = ez.Ezone('N48W002')
@@ -43,80 +46,58 @@ In this initial phase no data is loaded yet, to load all the data gathered for t
 
 ```python
 >>> z
-N48W002
---------
-latlon (deg) : [-2 -1 48 49]
-cartesian (meters) : [0.000 73676.623 0.000 111194.358 ]
-
-Buildings
----------
-i-longitude : 64 96
-i-latitude  : 19 38
 ```
 
-This object contains the srtm DEM data, the aster data and a filtration of the `open street map` database selecting only the ways with `building` attribute. Let's have a look to the data with the `show` method.
+This object contains the `srtm` DEM data, the aster data and a filtration of the `open street map` database selecting only the ways with `building` attribute. Let's have a look to the data with the `show` method.
+
 
 ```python
->>> ltiles = ext2qt(z.extent,z.lL0)
-```
+>>> f,a,axd=z.show(source='srtm',bldg=False,height=True,clim=[150,350],cmap=plt.cm.hot,alpha=1)
 
-```python
->>> z.show(source='srtm',bldg=False,height=True,clim=[150,350],cmap=plt.cm.hot,alpha=1)
-(<matplotlib.figure.Figure at 0x7f08d26f4a50>,
- <matplotlib.axes._subplots.AxesSubplot at 0x7f08cb5f2e90>,
- <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x7f08cb58c490>)
 ```
 
 The `Ezone` object has a member extent which gives [lonmin,lonmax,latmin,latmax]
 
 ```python
 >>> z.extent
-array([-2, -1, 48, 49])
 ```
 
 The shape of hgta data is larger (3601,3601) than the srtm data (1201,1201)
 
 ```python
 >>> z.hgta.shape
-(3601, 3601)
 ```
 
 ```python
 >>> z.hgts.shape
-(1201, 1201)
 ```
 
 The aster DEM can also be shown.
 
 ```python
->>> z.show(source='aster',bldg=False,clim=[0,320])
-(<matplotlib.figure.Figure at 0x7f08e57e1850>,
- <matplotlib.axes._subplots.AxesSubplot at 0x7f08e5827a10>,
- <mpl_toolkits.axes_grid1.axes_divider.AxesDivider at 0x7f08e5768090>)
+>>> f,a,axd=z.show(source='aster',bldg=False,clim=[0,320])
 ```
 
-An earth zone has an attached dictionnary of buildings, which contains the data of all the set of building footprints of the city extracted out of open street map data. Below is shown an example for the city of Rennes in Brittany (France).
+An earth zone has an attached dictionary of buildings, which contains the data of all the set of building footprints of the city extracted out of open street map data. Below is shown an example for the city of Rennes in Brittany (France).
 
 ## Zooming in
 
-For zooming into a smaller region, we define the zone to vizualize a given rectangular region with
+For zooming into a smaller region, we define the zone to visualize a given rectangular region with
 `(lonmin,lonmax,latmin,latmax)`.
 
-This region can be converted into cartesian coordinates with the `conv` method.
+This region can be converted into Cartesian coordinates with the `conv` method.
 
 ```python
 >>> extent1 = (-1.8,-1.6,48.05,48.15)
 >>> extent1_cart  = ez.conv(extent1,z.m)
 >>> print "latlon extent :",extent1
 >>> print "Cartesian extent (meters):",extent1_cart
-latlon extent : (-1.8, -1.6, 48.05, 48.15)
-Cartesian extent (meters): [ 14902.21631869  29782.9577558    5482.53114884  16563.42201909]
 ```
 
 Once the selected extent has been chosen, it is possible to pass it to the `show` method for zooming in the map.
 
 ```python
->>> f,a = z.show(title='Rennes City Center (ASTER data)',
+>>> f,a,axd = z.show(title='Rennes City Center (ASTER data)',
 ...              extent=extent1,
 ...              bldg=True,
 ...              height=True,
@@ -125,7 +106,7 @@ Once the selected extent has been chosen, it is possible to pass it to the `show
 ...              clim=[0,105],
 ...              figsize=(20,20)
 ...              )
->>> f,a = z.show(title='Rennes City Center (SRTM data)',
+>>> f,a,axd = z.show(title='Rennes City Center (SRTM data)',
 ...              extent=extent1,
 ...              bldg=True,
 ...              height=True,
@@ -144,7 +125,7 @@ The maps diplayed above are labeled in longitude (horizontal axis) and latitude 
 ```
 
 ```python
->>> f,a = z.show(title='Rennes City Center',
+>>> f,a,axd = z.show(title='Rennes City Center',
 ...              extent=extent1_cart,coord='cartesian',
 ...              bldg=True,height=True,
 ...              clim=[0,100])
@@ -157,26 +138,24 @@ Let zoom to the University of Rennes 1 campus in the North-East region of the ci
 >>> extent2_cart = ez.conv(extent2,z.m)
 >>> print extent2
 >>> print extent2_cart
-(-1.645, -1.62, 48.111, 48.125)
-[ 26436.36082372  28294.87716101  12232.14024036  13785.67272683]
 ```
 
 ```python
->>> f,a = z.show(title='Beaulieu Campus',
-...              extent=extent2_cart,
-...              coord='cartesian',
-...              height=False,
-...              bldg=True,
-...              clim=[0,40])
+>>> f,a,axd = z.show(title='Beaulieu Campus',
+              extent=extent2_cart,
+              coord='cartesian',
+              height=False,
+              bldg=True,
+              clim=[0,40])
 ```
 
 ```python
->>> buguenf,a = z.show(title='Beaulieu Campus',
-...              extent=extent2_cart,
-...              coord='cartesian',
-...              bldg=True,
-...              height=True,
-...              clim=[0,80])
+>>> f,a,axd = z.show(title='Beaulieu Campus',
+              extent=extent2_cart,
+              coord='cartesian',
+              bldg=True,
+              height=True,
+              clim=[0,80])
 ```
 
 ## Ground Height Profile Extraction
@@ -185,9 +164,9 @@ For predicting the radio propagation, it is necessary to retrieve the height pro
 
 ```python
 >>> h,d,dh,nu,num,m,LOS = z.profile(pa=(-1.645,48.111),
-...                                 pb=(-1.62,48.325),
-...                                 fGHz=0.3,
-...                                 source='srtm')
+                                 pb=(-1.62,48.325),
+                                 fGHz=0.3,
+                                 source='srtm')
 ```
 
 ```python
@@ -202,50 +181,4 @@ For predicting the radio propagation, it is necessary to retrieve the height pro
 >>> a = plt.axis([0,25000,-2,2])
 >>> plt.title(r'Fresnel parameter $\nu$')
 >>> plt.xlabel('Distance (meters)')
-```
-
-```python
->>> z
-N48W002
---------
-latlon (deg) : [-2 -1 48 49]
-cartesian (meters) : [0.000 73676.623 0.000 111194.358 ]
-
-Buildings
----------
-i-longitude : 64 96
-i-latitude  : 19 38
-```
-
-```python
->>> a=z.cover(Ht=2,Hr=2,Rmax=10000)
-```
-
-```python
->>> 20000*20000/(2*(4/3.)*6370*1e3)
-23.547880690737838
-```
-
-```python
->>> (5.77+23.54)*np.sqrt(3*(1/20000.+1/20000.))
-0.50766409169843796
-```
-
-```python
->>> 6.9+20*np.log10(np.sqrt(1+0.407**2)+0.407)
-10.344187901280684
-```
-
-```python
->>> 0.01/(2*np.pi*9*8.85e-4)
-0.19981788209905252
-```
-
-```python
->>> np.sqrt(9+0.2*1j)
-(3.0001851566146316+0.033331276164581342j)
-```
-
-```python
-
 ```
