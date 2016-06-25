@@ -32,7 +32,7 @@ extensions = [
     'numpydoc',
 #    'numpydoc.plot_directive',
 #    'ipython_directive',
-    'matplotlib.sphinxext.mathmpl',
+#    'matplotlib.sphinxext.mathmpl',
     'matplotlib.sphinxext.only_directives',
     'matplotlib.sphinxext.plot_directive',
 #   'ipython_console_highlighting',
