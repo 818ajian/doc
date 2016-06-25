@@ -6,7 +6,7 @@
 
 .. parsed-literal::
 
-    samedi 7 mai 2016, 14:36:13 (UTC+0200)
+    vendredi 24 juin 2016, 09:26:27 (UTC+0200)
 
 
  Robust Geometric Positioning Algorithm
@@ -260,7 +260,7 @@ with the above model
 
 .. parsed-literal::
 
-    11.729189855089983
+    8.8530311885002018
 
 
 

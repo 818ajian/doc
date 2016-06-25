@@ -4,15 +4,15 @@ Modelisation of the Thermal Noise
 
 .. code:: python
 
-    from pylayers.signal.bsignal import *
-    %matplotlib inline
+    >>> from pylayers.signal.bsignal import *
+    >>> %matplotlib inline
 
 The bsignal module has a dedicated class for handling noise signal. To
 create a white noise just type :
 
 .. code:: python
 
-    w = Noise()
+    >>> w = Noise()
 
 The representation of the noise object provides information about
 default values. In digital representation of noise the sampling
@@ -23,13 +23,7 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 .. code:: python
 
-    w
-
-
-
-
-.. parsed-literal::
-
+    >>> w
     Sampling frequency : 50 GHz
     ti  : 0ns 
     tf  : 100ns 
@@ -41,15 +35,24 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
     -------------
     Noise Figure : 0 dB
     Vrms : 9.97631157484e-05 Volts
-    Variance : 9.51113272612e-09 V^2
+    Variance : 9.81692234355e-09 V^2
     Power (dBm) /50 Ohms : -157.010299957 dBm
-    Power realized /50 Ohms : -157.207377621 dBm
+    Power realized /50 Ohms : -157.069946488 dBm
+
+
+::
+
+
+      File "<ipython-input-3-95c19c884cbc>", line 2
+        Sampling frequency : 50 GHz
+                         ^
+    SyntaxError: invalid syntax
 
 
 
 .. code:: python
 
-    f,a=w.plot(typ='v')
+    >>> f,a=w.plot(typ='v')
 
 
 
@@ -58,34 +61,32 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 .. code:: python
 
-    w.psd()
+    >>> w.psd()
+    FUsignal :  (2500,)  (2500,) 
+    Frequency (GHz) : 2500
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+      File "<ipython-input-5-ad9f7f7e43b5>", line 2
+        FUsignal :  (2500,)  (2500,)
+                 ^
+    SyntaxError: invalid syntax
 
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-5-638d26c14f9e> in <module>()
-    ----> 1 w.psd()
-    
-
-    AttributeError: 'Noise' object has no attribute 'psd'
 
 
 .. code:: python
 
-    w2 = w.fgating(fcGHz=4,BGHz=3)
+    >>> w2 = w.fgating(fcGHz=4,BGHz=3)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    TypeError                                 Traceback (most recent call last)
+    TypeErrorTraceback (most recent call last)
 
     <ipython-input-6-0901d96562a6> in <module>()
     ----> 1 w2 = w.fgating(fcGHz=4,BGHz=3)
@@ -96,16 +97,16 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 .. code:: python
 
-    W2=w2.psd()
-    W2.plotdB(mask=True)
+    >>> W2=w2.psd()
+    >>> W2.plotdB(mask=True)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-7-00fd8114e3d7> in <module>()
     ----> 1 W2=w2.psd()
@@ -117,33 +118,32 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 .. code:: python
 
-    w.plot(typ='v')
-
-
-
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b6ba4843090>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2b6ba486b250>]], dtype=object))
-
-
-
-
-.. image:: Noise_files/Noise_10_1.png
-
-
-.. code:: python
-
-    ip=EnImpulse(fc=4.4928,band=0.4992,fe=100)
+    >>> w.plot(typ='v')
+    (<matplotlib.figure.Figure at 0x7ff520fd5c90>,
+     array([[<matplotlib.axes.AxesSubplot object at 0x7ff520fcd750>]], dtype=object))
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+      File "<ipython-input-8-cc6c01699cec>", line 2
+        (<matplotlib.figure.Figure at 0x7ff520fd5c90>,
+         ^
+    SyntaxError: invalid syntax
 
-    NameError                                 Traceback (most recent call last)
+
+
+.. code:: python
+
+    >>> ip=EnImpulse(fc=4.4928,band=0.4992,fe=100)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-9-307076f57f86> in <module>()
     ----> 1 ip=EnImpulse(fc=4.4928,band=0.4992,fe=100)
@@ -154,21 +154,21 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 .. code:: python
 
-    fig = plt.figure(figsize=(10,10))
-    for k,snr in enumerate(range(30,-30,-10)):
-        a = fig.add_subplot(3,2,k+1)
-        ipn,n=ip.awgn(snr=snr,typ='snr')
-        ipn.plot(typ='v',fig=fig,ax=a)
-        a.set_title('SNR :'+str(snr)+' dB')
-    plt.tight_layout()
+    >>> fig = plt.figure(figsize=(10,10))
+    >>> for k,snr in enumerate(range(30,-30,-10)):
+    ...     a = fig.add_subplot(3,2,k+1)
+    ...     ipn,n=ip.awgn(snr=snr,typ='snr')
+    ...     ipn.plot(typ='v',fig=fig,ax=a)
+    ...     a.set_title('SNR :'+str(snr)+' dB')
+    >>> plt.tight_layout()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-10-897bc488bfef> in <module>()
           2 for k,snr in enumerate(range(30,-30,-10)):
@@ -183,5 +183,4 @@ density is :math:`-174dBm/Hz` and can be modified with the argument
 
 
 .. image:: Noise_files/Noise_12_1.png
-
 

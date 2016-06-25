@@ -6,7 +6,7 @@
 
 .. parsed-literal::
 
-    mardi 10 mai 2016, 21:55:44 (UTC+0200)
+    vendredi 24 juin 2016, 09:02:07 (UTC+0200)
 
 
 Description of the propagation environment
@@ -24,12 +24,6 @@ implementation of the ray tracing. The class is implemented in the
     >>> from IPython.display import Image
     >>> import os
     >>> %matplotlib inline
-
-
-.. parsed-literal::
-
-    Layout:Mayavi is not installed
-
 
 Getting the list of all available Layouts : the ``ls()`` method
 ---------------------------------------------------------------
@@ -52,17 +46,17 @@ Creating a default Layout is as simple as :
     ----------------
     
     Number of points  : 12
-    Number of segments  : 17
+    Number of segments  : 13
     Number of sub segments  : 3
     Number of cycles  : 7
     Number of rooms  : 2
-    degree 0 : [-12 -11 -10  -9]
-    degree 1 : []
-    number of node point of degree 2 : 6
+    degree 0 : []
+    degree 1 : [-8 -7]
+    number of node point of degree 2 : 4
     number of node point of degree 3 : 2
     
     xrange :(748.5, 778.5)
-    yrange :(1101.9, 1125.9)
+    yrange :(1101.6, 1125.9)
     
     Useful dictionnaries
     ----------------
@@ -83,6 +77,15 @@ Creating a default Layout is as simple as :
     lsss : list of segments with sub-segment
     sla : list of all slab names (Nsmax+Nss+1)
     degree : degree of nodes 
+    
+    Useful tip
+    ----------------
+    Point p in Gs => p_coord:
+    p -> u = self.iupnt[-p] -> p_coord = self.pt[:,u]
+    
+    Segment s in Gs => s_ab coordinates 
+    s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
+
 
 
 
@@ -118,34 +121,32 @@ find the good directories.
 .. parsed-literal::
 
     ['11Dbibli.ini',
+     'B11.ini',
      'CORM1.ini',
-     'DLR-bug.ini',
      'DLR.ini',
      'DLR2.ini',
-     'Jimmy.ini',
      'Luebbers.ini',
      'MOCAP-small.ini',
      'MOCAP-small2.ini',
      'MOCAP.ini',
      'MOCAPext.ini',
-     'NYU.ini',
      'Scene.ini',
      'TA-Office.ini',
-     'TA-Office_sauv.ini',
+     'TA-Office3.ini',
      'TC1_METIS.ini',
+     'TC1_METIS_old.ini',
+     'TC2_METIS.ini',
+     'TC2_METIS_new.ini',
      'W2PTIN.ini',
+     'WHERE1-new.ini',
      'WHERE1.ini',
-     'WHERE1_sauv.ini',
-     'convexity.ini',
+     'WHERE1_v1.0.ini',
      'defdiff.ini',
      'defsthdiff.ini',
      'defstr.ini',
-     'defstr3.ini',
      'edge.ini',
      'klepal.ini',
-     'nonconvex.ini',
      'scattering.ini',
-     'square.ini',
      'test.ini']
 
 
@@ -169,17 +170,17 @@ find the good directories.
     ----------------
     
     Number of points  : 12
-    Number of segments  : 17
+    Number of segments  : 13
     Number of sub segments  : 3
     Number of cycles  : 7
     Number of rooms  : 2
-    degree 0 : [-12 -11 -10  -9]
-    degree 1 : []
-    number of node point of degree 2 : 6
+    degree 0 : []
+    degree 1 : [-8 -7]
+    number of node point of degree 2 : 4
     number of node point of degree 3 : 2
     
     xrange :(748.5, 778.5)
-    yrange :(1101.9, 1125.9)
+    yrange :(1101.6, 1125.9)
     
     Useful dictionnaries
     ----------------
@@ -200,6 +201,15 @@ find the good directories.
     lsss : list of segments with sub-segment
     sla : list of all slab names (Nsmax+Nss+1)
     degree : degree of nodes 
+    
+    Useful tip
+    ----------------
+    Point p in Gs => p_coord:
+    p -> u = self.iupnt[-p] -> p_coord = self.pt[:,u]
+    
+    Segment s in Gs => s_ab coordinates 
+    s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
+
 
 
 
@@ -224,13 +234,73 @@ L.ax provides the boundary of the layout with the following format :
 
 .. parsed-literal::
 
-    (748.5, 778.5, 1101.9, 1125.9)
+    (748.5, 778.5, 1101.6, 1125.9)
 
 
 
 .. code:: python
 
     >>> L.build()
+
+
+.. parsed-literal::
+
+    building Layout ...
+
+
+::
+
+
+    
+
+    MultipleInstanceErrorTraceback (most recent call last)
+
+    <ipython-input-10-63002b766909> in <module>()
+    ----> 1 L.build()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4786             if verbose:
+       4787                 print "Gv"
+    -> 4788             self.buildGv()
+       4789             self.lbltg.extend('v')
+       4790 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGv(self, show)
+       7065                 for idiff in ndiffvalid:
+       7066 
+    -> 7067                     import ipdb
+       7068                     # ipdb.set_trace()
+       7069                     # if (icycle==2) & (idiff==-2399):
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__init__.py in <module>()
+          5 # https://opensource.org/licenses/BSD-3-Clause
+          6 
+    ----> 7 from ipdb.__main__ import set_trace, post_mortem, pm, run             # noqa
+          8 from ipdb.__main__ import runcall, runeval, launch_ipdb_on_exception  # noqa
+          9 
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__main__.py in <module>()
+         56     # the instance method will create a new one without loading the config.
+         57     # i.e: if we are in an embed instance we do not want to load the config.
+    ---> 58     ipapp = TerminalIPythonApp.instance()
+         59     shell = get_ipython()
+         60     def_colors = shell.colors
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/traitlets/config/configurable.pyc in instance(cls, *args, **kwargs)
+        414             raise MultipleInstanceError(
+        415                 'Multiple incompatible subclass instances of '
+    --> 416                 '%s are being created.' % cls.__name__
+        417             )
+        418 
+
+
+    MultipleInstanceError: Multiple incompatible subclass instances of TerminalIPythonApp are being created.
+
 
 L.ma is the polygon mask of the layout
 
@@ -259,23 +329,7 @@ list of output cycles and the corresponding wedge angles.
 
 .. parsed-literal::
 
-    {-6: {},
-     -4: {},
-     -3: {},
-     -1: {},
-     1: {},
-     2: {},
-     3: {},
-     4: {},
-     5: {},
-     6: {},
-     7: {},
-     8: {},
-     9: {},
-     16: {},
-     17: {},
-     20: {},
-     21: {}}
+    {}
 
 
 
@@ -288,10 +342,12 @@ list of output cycles and the corresponding wedge angles.
 
 .. parsed-literal::
 
-    {-6: ([3, 4], 4.7123889803846897),
+    {-8: ([1, 2], 6.283185307179586),
+     -7: ([1, 2], 6.283185307179586),
+     -6: ([5, 6], 4.7123889803846897),
      -4: ([4, 5], 4.7123889803846897),
-     -3: ([5, 6], 4.7123889803846897),
-     -1: ([3, 6], 4.7123889803846897)}
+     -3: ([3, 4], 4.7123889803846897),
+     -1: ([3, 6], 4.7723171355059337)}
 
 
 
@@ -318,20 +374,18 @@ list of output cycles and the corresponding wedge angles.
        (3, 1, 2),
        (3, 2, 1),
        (6, 1),
-       (6, 1, 4),
-       (6, 4, 1),
+       (6, 1, 5),
+       (6, 5, 1),
        (7, 1),
-       (7, 1, 5),
-       (7, 5, 1),
+       (7, 1, 4),
+       (7, 4, 1),
        (8, 1),
-       (8, 1, 6),
-       (8, 6, 1),
+       (8, 1, 3),
+       (8, 3, 1),
        (2, 1),
        (2, 1, 2),
-       (2, 2, 1),
-       (-3,),
-       (-1,)],
-      'isopen': False,
+       (2, 2, 1)],
+      'isopen': True,
       'polyg': (763.5,1113.432)
       (763.5,1114.432)
       (763.5,1115.9)
@@ -343,8 +397,8 @@ list of output cycles and the corresponding wedge angles.
      2: {'cycle': cycle nstr[-8  2 -2  9 -1  4 -6  5 -5  3 -7  1]
       point number 6
       segment number 6
-      area : -20.0
-      centroid : [  761.   1113.9],
+      area : -20.75
+      centroid : [  760.96987952  1113.82409639],
       'indoor': True,
       'inter': [(1, 2),
        (1, 2, 1),
@@ -353,132 +407,122 @@ list of output cycles and the corresponding wedge angles.
        (2, 2, 1),
        (2, 1, 2),
        (9, 2),
-       (9, 2, 6),
-       (9, 6, 2),
+       (9, 2, 3),
+       (9, 3, 2),
        (4, 2),
-       (4, 2, 3),
-       (4, 3, 2),
+       (4, 2, 6),
+       (4, 6, 2),
        (5, 2),
-       (5, 2, 4),
-       (5, 4, 2),
+       (5, 2, 5),
+       (5, 5, 2),
        (3, 2),
        (3, 2, 1),
-       (3, 1, 2),
-       (-3,),
-       (-1,)],
-      'isopen': False,
+       (3, 1, 2)],
+      'isopen': True,
       'polyg': (763.5,1114.432)
       (763.5,1113.432)
       (763.5,1111.9)
-      (758.5,1111.9)
+      (758.5,1111.6)
       (758.5,1115.9)
       (763.5,1115.9)
       
       vnodes : (-7 1 -8 2 -2 9 -1 4 -6 5 -5 3 )},
-     3: {'cycle': cycle nstr[ -6  20 -12  13  -9  16  -1   4]
-      point number 4
-      segment number 4
-      area : 140.0
-      centroid : [  752.30952381  1113.9       ],
+     3: {'cycle': cycle nstr[ -3  18 -10  10  -9  16  -1   9  -2   8]
+      point number 5
+      segment number 5
+      area : -203.75
+      centroid : [  763.57361963  1105.85169734],
       'indoor': False,
-      'inter': [(4, 3),
-       (4, 3, 2),
-       (4, 2, 3),
+      'inter': [(10, 3, 0),
+       (10, 0, 3),
        (16, 3, 6),
        (16, 6, 3),
-       (13, 3, 0),
-       (13, 0, 3),
-       (20, 3, 4),
-       (20, 4, 3),
-       (-3,),
-       (-1,)],
+       (9, 3),
+       (9, 3, 2),
+       (9, 2, 3),
+       (8, 3),
+       (8, 3, 1),
+       (8, 1, 3),
+       (18, 3, 4),
+       (18, 4, 3)],
       'isopen': True,
-      'polyg': (758.5,1115.9)
-      (758.5,1111.9)
-      (748.5,1101.9)
-      (748.5,1125.9)
+      'polyg': (778.5,1101.6)
+      (748.5,1101.6)
+      (758.5,1111.6)
+      (763.5,1111.9)
+      (768.5,1111.9)
       
-      vnodes : (-6 4 -1 16 -9 13 -12 20 )},
-     4: {'cycle': cycle nstr[ -6  20 -12  12 -11  21  -4   6  -5   5]
+      vnodes : (-10 10 -9 16 -1 9 -2 8 -3 18 )},
+     4: {'cycle': cycle nstr[ -4   7  -3  18 -10  11 -11  22]
+      point number 4
+      segment number 4
+      area : 141.5
+      centroid : [  774.69552415  1113.80706714],
+      'indoor': False,
+      'inter': [(11, 4, 0),
+       (11, 0, 4),
+       (18, 4, 3),
+       (18, 3, 4),
+       (7, 4),
+       (7, 4, 1),
+       (7, 1, 4),
+       (22, 4, 5),
+       (22, 5, 4)],
+      'isopen': True,
+      'polyg': (778.5,1125.9)
+      (778.5,1101.6)
+      (768.5,1111.9)
+      (768.5,1115.9)
+      
+      vnodes : (-11 11 -10 18 -3 7 -4 22 )},
+     5: {'cycle': cycle nstr[ -6  21 -12  12 -11  22  -4   6  -5   5]
       point number 5
       segment number 5
       area : -200.0
       centroid : [  763.5         1121.73333333],
       'indoor': False,
-      'inter': [(5, 4),
-       (5, 4, 2),
-       (5, 2, 4),
-       (20, 4, 3),
-       (20, 3, 4),
-       (12, 4, 0),
-       (12, 0, 4),
-       (21, 4, 5),
-       (21, 5, 4),
-       (6, 4),
-       (6, 4, 1),
-       (6, 1, 4),
-       (-3,),
-       (-1,)],
+      'inter': [(12, 5, 0),
+       (12, 0, 5),
+       (22, 5, 4),
+       (22, 4, 5),
+       (6, 5),
+       (6, 5, 1),
+       (6, 1, 5),
+       (5, 5),
+       (5, 5, 2),
+       (5, 2, 5),
+       (21, 5, 6),
+       (21, 6, 5)],
       'isopen': True,
-      'polyg': (763.5,1115.9)
-      (758.5,1115.9)
-      (748.5,1125.9)
+      'polyg': (748.5,1125.9)
       (778.5,1125.9)
       (768.5,1115.9)
+      (763.5,1115.9)
+      (758.5,1115.9)
       
-      vnodes : (-5 5 -6 20 -12 12 -11 21 -4 6 )},
-     5: {'cycle': cycle nstr[ -4  21 -11  11 -10  17  -3   7]
+      vnodes : (-12 12 -11 22 -4 6 -5 5 -6 21 )},
+     6: {'cycle': cycle nstr[ -6  21 -12  13  -9  16  -1   4]
       point number 4
       segment number 4
-      area : -140.0
-      centroid : [  774.69047619  1113.9       ],
+      area : 143.0
+      centroid : [  752.33449883  1113.75      ],
       'indoor': False,
-      'inter': [(7, 5),
-       (7, 5, 1),
-       (7, 1, 5),
-       (21, 5, 4),
-       (21, 4, 5),
-       (11, 5, 0),
-       (11, 0, 5),
-       (17, 5, 6),
-       (17, 6, 5),
-       (-3,),
-       (-1,)],
-      'isopen': True,
-      'polyg': (768.5,1111.9)
-      (768.5,1115.9)
-      (778.5,1125.9)
-      (778.5,1101.9)
-      
-      vnodes : (-3 7 -4 21 -11 11 -10 17 )},
-     6: {'cycle': cycle nstr[ -3  17 -10  10  -9  16  -1   9  -2   8]
-      point number 5
-      segment number 5
-      area : -200.0
-      centroid : [  763.5         1106.06666667],
-      'indoor': False,
-      'inter': [(8, 6),
-       (8, 6, 1),
-       (8, 1, 6),
-       (17, 6, 5),
-       (17, 5, 6),
-       (10, 6, 0),
-       (10, 0, 6),
+      'inter': [(13, 6, 0),
+       (13, 0, 6),
+       (21, 6, 5),
+       (21, 5, 6),
+       (4, 6),
+       (4, 6, 2),
+       (4, 2, 6),
        (16, 6, 3),
-       (16, 3, 6),
-       (9, 6),
-       (9, 6, 2),
-       (9, 2, 6),
-       (-3,),
-       (-1,)],
+       (16, 3, 6)],
       'isopen': True,
-      'polyg': (763.5,1111.9)
-      (768.5,1111.9)
-      (778.5,1101.9)
-      (748.5,1101.9)
-      (758.5,1111.9)
+      'polyg': (748.5,1101.6)
+      (748.5,1125.9)
+      (758.5,1115.9)
+      (758.5,1111.6)
       
-      vnodes : (-2 8 -3 17 -10 10 -9 16 -1 9 )}}
+      vnodes : (-9 13 -12 21 -6 4 -1 16 )}}
 
 
 
@@ -507,17 +551,23 @@ To check which are the used slabs :
 
 .. parsed-literal::
 
-    3D_WINDOW_GLASS : GLASS | AIR | GLASS | [0.005, 0.005, 0.005]
+    3D_WINDOW_GLASS : GLASS | AIR | GLASS | [0.05, 0.05, 0.05]
+           blue3 1
     
-    AIR : AIR | [0.02]
+    AIR : AIR | [0.05]
+           white 1
     
-    DOOR : WOOD | [0.03]
+    DOOR : WOOD | [0.05]
+           red1 1
     
-    METAL : METAL | [0.1]
+    METAL : METAL | [0.05]
+           black 4
     
-    PARTITION : PLASTER | [0.1]
+    PARTITION : PLASTER | [0.05]
+           grey80 4
     
-    WALL : BRICK | [0.07]
+    WALL : BRICK | [0.05]
+           grey20 3
     
 
 
@@ -585,8 +635,8 @@ The point coordinates are stored in two different places
 
 .. parsed-literal::
 
-    (2, 189)
-    189
+    (2, 181)
+    185
 
 
 This dual storage is chosen for computational efficiency reason. The
@@ -605,6 +655,66 @@ Where :math:`k` is the index of a given segment (starting in 0).
 .. code:: python
 
     >>> L.build()
+
+
+.. parsed-literal::
+
+    building Layout ...
+
+
+::
+
+
+    
+
+    MultipleInstanceErrorTraceback (most recent call last)
+
+    <ipython-input-23-63002b766909> in <module>()
+    ----> 1 L.build()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4786             if verbose:
+       4787                 print "Gv"
+    -> 4788             self.buildGv()
+       4789             self.lbltg.extend('v')
+       4790 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGv(self, show)
+       7065                 for idiff in ndiffvalid:
+       7066 
+    -> 7067                     import ipdb
+       7068                     # ipdb.set_trace()
+       7069                     # if (icycle==2) & (idiff==-2399):
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__init__.py in <module>()
+          5 # https://opensource.org/licenses/BSD-3-Clause
+          6 
+    ----> 7 from ipdb.__main__ import set_trace, post_mortem, pm, run             # noqa
+          8 from ipdb.__main__ import runcall, runeval, launch_ipdb_on_exception  # noqa
+          9 
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__main__.py in <module>()
+         56     # the instance method will create a new one without loading the config.
+         57     # i.e: if we are in an embed instance we do not want to load the config.
+    ---> 58     ipapp = TerminalIPythonApp.instance()
+         59     shell = get_ipython()
+         60     def_colors = shell.colors
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/traitlets/config/configurable.pyc in instance(cls, *args, **kwargs)
+        414             raise MultipleInstanceError(
+        415                 'Multiple incompatible subclass instances of '
+    --> 416                 '%s are being created.' % cls.__name__
+        417             )
+        418 
+
+
+    MultipleInstanceError: Multiple incompatible subclass instances of TerminalIPythonApp are being created.
+
 
 The figure below illustrates a Layout and a superimposition of the graph
 of cycles :math:`\mathcal{G}_c`. Those cycles are automatically
@@ -633,7 +743,7 @@ connected to the origin (corresponding to exterior cycle).
 
 .. parsed-literal::
 
-    <matplotlib.collections.LineCollection at 0x2b5519c26d90>
+    <matplotlib.collections.LineCollection at 0x7f6cd894f9d0>
 
 
 
@@ -692,7 +802,7 @@ because none segment has 0 as an index.
 
     {'connect': [-8, -139],
      'name': 'PARTITION',
-     'ncycles': [8, 9],
+     'ncycles': [5, 33],
      'norm': array([ 0., -1.,  0.]),
      'offset': 0,
      'transition': False,
@@ -731,62 +841,3 @@ because none segment has 0 as an index.
     >>> pt  = L.tahe[:,L.tgs[aseg]][0,:]
     >>> ph = L.tahe[:,L.tgs[aseg]][1,:]
     >>> pth = np.vstack((pt,ph))
-
-.. code:: python
-
-    >>> np.shape(pth)
-
-
-
-
-.. parsed-literal::
-
-    (2, 3)
-
-
-
-``Layout.seg2pts`` a function for getting points coordinates from segment number array
---------------------------------------------------------------------------------------
-
-.. code:: python
-
-    >>> L.seg2pts(aseg)
-
-
-
-
-.. parsed-literal::
-
-    array([[ 29.785,   0.044,  22.538],
-           [  6.822,  23.078,   8.711],
-           [ 29.785,  -3.754,  20.326],
-           [  8.921,  23.078,   8.693]])
-
-
-
-.. code:: python
-
-    >>> aseg = array(filter(lambda x: x>0,L.Gs.nodes()))
-    >>> pth = L.seg2pts(aseg)
-
-.. code:: python
-
-    >>> from pylayers.util.plotutil import displot
-
-.. code:: python
-
-    >>> displot(pth[0:2,:],pth[2:,:])
-    >>> plt.axis('off')
-
-
-
-
-.. parsed-literal::
-
-    (-20.0, 50.0, -20.0, 50.0)
-
-
-
-
-.. image:: Layout_files/Layout_54_1.png
-

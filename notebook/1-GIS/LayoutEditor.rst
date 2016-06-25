@@ -86,12 +86,6 @@ following :
     >>> from pylayers.util.project import *
     >>> %matplotlib inline
 
-
-.. parsed-literal::
-
-    Layout:Mayavi is not installed
-
-
 Reading an exiting Layout
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -115,9 +109,9 @@ environment variable.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-2-ec9ba75a5513> in <module>()
           1 print pstruc['DIRSTRUC']
@@ -187,9 +181,7 @@ The structure of the ``.osm`` file is shown below
 
 .. parsed-literal::
 
-    convexity.osm
-    Jimmy.osm
-    nonconvex.osm
+    ls: impossible d'accder  *.osm: Aucun fichier ou dossier de ce type
 
 
 .. code:: python
@@ -208,8 +200,8 @@ The structure of the ``.osm`` file is shown below
 
 .. parsed-literal::
 
-    head: impossible d'ouvrir «DLR.osm» en lecture: Aucun fichier ou dossier de ce type
-    tail: impossible d'ouvrir «DLR.osm» en lecture: Aucun fichier ou dossier de ce type
+    head: impossible d'ouvrir DLR.osm en lecture: Aucun fichier ou dossier de ce type
+    tail: impossible d'ouvrir DLR.osm en lecture: Aucun fichier ou dossier de ce type
 
 
 To read a new layout in osm format :
@@ -223,8 +215,30 @@ To read a new layout in osm format :
     >>> fig,ax=L.showGs()
 
 
+::
 
-.. image:: LayoutEditor_files/LayoutEditor_11_0.png
+
+    
+
+    KeyErrorTraceback (most recent call last)
+
+    <ipython-input-7-b9ee126fbab0> in <module>()
+    ----> 1 fig,ax=L.showGs()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in showGs(self, **kwargs)
+       4690             for nameslab in self.sl:
+       4691                 color = self.sl[nameslab]['color']
+    -> 4692                 edlist = self.name[nameslab]
+       4693                 fig,ax=self.show_layer(nameslab, edlist=edlist, alpha=alpha,
+       4694                                 dthin=dthin, dnodes=dnodes, dlabels=dlabels,
+
+
+    KeyError: 'FLOOR'
+
+
+
+.. image:: LayoutEditor_files/LayoutEditor_11_1.png
 
 
 .. code:: python
@@ -235,21 +249,19 @@ To read a new layout in osm format :
 .. parsed-literal::
 
     filestr :  DLR.ini
-    filematini :  matDB.ini
-    fileslabini :  slabDB.ini
     filegeom :  DLR.off
     boundaries  (-10.505, 42.586, -18.277, 18.878)
     number of Points : 109
-    number of Segments : 138
+    number of Segments : 128
     number of Sub-Segments : 30
-    Gs Nodes :  247
-    Gs Edges :  276
-    Gt Nodes :  31
-    Gt Edges :  79
+    Gs Nodes :  237
+    Gs Edges :  256
+    Gt Nodes :  33
+    Gt Edges :  81
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
-    Gr Nodes    : 21
-    Gr Edges    : 21
+    Gr Nodes    : 23
+    Gr Edges    : 19
     Nc  = Gr.node[nroom]['cycles']  
 
 
@@ -260,42 +272,63 @@ The different graphs associated with the layout are then built
     >>> L.build()
 
 
+.. parsed-literal::
+
+    building Layout ...
+
+
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    KeyError                                  Traceback (most recent call last)
+    MultipleInstanceErrorTraceback (most recent call last)
 
     <ipython-input-9-63002b766909> in <module>()
     ----> 1 L.build()
     
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
-       4682             if verbose:
-       4683                 print "Gr"
-    -> 4684             self.buildGr()
-       4685             self.lbltg.extend('r')
-       4686 
+       4786             if verbose:
+       4787                 print "Gv"
+    -> 4788             self.buildGv()
+       4789             self.lbltg.extend('v')
+       4790 
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGr(self)
-       8783                     pass
-       8784                 else:
-    -> 8785                     self.Gr.remove_node(cy)
-       8786                     self.Gr.pos.pop(cy)
-       8787 
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGv(self, show)
+       7065                 for idiff in ndiffvalid:
+       7066 
+    -> 7067                     import ipdb
+       7068                     # ipdb.set_trace()
+       7069                     # if (icycle==2) & (idiff==-2399):
 
 
-    /home/uguen/anaconda/lib/python2.7/site-packages/networkx/classes/graph.pyc in remove_node(self, n)
-        569             raise NetworkXError("The node %s is not in the graph." % (n,))
-        570         for u in nbrs:
-    --> 571             del adj[u][n]   # remove all edges n-u in graph
-        572         del adj[n]          # now remove node
-        573 
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__init__.py in <module>()
+          5 # https://opensource.org/licenses/BSD-3-Clause
+          6 
+    ----> 7 from ipdb.__main__ import set_trace, post_mortem, pm, run             # noqa
+          8 from ipdb.__main__ import runcall, runeval, launch_ipdb_on_exception  # noqa
+          9 
 
 
-    KeyError: 13
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__main__.py in <module>()
+         56     # the instance method will create a new one without loading the config.
+         57     # i.e: if we are in an embed instance we do not want to load the config.
+    ---> 58     ipapp = TerminalIPythonApp.instance()
+         59     shell = get_ipython()
+         60     def_colors = shell.colors
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/traitlets/config/configurable.pyc in instance(cls, *args, **kwargs)
+        414             raise MultipleInstanceError(
+        415                 'Multiple incompatible subclass instances of '
+    --> 416                 '%s are being created.' % cls.__name__
+        417             )
+        418 
+
+
+    MultipleInstanceError: Multiple incompatible subclass instances of TerminalIPythonApp are being created.
 
 
 The topological graph :math:`\mathcal{G}_t` or graph of non overlapping
@@ -321,47 +354,8 @@ connection) are not connected
     >>> b=plt.axis('off')
 
 
-::
 
-
-    ---------------------------------------------------------------------------
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-11-691b11b3fe3c> in <module>()
-    ----> 1 f,a=L.showG('r')
-          2 b=plt.axis('off')
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in showG(self, graph, **kwargs)
-       7769             else:
-       7770                 kwargs['labels']=False
-    -> 7771             fig,ax = gru.draw(G,**kwargs)
-       7772             kwargs['fig']=fig
-       7773             kwargs['ax']=ax
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/util/graphutil.pyc in draw(G, **kwargs)
-        157                                width = kwargs['width'],
-        158                                arrows= kwargs['arrows'],
-    --> 159                                alpha = kwargs['alphae'],ax=ax)
-        160         if kwargs['airwalls']:
-        161             try:
-
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/networkx/drawing/nx_pylab.pyc in draw_networkx_edges(G, pos, edgelist, width, edge_color, style, alpha, edge_cmap, edge_vmin, edge_vmax, ax, arrows, label, **kwds)
-        513 
-        514     # set edge positions
-    --> 515     edge_pos = numpy.asarray([(pos[e[0]], pos[e[1]]) for e in edgelist])
-        516 
-        517     if not cb.iterable(width):
-
-
-    KeyError: 0
-
-
-
-.. image:: LayoutEditor_files/LayoutEditor_18_1.png
+.. image:: LayoutEditor_files/LayoutEditor_18_0.png
 
 
 The graph of waypath :math:`\mathcal{G}_w`. This graph is used for agent
@@ -417,21 +411,19 @@ The display options dictionnary
 .. parsed-literal::
 
     filestr :  DLR.ini
-    filematini :  matDB.ini
-    fileslabini :  slabDB.ini
     filegeom :  DLR.off
     boundaries  (-10.505, 42.586, -18.277, 18.878)
     number of Points : 109
-    number of Segments : 138
+    number of Segments : 140
     number of Sub-Segments : 30
-    Gs Nodes :  247
-    Gs Edges :  276
-    Gt Nodes :  31
-    Gt Edges :  140
+    Gs Nodes :  249
+    Gs Edges :  280
+    Gt Nodes :  33
+    Gt Edges :  81
     vnodes = Gt.node[Nc]['cycles'].cycle 
     poly = Gt.node[Nc]['cycle'].polyg 
-    Gr Nodes    : 26
-    Gr Edges    : 114
+    Gr Nodes    : 23
+    Gr Edges    : 19
     Nc  = Gr.node[nroom]['cycles']  
 
 
@@ -458,7 +450,12 @@ are exploited in ``showGs()`` visualization method.
      'ednodes': True,
      'fontsize': 10,
      'layer': [],
-     'layers': ['WALL', 'PARTITION', 'AIR', 'WINDOW_GLASS', '3D_WINDOW_GLASS'],
+     'layers': ['WALL',
+      'PARTITION',
+      'AIR',
+      'WINDOW_GLASS',
+      '3D_WINDOW_GLASS',
+      '_AIR'],
      'layerset': ['WINDOW_GLASS',
       'PLASTERBOARD_7CM',
       'WALL',
@@ -603,6 +600,83 @@ a filename. In that case the file is stored in
     >>> L=Layout()
     >>> L.display['fileoverlay']='http://images.wikia.com/theoffice/images/9/9e/Layout.jpg'
 
+
+.. parsed-literal::
+
+    building Layout ...
+
+
+::
+
+
+    
+
+    MultipleInstanceErrorTraceback (most recent call last)
+
+    <ipython-input-18-cead63e6ceaa> in <module>()
+    ----> 1 L=Layout()
+          2 L.display['fileoverlay']='http://images.wikia.com/theoffice/images/9/9e/Layout.jpg'
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check, build, verbose)
+        422 
+        423 
+    --> 424         self.load(_filename,build=build)
+        425 
+        426 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in load(self, _filename, build)
+       1624                     # if ans.lower()=='y':
+       1625 
+    -> 1626                     self.build()
+       1627                     self.lbltg.append('s')
+       1628                     self.dumpw()
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4786             if verbose:
+       4787                 print "Gv"
+    -> 4788             self.buildGv()
+       4789             self.lbltg.extend('v')
+       4790 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGv(self, show)
+       7065                 for idiff in ndiffvalid:
+       7066 
+    -> 7067                     import ipdb
+       7068                     # ipdb.set_trace()
+       7069                     # if (icycle==2) & (idiff==-2399):
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__init__.py in <module>()
+          5 # https://opensource.org/licenses/BSD-3-Clause
+          6 
+    ----> 7 from ipdb.__main__ import set_trace, post_mortem, pm, run             # noqa
+          8 from ipdb.__main__ import runcall, runeval, launch_ipdb_on_exception  # noqa
+          9 
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__main__.py in <module>()
+         56     # the instance method will create a new one without loading the config.
+         57     # i.e: if we are in an embed instance we do not want to load the config.
+    ---> 58     ipapp = TerminalIPythonApp.instance()
+         59     shell = get_ipython()
+         60     def_colors = shell.colors
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/traitlets/config/configurable.pyc in instance(cls, *args, **kwargs)
+        414             raise MultipleInstanceError(
+        415                 'Multiple incompatible subclass instances of '
+    --> 416                 '%s are being created.' % cls.__name__
+        417             )
+        418 
+
+
+    MultipleInstanceError: Multiple incompatible subclass instances of TerminalIPythonApp are being created.
+
+
 .. code:: python
 
     >>> L.display['overlay']=True
@@ -617,19 +691,33 @@ a filename. In that case the file is stored in
     >>> L.showGs()
 
 
+::
+
+
+    
+
+    KeyErrorTraceback (most recent call last)
+
+    <ipython-input-20-9bcb9acc34ba> in <module>()
+          1 plt.figure(figsize=(10,10))
+    ----> 2 L.showGs()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in showGs(self, **kwargs)
+       4690             for nameslab in self.sl:
+       4691                 color = self.sl[nameslab]['color']
+    -> 4692                 edlist = self.name[nameslab]
+       4693                 fig,ax=self.show_layer(nameslab, edlist=edlist, alpha=alpha,
+       4694                                 dthin=dthin, dnodes=dnodes, dlabels=dlabels,
+
+
+    KeyError: 'FLOOR'
+
 
 
 .. parsed-literal::
 
-    (<matplotlib.figure.Figure at 0x2abb60121a50>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x2abb6077b790>)
-
-
-
-
-.. parsed-literal::
-
-    <matplotlib.figure.Figure at 0x2abb60121910>
+    <matplotlib.figure.Figure at 0x7f3b22214d50>
 
 
 
@@ -703,8 +791,83 @@ Vizualisation of the layout
     >>> a = plt.axis('off')
 
 
+.. parsed-literal::
 
-.. image:: LayoutEditor_files/LayoutEditor_38_0.png
+    building Layout ...
+
+
+::
+
+
+    
+
+    MultipleInstanceErrorTraceback (most recent call last)
+
+    <ipython-input-22-19a72aa609b6> in <module>()
+    ----> 1 L = Layout('TA-Office.ini')
+          2 L.dumpr()
+          3 fig = plt.figure(figsize=(25,25))
+          4 ax = fig.gca()
+          5 fig,ax = L.showG(fig=fig,ax=ax,graph='s',labels=True,font_size=9,node_size=220,node_color='c')
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check, build, verbose)
+        422 
+        423 
+    --> 424         self.load(_filename,build=build)
+        425 
+        426 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in load(self, _filename, build)
+       1624                     # if ans.lower()=='y':
+       1625 
+    -> 1626                     self.build()
+       1627                     self.lbltg.append('s')
+       1628                     self.dumpw()
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4786             if verbose:
+       4787                 print "Gv"
+    -> 4788             self.buildGv()
+       4789             self.lbltg.extend('v')
+       4790 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGv(self, show)
+       7065                 for idiff in ndiffvalid:
+       7066 
+    -> 7067                     import ipdb
+       7068                     # ipdb.set_trace()
+       7069                     # if (icycle==2) & (idiff==-2399):
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__init__.py in <module>()
+          5 # https://opensource.org/licenses/BSD-3-Clause
+          6 
+    ----> 7 from ipdb.__main__ import set_trace, post_mortem, pm, run             # noqa
+          8 from ipdb.__main__ import runcall, runeval, launch_ipdb_on_exception  # noqa
+          9 
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__main__.py in <module>()
+         56     # the instance method will create a new one without loading the config.
+         57     # i.e: if we are in an embed instance we do not want to load the config.
+    ---> 58     ipapp = TerminalIPythonApp.instance()
+         59     shell = get_ipython()
+         60     def_colors = shell.colors
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/traitlets/config/configurable.pyc in instance(cls, *args, **kwargs)
+        414             raise MultipleInstanceError(
+        415                 'Multiple incompatible subclass instances of '
+    --> 416                 '%s are being created.' % cls.__name__
+        417             )
+        418 
+
+
+    MultipleInstanceError: Multiple incompatible subclass instances of TerminalIPythonApp are being created.
 
 
 Each node of :math:`\mathcal{G}_s` with a negative index is a point.

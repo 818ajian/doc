@@ -44,8 +44,9 @@ docx:
 	$(SPHINXBUILD) -b docx $(ALLSPHINXOPTS) $(BUILDDIR)/docx
 	@echo
 	@echo "Build finished. The docx is in $(BUILDDIR)/docx."
-html:
+rst:
 	make -f ./notebook/Makefile all
+html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."

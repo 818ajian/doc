@@ -1355,7 +1355,7 @@ Double Glass example from litterature [1] in sub TeraHertz D-band @ 120GHz
 
     freq = np.linspace(110,135,50)
     sl['DoubleGlass'].ev(freq,theta)
-    fig,ax = sl['DoubleGlass'].plotwrt('f',figsize=(10,10))  # @20°
+    fig,ax = sl['DoubleGlass'].plotwrt('f',figsize=(10,10))  # @20
     tight_layout()
 
 
@@ -1373,7 +1373,7 @@ on <http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=5505315&query
 
 [2]. `R.Piesiewicz 'Terahertz characterization of building materials'
 Electronics .Letters Jan 2005 Vol 41
-N°18 <https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&ved=0CCwQFjAA&url=http%3A%2F%2Fwww-ece.rice.edu%2F~daniel%2Fpapers%2FnormanElecLett.pdf&ei=Tr_eUe6EG-OM0AWA0IAw&usg=AFQjCNHzt9H3RkLAtws51E9EpEgyqh-6LA&sig2=QLZlhoTJtiuHAW5Zzg_xOw&bvm=bv.48705608,d.d2k>`__
+N18 <https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&ved=0CCwQFjAA&url=http%3A%2F%2Fwww-ece.rice.edu%2F~daniel%2Fpapers%2FnormanElecLett.pdf&ei=Tr_eUe6EG-OM0AWA0IAw&usg=AFQjCNHzt9H3RkLAtws51E9EpEgyqh-6LA&sig2=QLZlhoTJtiuHAW5Zzg_xOw&bvm=bv.48705608,d.d2k>`__
 
 
 
@@ -5511,7 +5511,7 @@ To define a default trajectory :
         </tr>
       </tbody>
     </table>
-    <p>5 rows × 10 columns</p>
+    <p>5 rows  10 columns</p>
     </div>
 
 
@@ -5901,7 +5901,7 @@ A large scale trajectory is defined in the :math:`(O,x,y)` plane.
         </tr>
       </tbody>
     </table>
-    <p>5 rows × 10 columns</p>
+    <p>5 rows  10 columns</p>
     </div>
 
 
@@ -6912,7 +6912,7 @@ The log file which contains all traces from the dynamic are in
 
 .. parsed-literal::
 
-    ls: impossible d'accéder à /home/Bureau/P1/netsave/: Aucun fichier ou dossier de ce type
+    ls: impossible d'accder  /home/Bureau/P1/netsave/: Aucun fichier ou dossier de ce type
 
 
 Layout
@@ -7145,7 +7145,7 @@ enable/disable localizaiton of the agents
 
 Select localization methods :
 
--  Algebraic : hétérogeneous localization algorithm
+-  Algebraic : htrogeneous localization algorithm
 -  Geometric : RGPA
 
 .. code-block:: python

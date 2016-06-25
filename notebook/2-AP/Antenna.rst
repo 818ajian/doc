@@ -17,14 +17,8 @@ module which is placed in the ``antprop`` module.
 
 .. code:: python
 
-    from pylayers.antprop.antenna import *
-    %matplotlib inline
-
-
-.. parsed-literal::
-
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
+    >>> from pylayers.antprop.antenna import *
+    >>> %matplotlib inline
 
 An antenna object can not be loaded in specifying an existing antenna
 file name as argument of the constructor. Lets start by loading an
@@ -34,19 +28,13 @@ chamber.
 
 .. code:: python
 
-    A = Antenna('S1R1.vsh3')
+    >>> A = Antenna('S1R1.vsh3')
 
 The object antenna can show itself just by typing it's name.
 
 .. code:: python
 
-    A
-
-
-
-
-.. parsed-literal::
-
+    >>> A
     Antenna type : vsh3
     ------------------------
     file name : S1R1.vsh3
@@ -57,12 +45,22 @@ The object antenna can show itself just by typing it's name.
     Not evaluated
 
 
+::
+
+
+      File "<ipython-input-3-8622ceb93fe9>", line 2
+        Antenna type : vsh3
+                   ^
+    SyntaxError: invalid syntax
+
+
 
 We got information about the antenna filename and the frequency band
 where it has been defined.
 
-At loading time the antenna is not evaluated. It means that there is no
-internally any pattern for a set of angular and frequency values.
+At loading time the antenna is not evaluated. It means that there is not
+internally any instanciation of the pattern for a set of angular and
+frequency values.
 
 To list all the available antenna files in the dedicated directory of
 the project it is possible to invoke the ``ls()`` method.
@@ -73,12 +71,18 @@ environment variable.
 
 .. code:: python
 
-    !echo $BASENAME
-
-
-.. parsed-literal::
-
+    >>> !echo $BASENAME
     /home/uguen/Bureau/P1
+
+
+::
+
+
+      File "<ipython-input-4-a699c56867f8>", line 2
+        home(/uguen/Bureau/P1)
+             ^
+    SyntaxError: invalid syntax
+
 
 
 We can use the ``ls`` method to determine the number of files of
@@ -86,25 +90,30 @@ different type
 
 .. code:: python
 
-    lvsh3 = A.ls('vsh3')
-    lssh3 = A.ls('sh3')
-    lmat = A.ls('mat')
-    print "Number of antenna in .vsh3 format : ",len(lvsh3)
-    print "Number of antenna in .sh3 format : ",len(lssh3)
-    print lvsh3[0:5]
-    print lssh3[0:5]
-
-
-.. parsed-literal::
-
-    Number of antenna in .vsh3 format :  5
+    >>> lvsh3 = A.ls('vsh3')
+    >>> lssh3 = A.ls('sh3')
+    >>> lmat = A.ls('mat')
+    >>> print "Number of antenna in .vsh3 format : ",len(lvsh3)
+    >>> print "Number of antenna in .sh3 format : ",len(lssh3)
+    >>> print lvsh3[0:5]
+    >>> print lssh3[0:5]
+    >>> print lmat[0:5]
+    Number of antenna in .vsh3 format :  2
     Number of antenna in .sh3 format :  4
-    ['S1R1.vsh3', 'UWB_CEA.vsh3', 'defant.vsh3', 'dipole_XZ_NEC2.vsh3', 'monocone_IETR_1_6_G.vsh3']
+    ['S1R1.vsh3', 'defant.vsh3']
     ['S17R1.sh3', 'S17R2m.sh3', 'S1R1.sh3', 'S2R2.sh3']
+    []
 
 
-Pattern Visualization
-=====================
+::
+
+
+      File "<ipython-input-5-b1e6701d70dc>", line 9
+        Number of antenna in .vsh3 format :  2
+                ^
+    SyntaxError: invalid syntax
+
+
 
 As already mentionned, the radiation pattern of the antenna has not yet
 been evaluated. The method to evaluate the pattern is ``eval()`` with
@@ -112,84 +121,6 @@ the ``grid`` option set to true. If the ``grid`` option is set to False,
 the antenna is evaluated for only the specified direction. This mode is
 used in the ray tracing, while the former is used to visualize the whole
 antenna pattern.
-
-.. code:: python
-
-    A.eval()
-
-Now the antenna is evaluated
-
-.. code:: python
-
-    A
-
-
-
-
-.. parsed-literal::
-
-    Antenna type : vsh3
-    ------------------------
-    file name : S1R1.vsh3
-    fmin : 0.80GHz
-    fmax : 5.95GHz
-    step : 50.00MHz
-    Nf : 104
-    -----------------------
-          evaluated        
-    -----------------------
-    Ntheta : 90
-    Nphi : 181
-       f = 5.60 GHz 
-       theta = 68.76 (degrees) 
-       phi = 270.50  (degrees) 
-
-
-
-.. code:: python
-
-    A.fGHz
-
-
-
-
-.. parsed-literal::
-
-    array([ 0.8 ,  0.85,  0.9 ,  0.95,  1.  ,  1.05,  1.1 ,  1.15,  1.2 ,
-            1.25,  1.3 ,  1.35,  1.4 ,  1.45,  1.5 ,  1.55,  1.6 ,  1.65,
-            1.7 ,  1.75,  1.8 ,  1.85,  1.9 ,  1.95,  2.  ,  2.05,  2.1 ,
-            2.15,  2.2 ,  2.25,  2.3 ,  2.35,  2.4 ,  2.45,  2.5 ,  2.55,
-            2.6 ,  2.65,  2.7 ,  2.75,  2.8 ,  2.85,  2.9 ,  2.95,  3.  ,
-            3.05,  3.1 ,  3.15,  3.2 ,  3.25,  3.3 ,  3.35,  3.4 ,  3.45,
-            3.5 ,  3.55,  3.6 ,  3.65,  3.7 ,  3.75,  3.8 ,  3.85,  3.9 ,
-            3.95,  4.  ,  4.05,  4.1 ,  4.15,  4.2 ,  4.25,  4.3 ,  4.35,
-            4.4 ,  4.45,  4.5 ,  4.55,  4.6 ,  4.65,  4.7 ,  4.75,  4.8 ,
-            4.85,  4.9 ,  4.95,  5.  ,  5.05,  5.1 ,  5.15,  5.2 ,  5.25,
-            5.3 ,  5.35,  5.4 ,  5.45,  5.5 ,  5.55,  5.6 ,  5.65,  5.7 ,
-            5.75,  5.8 ,  5.85,  5.9 ,  5.95])
-
-
-
-.. code:: python
-
-    f,a=A.plotG(fGHz=[0.8,1,2,3,4,5,6],plan='phi',GmaxdB=5)
-
-
-
-.. image:: Antenna_files/Antenna_22_0.png
-
-
-.. code:: python
-
-    f,a = A.plotG(fGHz=[0.8,1,2,3,4,5,6],plan='theta',GmaxdB=5)
-
-
-
-.. image:: Antenna_files/Antenna_23_0.png
-
-
-Spherial Harmonics representation
-=================================
 
 The vector spherical coefficient are strored in ``A.C``. This C refers
 to the coefficients. Those coefficients are obtained thanks to the
@@ -213,13 +144,7 @@ The coefficients of the antenna also have a **repr**
 
 .. code:: python
 
-    A.C
-
-
-
-
-.. parsed-literal::
-
+    >>> A.C
     Br
     -------------
     Nf   : 104
@@ -249,6 +174,15 @@ The coefficients of the antenna also have a **repr**
     Ncoeff s3 : 72
 
 
+::
+
+
+      File "<ipython-input-6-1c85cece9bf9>", line 3
+        -------------
+                     ^
+    SyntaxError: invalid syntax
+
+
 
 Synthesis of the radiation pattern
 ----------------------------------
@@ -257,19 +191,27 @@ The radiation pattern is synthetized with the following call
 
 .. code:: python
 
-    A.eval(grid=True)
+    >>> A.eval(grid=True)
 
 .. code:: python
 
-    20*np.log10(np.max(A.sqG))
-
-
-
-
-.. parsed-literal::
-
+    >>> 20*log10(np.max(A.sqG))
     2.2267467105871743
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-8-6b5768b333ca> in <module>()
+    ----> 1 20*log10(np.max(A.sqG))
+          2 2.2267467105871743
+
+
+    NameError: name 'log10' is not defined
 
 
 The ``plotG()`` method allow to superpose different pattern for a list
@@ -279,35 +221,36 @@ degree) is specified the diagram is given as a function of :math:`\phi`
 
 .. code:: python
 
-    f = plt.figure(figsize=(20,10))
-    a1 = f.add_subplot(121,projection='polar')
-    f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,GmaxdB=5,fig=f,ax=a1,show=False)
-    a2 = f1.add_subplot(122,projection='polar')
-    f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f,ax=a2)
-    f2.tight_layout()
+    >>> f = plt.figure(figsize=(20,10))
+    >>> a1 = f.add_subplot(121,projection='polar')
+    >>> f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,GmaxdB=5,fig=f,ax=a1,show=False)
+    >>> a2 = f1.add_subplot(122,projection='polar')
+    >>> f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f,ax=a2)
+    >>> f2.tight_layout()
 
 
 
-.. image:: Antenna_files/Antenna_36_0.png
-
-
-.. code:: python
-
-    f = plt.figure(figsize=(20,10))
-    a1 = f.add_subplot(121)
-    f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,fig=f,ax=a1,show=False,polar=False)
-    a2 = f.add_subplot(122)
-    f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f1,ax=a2,polar=False)
-    f2.tight_layout()
-
-
-
-.. image:: Antenna_files/Antenna_37_0.png
+.. image:: Antenna_files/Antenna_16_0.png
 
 
 .. code:: python
 
-    A.fGHz[96]
+    >>> f = plt.figure(figsize=(20,10))
+    >>> a1 = f.add_subplot(121)
+    >>> f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,fig=f,ax=a1,show=False,polar=False)
+    >>> a2 = f.add_subplot(122)
+    >>> f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f1,ax=a2,polar=False)
+    >>> f2.tight_layout()
+
+
+
+.. image:: Antenna_files/Antenna_17_0.png
+
+
+.. code:: python
+
+    >>> A.fGHz[96]
+    5.6000000000000005
 
 
 
@@ -320,37 +263,44 @@ degree) is specified the diagram is given as a function of :math:`\phi`
 
 .. code:: python
 
-    A.plotG(fGHz=[5.6],plan='phi',angdeg=90,GmaxdB=5)
+    >>> A.plotG(fGHz=[5.6],plan='phi',angdeg=90,GmaxdB=5)
+    (<matplotlib.figure.Figure at 0x7f140c466090>,
+     <matplotlib.projections.polar.PolarAxes at 0x7f140c4663d0>)
 
 
-
-.. image:: Antenna_files/Antenna_39_0.png
-
+::
 
 
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b0900a8d1d0>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b09003648d0>)
+      File "<ipython-input-12-a50e1281f288>", line 2
+        (<matplotlib.figure.Figure at 0x7f140c466090>,
+         ^
+    SyntaxError: invalid syntax
 
 
 
 .. code:: python
 
-    # A.pol3d(R=5,St=8,Sp=8)
+    >>> A.pol3d(R=5,St=8,Sp=8)
 
 The vector spherical coefficients can be dispalayed as follows
 
 .. code:: python
 
-    fig = plt.figure(figsize=(8,8))
-    A.C.show(typ='s3')
-    plt.tight_layout()
+    >>> fig = plt.figure(figsize=(8,8))
+    >>> A.C.show(typ='s3')
+    >>> plt.tight_layout()
+    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+      if self._edgecolors == str('face'):
 
 
+::
 
-.. image:: Antenna_files/Antenna_42_0.png
+
+      File "<ipython-input-14-126674ed8ed5>", line 4
+        home(/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590:, FutureWarning:, elementwise, comparison, failed;, returning, scalar, instead,, but, in, the, future, will, perform, elementwise, comparison)
+             ^
+    SyntaxError: invalid syntax
+
 
 
 Defining Antenna gain from analytic formulas
@@ -361,66 +311,63 @@ antennas are the following + Omni + Gauss + WirePlate + 3GPP
 
 .. code:: python
 
-    Ag = Antenna(typ='Gauss')
+    >>> Ag = Antenna(typ='Gauss')
 
 .. code:: python
 
-    Ag.plotG()
+    >>> Ag.plotG()
+    (<matplotlib.figure.Figure at 0x7f140978add0>,
+     <matplotlib.projections.polar.PolarAxes at 0x7f13ff5b7c90>)
 
 
-
-.. image:: Antenna_files/Antenna_46_0.png
-
+::
 
 
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b0900c1e350>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b0900c1e310>)
-
-
-
-.. code:: python
-
-    Ao = Antenna('Omni')
-
-.. code:: python
-
-    Ao.plotG()
-
-
-
-.. image:: Antenna_files/Antenna_48_0.png
-
-
-
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b0900af2d10>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b0900af2910>)
+      File "<ipython-input-16-a39c3acd4a57>", line 2
+        (<matplotlib.figure.Figure at 0x7f140978add0>,
+         ^
+    SyntaxError: invalid syntax
 
 
 
 .. code:: python
 
-    A3 = Antenna('3gpp')
+    >>> Ao = Antenna('Omni')
 
 .. code:: python
 
-    A3.plotG()
+    >>> Ao.plotG()
+    (<matplotlib.figure.Figure at 0x7f13ff4f0e90>,
+     <matplotlib.projections.polar.PolarAxes at 0x7f14881dcc90>)
+
+
+::
+
+
+      File "<ipython-input-18-94e1e6f5f0b1>", line 2
+        (<matplotlib.figure.Figure at 0x7f13ff4f0e90>,
+         ^
+    SyntaxError: invalid syntax
 
 
 
-.. image:: Antenna_files/Antenna_50_0.png
+.. code:: python
+
+    >>> A3 = Antenna('3gpp')
+
+.. code:: python
+
+    >>> A3.plotG()
+    (<matplotlib.figure.Figure at 0x7f13ff41f710>,
+     <matplotlib.projections.polar.PolarAxes at 0x7f13ff410650>)
 
 
+::
 
 
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2b0900ab4c90>,
-     <matplotlib.projections.polar.PolarAxes at 0x2b0900ab44d0>)
+      File "<ipython-input-20-dec534729d0b>", line 2
+        (<matplotlib.figure.Figure at 0x7f13ff41f710>,
+         ^
+    SyntaxError: invalid syntax
 
 

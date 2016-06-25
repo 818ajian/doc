@@ -4,23 +4,11 @@ WHERE1 UWB Measurement campaign M1
 
 .. code:: python
 
-    %matplotlib inline
-    from pylayers.measures.mesuwb import *
-    from pylayers.gis.layout import *
-    from pylayers.simul.link import *
-    from pylayers.signal.waveform import *
-
-
-.. parsed-literal::
-
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
-
-
-.. parsed-literal::
-
-    <matplotlib.figure.Figure at 0x2ba6e71f5d10>
-
+    >>> %matplotlib inline
+    >>> from pylayers.measures.mesuwb import *
+    >>> from pylayers.gis.layout import *
+    >>> from pylayers.simul.link import *
+    >>> from pylayers.signal.waveform import *
 
 First of all, we load the Layout of the environment. If the Layout
 associated graphs have already been built, one can load them with the
@@ -28,54 +16,40 @@ associated graphs have already been built, one can load them with the
 
 .. code:: python
 
-    L=Layout('WHERE1.ini')
-    L.dumpr()
+    >>> L=Layout('WHERE1.ini')
+    >>> L.dumpr()
 
 .. code:: python
 
-    try:
-        del td1
-        del td2
-        del td3
-        del td4
-        del te1
-        del te2
-        del te3
-        del te4
-        del tt1
-        del tt2
-        del tt3
-        del tt4
-    except:
-        pass
+    >>> try:
+    ...     del td1
+    ...     del td2
+    ...     del td3
+    ...     del td4
+    ...     del te1
+    ...     del te2
+    ...     del te3
+    ...     del te4
+    ...     del tt1
+    ...     del tt2
+    ...     del tt3
+    ...     del tt4
+    >>> except:
+    ...     pass
 
 The UWB measure from the WHERE1 project are handled in the class
 ``UWBMeasure``
 
 .. code:: python
 
-    K=UWBMeasure(10)
-
-
-.. parsed-literal::
-
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-
-
-.. parsed-literal::
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/measures/mesuwb.py:993: FutureWarning: elementwise != comparison failed and returning scalar instead; this will raise an error or perform elementwise comparison in the future.
-      if d != []:
-
+    >>> K=UWBMeasure(10)
 
 The delays associated with the 4 links are obatained directly
 
 .. code:: python
 
-    K.de
+    >>> K.de
+    array([ 46.19349565,  23.96692223,  71.6705632 ,  55.09300165])
 
 
 
@@ -90,11 +64,7 @@ As well as more information if needed.
 
 .. code:: python
 
-    K.info()
-
-
-.. parsed-literal::
-
+    >>> K.info()
     Date_Time : [u'31-Jul-2008 08:17:50']
     Tx_height : [u'120cm']
     Tx_position : [u'P010']
@@ -129,11 +99,21 @@ As well as more information if needed.
     LQI Meth2 4.89658815244  (dB)
 
 
+::
+
+
+      File "<ipython-input-6-4b703fad5eb6>", line 2
+        Date_Time : [u'31-Jul-2008 08:17:50']
+                  ^
+    SyntaxError: invalid syntax
+
+
+
 .. code:: python
 
-    ### Simulation section
-    fig=plt.figure(figsize=(10,5))
-    f,a = K.show(delay=K.de)
+    >>> ### Simulation section
+    ... fig=plt.figure(figsize=(10,5))
+    >>> f,a = K.show(delay=K.de)
 
 
 
@@ -142,28 +122,36 @@ As well as more information if needed.
 
 .. code:: python
 
-    #toa1 = K.toa_new()
-    #toa2 = K.toa_th(1e-1,1e-1)
+    >>> #toa1 = K.toa_new()
+    ... #toa2 = K.toa_th(1e-1,1e-1)
 
 .. code:: python
 
-    K.tau_Emax()
-
-
-
-
-.. parsed-literal::
-
+    >>> K.tau_Emax()
     array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
            [ 0.,  0.,  0., ...,  0.,  0.,  0.],
            [ 0.,  0.,  0., ...,  0.,  0.,  0.],
            [ 0.,  0.,  0., ...,  0.,  0.,  0.]])
 
 
+::
+
+
+      File "<ipython-input-9-65d660e0cd33>", line 2
+        array([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
+                               ^
+    SyntaxError: invalid syntax
+
+
 
 .. code:: python
 
-    np.vstack((K.rx))
+    >>> np.vstack((K.rx))
+    array([[  0.    ,   0.    ,   1.2   ],
+           [-12.2724,   7.7632,   1.2   ],
+           [-18.7747,  15.178 ,   1.2   ],
+           [ -4.1418,   8.8603,   1.2   ],
+           [ -9.0914,  15.1899,   1.2   ]])
 
 
 
@@ -182,60 +170,51 @@ The code below reads data from the M1-WHERE2 measurement campaign.
 
 .. code:: python
 
-    M=UWBMeasure(15)
-
-
-.. parsed-literal::
-
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-
+    >>> M=UWBMeasure(15)
 
 .. code:: python
 
-    for k in range(300):
-        try:
-            M  = UWBMeasure(k)
-        except:
-            break
-        tx = M.tx
-        D  = M.rx-tx[np.newaxis,:]
-        D2 = D*D
-        dist = np.sqrt(np.sum(D2,axis=1))[1:]
-        Emax = M.Emax()
-        Etot = M.Etot()[0]
-        try:
-            td1 = np.hstack((td1,dist[0]))
-            td2 = np.hstack((td2,dist[1]))
-            td3 = np.hstack((td3,dist[2]))
-            td4 = np.hstack((td4,dist[3]))
-    
-            te1 = np.hstack((te1,Emax[0]))
-            te2 = np.hstack((te2,Emax[1]))
-            te3 = np.hstack((te3,Emax[2]))
-            te4 = np.hstack((te4,Emax[3]))
-    
-            tt1 = np.hstack((tt1,Etot[0]))
-            tt2 = np.hstack((tt2,Etot[1]))
-            tt3 = np.hstack((tt3,Etot[2]))
-            tt4 = np.hstack((tt4,Etot[3]))
-            #tdist = np.hstack((tdist,dist))
-            #te = np.hstack((te,Emax))
-        except:
-            td1=np.array(dist[0])
-            td2=np.array(dist[1])
-            td3=np.array(dist[2])
-            td4=np.array(dist[3])
-            te1 =np.array(Emax[0])
-            te2 =np.array(Emax[1])
-            te3 =np.array(Emax[2])
-            te4 =np.array(Emax[3])
-            tt1 =np.array(Etot[0])
-            tt2 =np.array(Etot[1])
-            tt3 =np.array(Etot[2])
-            tt4 =np.array(Etot[3])
+    >>> for k in range(300):
+    ...     try:
+    ...         M  = UWBMeasure(k)
+    ...     except:
+    ...         break
+    ...     tx = M.tx
+    ...     D  = M.rx-tx[np.newaxis,:]
+    ...     D2 = D*D
+    ...     dist = np.sqrt(np.sum(D2,axis=1))[1:]
+    ...     Emax = M.Emax()
+    ...     Etot = M.Etot()[0]
+    ...     try:
+    ...         td1 = np.hstack((td1,dist[0]))
+    ...         td2 = np.hstack((td2,dist[1]))
+    ...         td3 = np.hstack((td3,dist[2]))
+    ...         td4 = np.hstack((td4,dist[3]))
+    >>> 
+    ...         te1 = np.hstack((te1,Emax[0]))
+    ...         te2 = np.hstack((te2,Emax[1]))
+    ...         te3 = np.hstack((te3,Emax[2]))
+    ...         te4 = np.hstack((te4,Emax[3]))
+    >>> 
+    ...         tt1 = np.hstack((tt1,Etot[0]))
+    ...         tt2 = np.hstack((tt2,Etot[1]))
+    ...         tt3 = np.hstack((tt3,Etot[2]))
+    ...         tt4 = np.hstack((tt4,Etot[3]))
+    ...         #tdist = np.hstack((tdist,dist))
+    ...         #te = np.hstack((te,Emax))
+    ...     except:
+    ...         td1=np.array(dist[0])
+    ...         td2=np.array(dist[1])
+    ...         td3=np.array(dist[2])
+    ...         td4=np.array(dist[3])
+    ...         te1 =np.array(Emax[0])
+    ...         te2 =np.array(Emax[1])
+    ...         te3 =np.array(Emax[2])
+    ...         te4 =np.array(Emax[3])
+    ...         tt1 =np.array(Etot[0])
+    ...         tt2 =np.array(Etot[1])
+    ...         tt3 =np.array(Etot[2])
+    ...         tt4 =np.array(Etot[3])
 
 The IR-UWB applied waweform is available in the raw data structure and
 can be extracted as follow. This exracttion is important in order to
@@ -244,15 +223,15 @@ used in the measurement campaign.
 
 .. code:: python
 
-    td1
+    >>> td1
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-13-479d13f50eb4> in <module>()
     ----> 1 td1
@@ -263,12 +242,12 @@ used in the measurement campaign.
 
 .. code:: python
 
-    from pylayers.signal.bsignal import *
-    s=M.RAW_DATA.tx[0]
-    t=M.RAW_DATA.timetx[0]*1e9
-    plt.plot(t,s)
-    plt.xlabel('time (ns)')
-    se=TUsignal(t,s)
+    >>> from pylayers.signal.bsignal import *
+    >>> s=M.RAW_DATA.tx[0]
+    >>> t=M.RAW_DATA.timetx[0]*1e9
+    >>> plt.plot(t,s)
+    >>> plt.xlabel('time (ns)')
+    >>> se=TUsignal(t,s)
 
 
 
@@ -277,14 +256,17 @@ used in the measurement campaign.
 
 .. code:: python
 
-    te = t[1]-t[0]
-    cs = np.cumsum(s*s)
-    E = cs[-1]*te
-    EdB = 10*np.log10(E*30)
-    print EdB
-    print E*30
-    use =1/E
-    print use
+    >>> te = t[1]-t[0]
+    >>> cs = np.cumsum(s*s)
+    >>> E = cs[-1]*te
+    >>> EdB = 10*np.log10(E*30)
+    >>> print EdB
+    >>> print E*30
+    >>> use =1/E
+    >>> print use
+    -10.2361907016
+    0.0947067492189
+    316.767286888
 
 
 .. parsed-literal::
@@ -294,20 +276,28 @@ used in the measurement campaign.
     316.767286888
 
 
+
+
+.. parsed-literal::
+
+    316.767286888
+
+
+
 .. code:: python
 
-    E2=se.Emax()
-    print E2*30
-    E2dB=10*np.log10(E2*30)
-    print E2dB
+    >>> E2=se.Emax()
+    >>> print E2*30
+    >>> E2dB=10*np.log10(E2*30)
+    >>> print E2dB
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    AttributeError                            Traceback (most recent call last)
+    AttributeErrorTraceback (most recent call last)
 
     <ipython-input-16-b3aec4f6e3ab> in <module>()
     ----> 1 E2=se.Emax()
@@ -321,33 +311,32 @@ used in the measurement campaign.
 
 .. code:: python
 
-    se.plot(typ='v')
-
-
-
-
-.. parsed-literal::
-
-    (<matplotlib.figure.Figure at 0x2ba6e7d47b90>,
-     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x2ba6e7d47e50>]], dtype=object))
-
-
-
-
-.. image:: Wheresimple_files/Wheresimple_23_1.png
-
-
-.. code:: python
-
-    td1
+    >>> se.plot(typ='v')
+    (<matplotlib.figure.Figure at 0x7f1da9c88410>,
+     array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7f1da9da1c10>]], dtype=object))
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+      File "<ipython-input-17-5f085613f54b>", line 2
+        (<matplotlib.figure.Figure at 0x7f1da9c88410>,
+         ^
+    SyntaxError: invalid syntax
 
-    NameError                                 Traceback (most recent call last)
+
+
+.. code:: python
+
+    >>> td1
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-18-479d13f50eb4> in <module>()
     ----> 1 td1
@@ -358,26 +347,26 @@ used in the measurement campaign.
 
 .. code:: python
 
-    fig = plt.figure(figsize=(16,6))
-    ax = fig.add_subplot(111)
-    ax.semilogx(td1,te1+EdB,'.r',label='Rx1')
-    ax.semilogx(td2,te2+EdB,'.b',label='Rx2')
-    ax.semilogx(td3,te3+EdB,'.g',label='Rx3')
-    ax.semilogx(td4,te4+EdB,'.c',label='Rx4')
-    d = np.linspace(1,30,100)
-    
-    LFS = -(32.4+20*np.log10(4)+20*np.log10(d))-4
-    ax.semilogx(d,LFS)
-    plt.legend()
-    plt.grid()
+    >>> fig = plt.figure(figsize=(16,6))
+    >>> ax = fig.add_subplot(111)
+    >>> ax.semilogx(td1,te1+EdB,'.r',label='Rx1')
+    >>> ax.semilogx(td2,te2+EdB,'.b',label='Rx2')
+    >>> ax.semilogx(td3,te3+EdB,'.g',label='Rx3')
+    >>> ax.semilogx(td4,te4+EdB,'.c',label='Rx4')
+    >>> d = np.linspace(1,30,100)
+    >>> 
+    >>> LFS = -(32.4+20*np.log10(4)+20*np.log10(d))-4
+    >>> ax.semilogx(d,LFS)
+    >>> plt.legend()
+    >>> plt.grid()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-19-c8c2d113d203> in <module>()
           1 fig = plt.figure(figsize=(16,6))
@@ -396,26 +385,26 @@ used in the measurement campaign.
 
 .. code:: python
 
-    fig = plt.figure(figsize=(16,6))
-    ax = fig.add_subplot(111)
-    ax.semilogx(td1,tt1+EdB,'.r',label='Rx1')
-    ax.semilogx(td2,tt2+EdB,'.b',label='Rx2')
-    ax.semilogx(td3,tt3+EdB,'.g',label='Rx3')
-    ax.semilogx(td4,tt4+EdB,'.c',label='Rx4')
-    d = np.linspace(1,30,100)
-    
-    LFS = -(32.4+20*np.log10(4)+20*np.log10(d))-4
-    ax.semilogx(d,LFS)
-    plt.legend()
-    plt.grid()
+    >>> fig = plt.figure(figsize=(16,6))
+    >>> ax = fig.add_subplot(111)
+    >>> ax.semilogx(td1,tt1+EdB,'.r',label='Rx1')
+    >>> ax.semilogx(td2,tt2+EdB,'.b',label='Rx2')
+    >>> ax.semilogx(td3,tt3+EdB,'.g',label='Rx3')
+    >>> ax.semilogx(td4,tt4+EdB,'.c',label='Rx4')
+    >>> d = np.linspace(1,30,100)
+    >>> 
+    >>> LFS = -(32.4+20*np.log10(4)+20*np.log10(d))-4
+    >>> ax.semilogx(d,LFS)
+    >>> plt.legend()
+    >>> plt.grid()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-20-73bd51aacab9> in <module>()
           1 fig = plt.figure(figsize=(16,6))
@@ -434,40 +423,34 @@ used in the measurement campaign.
 
 .. code:: python
 
-    M.Etot()
-
-
-.. parsed-literal::
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/channel.py:808: VisibleDeprecationWarning: boolean index did not match indexed array along dimension 0; dimension is 1 but corresponding boolean dimension is 40000
-      etot = self.dx() * sum(self.y[u] * np.conj(self.y[u]))
+    >>> M.Etot()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    IndexError                                Traceback (most recent call last)
+    IndexErrorTraceback (most recent call last)
 
     <ipython-input-21-4c54b027f6b5> in <module>()
     ----> 1 M.Etot()
     
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/measures/mesuwb.pyc in Etot(self, toffns, tdns, dB)
-       1998         de2 = self.de[2] + toffns
-       1999         de3 = self.de[3] + toffns
-    -> 2000         Etot1 = self.tdd.ch1.Etot(de0, de0 + tdns)
-       2001         Etot2 = self.tdd.ch2.Etot(de1, de1 + tdns)
-       2002         Etot3 = self.tdd.ch3.Etot(de2, de2 + tdns)
+       1977         de2 = self.de[2] + toffns
+       1978         de3 = self.de[3] + toffns
+    -> 1979         Etot1 = self.tdd.ch1.Etot(de0, de0 + tdns)
+       1980         Etot2 = self.tdd.ch2.Etot(de1, de1 + tdns)
+       1981         Etot3 = self.tdd.ch3.Etot(de2, de2 + tdns)
 
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/channel.pyc in Etot(self, tau0, taumax, dB)
-        806         """
-        807         u = (self.x > tau0) & (self.x < taumax)
-    --> 808         etot = self.dx() * sum(self.y[u] * np.conj(self.y[u]))
-        809         if dB:
-        810             etot = 10 * np.log10(etot)
+        787         """
+        788         u = (self.x > tau0) & (self.x < taumax)
+    --> 789         etot = self.dx() * sum(self.y[u] * np.conj(self.y[u]))
+        790         if dB:
+        791             etot = 10 * np.log10(etot)
 
 
     IndexError: index 8646 is out of bounds for axis 0 with size 1
@@ -477,25 +460,16 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    #measure id
-    tx_id = 100 #in M.valid_index
-    rx_id = 2 #1,2,3,4
-    M=UWBMeasure(tx_id)
-    TX = M.tx
-    RX =M.rx[rx_id]
-
-
-.. parsed-literal::
-
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-
+    >>> #measure id
+    ... tx_id = 100 #in M.valid_index
+    >>> rx_id = 2 #1,2,3,4
+    >>> M=UWBMeasure(tx_id)
+    >>> TX = M.tx
+    >>> RX =M.rx[rx_id]
 
 .. code:: python
 
-    TX
+    >>> TX
 
 
 
@@ -508,7 +482,7 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    M.rx
+    >>> M.rx
 
 
 
@@ -525,39 +499,27 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    L.showG('s',figsize=(8,4))
-    plt.plot(TX[0],TX[1],'ob')
-    plt.plot(RX[0],RX[1],'or')
-    plt.title('TOF = '+ str(np.sqrt(np.sum((TX-RX)**2))/0.3))
-
-
-.. parsed-literal::
-
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:650: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-      if self._edgecolors_original != str('face'):
+    >>> L.showG('s',figsize=(8,4))
+    >>> plt.plot(TX[0],TX[1],'ob')
+    >>> plt.plot(RX[0],RX[1],'or')
+    >>> plt.title('TOF = '+ str(np.sqrt(np.sum((TX-RX)**2))/0.3))
 
 
 
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x2ba6e826ba10>
+    <matplotlib.text.Text at 0x7f86c89c3f50>
 
 
 
-.. parsed-literal::
 
-    /home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-      if self._edgecolors == str('face'):
-
-
-
-.. image:: Wheresimple_files/Wheresimple_32_3.png
+.. image:: Wheresimple_files/Wheresimple_32_1.png
 
 
 .. code:: python
 
-    TX
+    >>> TX
 
 
 
@@ -570,7 +532,7 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    RX
+    >>> RX
 
 
 
@@ -583,18 +545,23 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    #Lk = DLink()
-    Lk = DLink(L=L,a=TX,b=RX,cutoff=4,verbose=False)
-    Lk.Aa=Antenna('defant.vsh3')
-    Lk.Ab=Antenna('defant.vsh3')
+    >>> #Lk = DLink()
+    ... Lk = DLink(L=L,a=TX,b=RX,cutoff=4,verbose=False)
+    >>> Lk.Aa=Antenna('defant.vsh3')
+    >>> Lk.Ab=Antenna('defant.vsh3')
+
+
+.. parsed-literal::
+
+    building Layout ...
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    AssertionError                            Traceback (most recent call last)
+    MultipleInstanceErrorTraceback (most recent call last)
 
     <ipython-input-28-6282203ae045> in <module>()
           1 #Lk = DLink()
@@ -604,44 +571,84 @@ On choisit un index pour Tx et Rx
 
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/simul/link.pyc in __init__(self, **kwargs)
-        344         Link.__init__(self)
-        345 
-    --> 346         defaults={ 'L':Layout(),
-        347                    'a':np.array(()),
-        348                    'b':np.array(()),
+        348         Link.__init__(self)
+        349 
+    --> 350         defaults={ 'L':Layout(),
+        351                    'a':np.array(()),
+        352                    'b':np.array(()),
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check)
-        410         # check layout integrity (default)
-        411         if check:
-    --> 412             self.check()
-        413         #self.boundary()
-        414 
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in __init__(self, _filename, _filematini, _fileslabini, _filefur, force, check, build, verbose)
+        422 
+        423 
+    --> 424         self.load(_filename,build=build)
+        425 
+        426 
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in check(self, level)
-        719             deg0 = filter(lambda x: nx.degree(self.Gs,x)==0,upnt)
-        720             deg1 = filter(lambda x: nx.degree(self.Gs,x)==1,upnt)
-    --> 721             assert (len(deg0)==0), "It exists degree 0 points :  %r" % deg0
-        722             assert (len(deg1)==0), "It exists degree 1 points : %r" % deg1
-        723 
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in load(self, _filename, build)
+       1624                     # if ans.lower()=='y':
+       1625 
+    -> 1626                     self.build()
+       1627                     self.lbltg.append('s')
+       1628                     self.dumpw()
 
 
-    AssertionError: It exists degree 0 points :  [-18, -17, -16, -15, -14]
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4786             if verbose:
+       4787                 print "Gv"
+    -> 4788             self.buildGv()
+       4789             self.lbltg.extend('v')
+       4790 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGv(self, show)
+       7065                 for idiff in ndiffvalid:
+       7066 
+    -> 7067                     import ipdb
+       7068                     # ipdb.set_trace()
+       7069                     # if (icycle==2) & (idiff==-2399):
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__init__.py in <module>()
+          5 # https://opensource.org/licenses/BSD-3-Clause
+          6 
+    ----> 7 from ipdb.__main__ import set_trace, post_mortem, pm, run             # noqa
+          8 from ipdb.__main__ import runcall, runeval, launch_ipdb_on_exception  # noqa
+          9 
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/ipdb/__main__.py in <module>()
+         56     # the instance method will create a new one without loading the config.
+         57     # i.e: if we are in an embed instance we do not want to load the config.
+    ---> 58     ipapp = TerminalIPythonApp.instance()
+         59     shell = get_ipython()
+         60     def_colors = shell.colors
+
+
+    /home/uguen/anaconda2/lib/python2.7/site-packages/traitlets/config/configurable.pyc in instance(cls, *args, **kwargs)
+        414             raise MultipleInstanceError(
+        415                 'Multiple incompatible subclass instances of '
+    --> 416                 '%s are being created.' % cls.__name__
+        417             )
+        418 
+
+
+    MultipleInstanceError: Multiple incompatible subclass instances of TerminalIPythonApp are being created.
 
 
 .. code:: python
 
-    Lk.eval(force=['ray','Ct','H'],alg=5)
-    #f,a = Lk.show(rays=True,labels=False)
+    >>> Lk.eval(force=['ray','Ct','H'],alg=5)
+    >>> #f,a = Lk.show(rays=True,labels=False)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-29-213fa5db2653> in <module>()
     ----> 1 Lk.eval(force=['ray','Ct','H'],alg=5)
@@ -653,20 +660,20 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    #%timeit Lk.eval(force=True,alg=7,cutoff=3)
-    #f,a = Lk.show(rays=True,labels=False)
+    >>> #%timeit Lk.eval(force=True,alg=7,cutoff=3)
+    ... #f,a = Lk.show(rays=True,labels=False)
 
 .. code:: python
 
-    Lk.R
+    >>> Lk.R
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-31-dd2218c56595> in <module>()
     ----> 1 Lk.R
@@ -677,20 +684,20 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    #%timeit Lk.eval(force=True,alg=7,threshold=0.01)
-    #f,a = Lk.show(rays=True,labels=False)
+    >>> #%timeit Lk.eval(force=True,alg=7,threshold=0.01)
+    ... #f,a = Lk.show(rays=True,labels=False)
 
 .. code:: python
 
-    Lk.Si.keys()
+    >>> Lk.Si.keys()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-33-fbcd3fa4b286> in <module>()
     ----> 1 Lk.Si.keys()
@@ -701,15 +708,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    U=Lk.R[4]['sig2d'][0]
+    >>> U=Lk.R[4]['sig2d'][0]
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-34-7127f05a2d76> in <module>()
     ----> 1 U=Lk.R[4]['sig2d'][0]
@@ -720,15 +727,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    print U.shape
+    >>> print U.shape
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-35-c88df2aeda9a> in <module>()
     ----> 1 print U.shape
@@ -739,16 +746,16 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    s1 = U[:,:,0]
-    print s1
+    >>> s1 = U[:,:,0]
+    >>> print s1
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-36-03b545538d6b> in <module>()
     ----> 1 s1 = U[:,:,0]
@@ -760,19 +767,19 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    from pylayers.antprop.signature import Signature
+    >>> from pylayers.antprop.signature import Signature
 
 .. code:: python
 
-    S=Signature(s1)
+    >>> S=Signature(s1)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-38-e7330839f958> in <module>()
     ----> 1 S=Signature(s1)
@@ -783,15 +790,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    S
+    >>> S
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-39-65db27307aa0> in <module>()
     ----> 1 S
@@ -802,39 +809,30 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    wav = Waveform(typ='W1compensate')
-
-
-.. parsed-literal::
-
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-    DEPRECATION WARNING : geomutil.angular going deprecatd  because wrong
-
+    >>> wav = Waveform(typ='W1compensate')
 
 .. code:: python
 
-    wav.show()
+    >>> wav.show()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    IndexError                                Traceback (most recent call last)
+    IndexErrorTraceback (most recent call last)
 
     <ipython-input-41-8d4639290888> in <module>()
     ----> 1 wav.show()
     
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/signal/waveform.pyc in show(self, fig)
-        361         #plt.title(title)
-        362         ax1 = fig.add_subplot(2,1,1)
-    --> 363         ax1.plot(self.st.x,self.st.y[0,:])
-        364         plt.xlabel('time (ns)')
-        365         plt.ylabel('level in linear scale')
+        382         #plt.title(title)
+        383         ax1 = fig.add_subplot(2,1,1)
+    --> 384         ax1.plot(self.st.x,self.st.y[0,:])
+        385         plt.xlabel('time (ns)')
+        386         plt.ylabel('level in linear scale')
 
 
     IndexError: too many indices for array
@@ -846,19 +844,19 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    #ir = Lk.H.applywavB(wav.sfg)
+    >>> #ir = Lk.H.applywavB(wav.sfg)
 
 .. code:: python
 
-    Lk.H.isFriis
+    >>> Lk.H.isFriis
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-43-7614e9090bba> in <module>()
     ----> 1 Lk.H.isFriis
@@ -869,18 +867,18 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    if Lk.H.isFriis:
-        ir = Lk.H.applywavB(wav.sf)
-    else:
-        ir = Lk.H.applywavB(wav.sfg)
+    >>> if Lk.H.isFriis:
+    ...     ir = Lk.H.applywavB(wav.sf)
+    >>> else:
+    ...     ir = Lk.H.applywavB(wav.sfg)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-44-4083ce0b2310> in <module>()
     ----> 1 if Lk.H.isFriis:
@@ -894,15 +892,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    Lk.R.los
+    >>> Lk.R.los
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-45-c0cdcab44e2f> in <module>()
     ----> 1 Lk.R.los
@@ -913,15 +911,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    Lk.H.ak
+    >>> Lk.H.ak
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-46-ab86c1ac1316> in <module>()
     ----> 1 Lk.H.ak
@@ -932,15 +930,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    Lk.H.taud
+    >>> Lk.H.taud
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-47-a65c1ec8a0a6> in <module>()
     ----> 1 Lk.H.taud
@@ -951,15 +949,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    G=Lk.H.ift()
+    >>> G=Lk.H.ift()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-48-0f2260ad659d> in <module>()
     ----> 1 G=Lk.H.ift()
@@ -970,8 +968,8 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    M.tdd.ch2.plot(typ='v')
-    plt.xlim([10,130])
+    >>> M.tdd.ch2.plot(typ='v')
+    >>> plt.xlim([10,130])
 
 
 
@@ -988,7 +986,7 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    M.tx
+    >>> M.tx
 
 
 
@@ -1001,7 +999,7 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    M.rx
+    >>> M.rx
 
 
 
@@ -1018,7 +1016,7 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    np.sqrt(np.sum((M.tx-M.rx[3,:])*(M.tx-M.rx[3,:]),axis=0))/0.3
+    >>> np.sqrt(np.sum((M.tx-M.rx[3,:])*(M.tx-M.rx[3,:]),axis=0))/0.3
 
 
 
@@ -1031,15 +1029,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    Lk.H.ak
+    >>> Lk.H.ak
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-53-ab86c1ac1316> in <module>()
     ----> 1 Lk.H.ak
@@ -1050,15 +1048,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    Lk.wav=wav
+    >>> Lk.wav=wav
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-54-b1309bad8a92> in <module>()
     ----> 1 Lk.wav=wav
@@ -1069,15 +1067,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    ir.plot(typ='v')
+    >>> ir.plot(typ='v')
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-55-a7f16e271894> in <module>()
     ----> 1 ir.plot(typ='v')
@@ -1088,15 +1086,15 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    ir
+    >>> ir
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-56-2c92a57a4caa> in <module>()
     ----> 1 ir
@@ -1107,22 +1105,22 @@ On choisit un index pour Tx et Rx
 
 .. code:: python
 
-    fig = plt.figure(figsize=(10,7))
-    ax1=fig.add_subplot(211)
-    cmd='M.tdd.ch' + str(rx_id) + '.plot(typ=[\'l20\'],fig=fig,ax=ax1)'
-    eval(cmd)
-    ax2 = fig.add_subplot(212,sharex=ax1,sharey=ax1)
-    #Lk.chanreal.plot(typ=['v'],fig=fig,ax=ax2)
-    ir.plot(typ=['l20'],fig=fig,ax=ax2)
-    plt.xlim(60,130)
+    >>> fig = plt.figure(figsize=(10,7))
+    >>> ax1=fig.add_subplot(211)
+    >>> cmd='M.tdd.ch' + str(rx_id) + '.plot(typ=[\'l20\'],fig=fig,ax=ax1)'
+    >>> eval(cmd)
+    >>> ax2 = fig.add_subplot(212,sharex=ax1,sharey=ax1)
+    >>> #Lk.chanreal.plot(typ=['v'],fig=fig,ax=ax2)
+    ... ir.plot(typ=['l20'],fig=fig,ax=ax2)
+    >>> plt.xlim(60,130)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-57-c4c4ac0b63ee> in <module>()
           5 ax2 = fig.add_subplot(212,sharex=ax1,sharey=ax1)
@@ -1136,5 +1134,4 @@ On choisit un index pour Tx et Rx
 
 
 .. image:: Wheresimple_files/Wheresimple_64_1.png
-
 

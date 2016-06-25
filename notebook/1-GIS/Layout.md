@@ -215,26 +215,4 @@ The figure below illustrates a Layout and a superimposition of the graph of cycl
 >>> pth = np.vstack((pt,ph))
 ```
 
-```python
->>> np.shape(pth)
-```
 
-## `Layout.seg2pts` a function for getting points coordinates from segment number array
-
-```python
->>> L.seg2pts(aseg)
-```
-
-```python
->>> aseg = array(filter(lambda x: x>0,L.Gs.nodes()))
->>> pth = L.seg2pts(aseg)
-```
-
-```python
->>> from pylayers.util.plotutil import displot
-```
-
-```python
->>> displot(pth[0:2,:],pth[2:,:])
->>> plt.axis('off')
-```

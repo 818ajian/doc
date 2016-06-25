@@ -4,17 +4,23 @@ Handling Body Description and Mobility
 
 .. code:: python
 
-    from pylayers.mobility.ban.body import *
-    from pylayers.mobility.trajectory import Trajectory
-    from IPython.display import Image
-    from matplotlib.pyplot import *
-    import pylayers.util.mayautil as mau
-    %matplotlib inline
-
-
-.. parsed-literal::
-
+    >>> from pylayers.mobility.ban.body import *
+    >>> from pylayers.mobility.trajectory import Trajectory
+    >>> from IPython.display import Image
+    >>> from matplotlib.pyplot import *
+    >>> import pylayers.util.mayautil as mau
+    >>> %matplotlib inline
     WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+
+
+::
+
+
+      File "<ipython-input-1-0125d12214a3>", line 7
+        WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+               ^
+    SyntaxError: invalid syntax
+
 
 
 The body mobility is imported from motion capture files. This is the
@@ -47,24 +53,36 @@ To create a void body, simply instantiate a Body object from the class
 
 .. code:: python
 
-    John = Body()
-
-
-.. parsed-literal::
-
+    >>> John = Body()
     **** Processor coding : Intel-PC
+
+
+::
+
+
+      File "<ipython-input-2-df9088ea8006>", line 2
+        **** Processor coding : Intel-PC
+         ^
+    SyntaxError: invalid syntax
+
 
 
 which is equivalent to :
 
 .. code:: python
 
-    John = Body(_filebody='John.ini',_filemocap='07_01.c3d',unit='cm')
-
-
-.. parsed-literal::
-
+    >>> John = Body(_filebody='John.ini',_filemocap='07_01.c3d',unit='cm')
     **** Processor coding : Intel-PC
+
+
+::
+
+
+      File "<ipython-input-3-597f669313dd>", line 2
+        **** Processor coding : Intel-PC
+         ^
+    SyntaxError: invalid syntax
+
 
 
 The default body filename is John.ini and the default motion capture
@@ -73,12 +91,19 @@ filename is '07\_01.c3d'. The creation of a Body consists in reading a
 
 .. code:: python
 
-    John._show3()
-    mau.inotshow('John',doc=True)
+    >>> John._show3()
+    >>> mau.inotshow('John',doc=True)
+    <IPython.core.display.Image object>
 
 
+::
 
-.. image:: Body_files/Body_15_0.png
+
+      File "<ipython-input-4-d1569a3ca84d>", line 3
+        <IPython.core.display.Image object>
+        ^
+    SyntaxError: invalid syntax
+
 
 
 Description of a body file
@@ -92,38 +117,79 @@ with 4 sections.
 This section associates a node number to a c3d fils conventional node
 number
 
-::
+.. code:: python
 
     NodeId = C3DNODE
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-5-fb12c5303211> in <module>()
+    ----> 1 NodeId = C3DNODE
+    
+
+    NameError: name 'C3DNODE' is not defined
+
 
 -  [cylinder]
 
 This section associates a cylinder Id to a dictionnary wich contains
 cylinder tail head and radius information
 
+.. code:: python
+
+    CylId = {'t',NodeId1,'h',NodeId2,'r',float (m),'name',}
+
+
 ::
 
-      CylId = {'t',NodeId1,'h',NodeId2,'r',float (m),'name',}
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-6-46d3bfd7e067> in <module>()
+    ----> 1 CylId = {'t',NodeId1,'h',NodeId2,'r',float (m),'name',}
+    
+
+    NameError: name 'NodeId1' is not defined
+
 
 -  [device]
 
 This section associates a device name to a dictionnary wich contains
 cylinder device related information
 
+.. code:: python
+
+    DevId = {'typ' : {static|mobile}
+              'cyl': CylId
+              'l'  : length coordinate in ccs,
+              'h'  : height coordinate in ccs,
+              'a'  : angle coordinate in ccs,
+              'file' : antenna file ,
+              'T' : Rotation matrix }
+
+
 ::
 
-       DevId = {'typ' : {static|mobile}
-                 'cyl': CylId
-                 'l'  : length coordinate in ccs,
-                 'h'  : height coordinate in ccs,
-                 'a'  : angle coordinate in ccs,
-                 'file' : antenna file ,
-                 'T' : Rotation matrix }
+
+      File "<ipython-input-7-1a50e5204ee7>", line 2
+        'cyl': CylId
+            ^
+    SyntaxError: invalid syntax
+
+
 
 Example of a Body file
 ----------------------
 
-::
+.. code:: python
 
     [nodes]
     0 = [STRN,T10]
@@ -174,14 +240,30 @@ Example of a Body file
     ; number of frame to consider. if -1 : all frames
     nframes = -1
 
+
+::
+
+
+      File "<ipython-input-8-6f05e72414a3>", line 2
+        0 = [STRN,T10]
+    SyntaxError: can't assign to literal
+
+
+
 .. code:: python
 
-    Bernard = Body(_filebody='Bernard.ini',_filemocap='serie_017.c3d')
-
-
-.. parsed-literal::
-
+    >>> Bernard = Body(_filebody='Bernard.ini',_filemocap='serie_017.c3d')
     **** Processor coding : DEC-VAX
+
+
+::
+
+
+      File "<ipython-input-9-6a6810cef221>", line 2
+        **** Processor coding : DEC-VAX
+         ^
+    SyntaxError: invalid syntax
+
 
 
 Loading a Motion Capture File
@@ -199,30 +281,36 @@ verbose option of the ``read_c3d`` function
 
 .. code:: python
 
-    # Video Frame Rate
-    Vrate = 120
-    # Inter Frame
-    Tframe = 1./120
-    # select a number of frame
-    nframes = 300
-    # Time duration of the whole selected frame sequence
-    Tfseq = Tframe*nframes
-    #
-    # load a .c3dmotion capture file
-    # this update the g.pos
-    #
-    #bc.loadC3D(filename='07_01.c3d',nframes=nframes,centered=True)
+    >>> # Video Frame Rate
+    ... Vrate = 120
+    >>> # Inter Frame
+    ... Tframe = 1./120
+    >>> # select a number of frame
+    ... nframes = 300
+    >>> # Time duration of the whole selected frame sequence
+    ... Tfseq = Tframe*nframes
+    >>> #
+    ... # load a .c3dmotion capture file
+    ... # this update the g.pos
+    ... #
+    ... #bc.loadC3D(filename='07_01.c3d',nframes=nframes,centered=True)
 
 The duration of the capture is
 
 .. code:: python
 
-    print "Duration of the motion capture sequence", Tfseq," seconds"
-
-
-.. parsed-literal::
-
+    >>> print "Duration of the motion capture sequence", Tfseq," seconds"
     Duration of the motion capture sequence 2.5  seconds
+
+
+::
+
+
+      File "<ipython-input-11-444d441a8e14>", line 2
+        Duration of the motion capture sequence 2.5  seconds
+                  ^
+    SyntaxError: invalid syntax
+
 
 
 ``d`` is a MDA of shape ``(3,npoint,nframe)``. It contains all the
@@ -236,15 +324,23 @@ A specific space-time configuration of the body is called a
 
 .. code:: python
 
-    np.shape(Bernard.d)
-
-
-
-
-.. parsed-literal::
-
+    >>> np.shape(Bernard.d)
     (3, 16, 11213)
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-12-6251b76951c5> in <module>()
+    ----> 1 np.shape(Bernard.d)
+          2 (3, 16, 11213)
+
+
+    NameError: name 'np' is not defined
 
 
 Defining a trajectory
@@ -257,129 +353,110 @@ A Trajectory is a class which :
 
 .. code:: python
 
-    traj = Trajectory()
+    >>> traj = Trajectory()
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-13-bb102923b377> in <module>()
+    ----> 1 traj = Trajectory()
+    
+
+    NameError: name 'Trajectory' is not defined
+
 
 To define a default trajectory :
 
 .. code:: python
 
-    t = traj.generate()
+    >>> t = traj.generate()
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-14-59d8f9eb4b80> in <module>()
+    ----> 1 t = traj.generate()
+    
+
+    NameError: name 'traj' is not defined
+
 
 .. code:: python
 
-    print traj.columns
-
-
-.. parsed-literal::
-
+    >>> print traj.columns
     Index([u'x', u'y', u'z', u'vx', u'vy', u'vz', u'ax', u'ay', u'az', u's'], dtype='object')
 
 
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-15-1955a4bda7f1> in <module>()
+    ----> 1 print traj.columns
+          2 Index([u'x', u'y', u'z', u'vx', u'vy', u'vz', u'ax', u'ay', u'az', u's'], dtype='object')
+
+
+    NameError: name 'traj' is not defined
+
+
 .. code:: python
 
-    traj.head()
+    >>> traj.head()
+                                       x         y         z        vx  vy  \
+    1970-01-01 00:00:00.000000  0.000000  0.000000  0.258768  0.299813   1   
+    1970-01-01 00:00:00.204082  0.061186  0.204082 -0.073361  0.298689   1   
+    1970-01-01 00:00:00.408163  0.122143  0.408163  0.472638  0.296446   1   
+    1970-01-01 00:00:00.612245  0.182642  0.612245  0.230392  0.293093   1   
+    1970-01-01 00:00:00.816327  0.242457  0.816327 -0.345044  0.288641   1   
+    
+                                      vz        ax  ay         az         s  
+    1970-01-01 00:00:00.000000 -1.627431 -0.005505   0  21.083835  0.000000  
+    1970-01-01 00:00:00.204082  2.675393 -0.010989   0 -18.925740  0.213056  
+    1970-01-01 00:00:00.408163 -1.187003 -0.016433   0  -7.999922  0.426047  
+    1970-01-01 00:00:00.612245 -2.819640 -0.021814   0  -9.910813  0.638907  
+    1970-01-01 00:00:00.816327 -4.842255 -0.027114   0  30.434337  0.851574
 
 
+::
 
 
-.. raw:: html
-
-    <div>
-    <table border="1" class="dataframe">
-      <thead>
-        <tr style="text-align: right;">
-          <th></th>
-          <th>x</th>
-          <th>y</th>
-          <th>z</th>
-          <th>vx</th>
-          <th>vy</th>
-          <th>vz</th>
-          <th>ax</th>
-          <th>ay</th>
-          <th>az</th>
-          <th>s</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>1970-01-01 00:00:00.000000</th>
-          <td>0.000000</td>
-          <td>0.000000</td>
-          <td>-0.119779</td>
-          <td>0.299813</td>
-          <td>1</td>
-          <td>2.694500</td>
-          <td>-0.005505</td>
-          <td>0</td>
-          <td>4.195088</td>
-          <td>0.000000</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.204082</th>
-          <td>0.061186</td>
-          <td>0.204082</td>
-          <td>0.430119</td>
-          <td>0.298689</td>
-          <td>1</td>
-          <td>3.550640</td>
-          <td>-0.010989</td>
-          <td>0</td>
-          <td>-26.724612</td>
-          <td>0.213056</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.408163</th>
-          <td>0.122143</td>
-          <td>0.408163</td>
-          <td>1.154739</td>
-          <td>0.296446</td>
-          <td>1</td>
-          <td>-1.903363</td>
-          <td>-0.016433</td>
-          <td>0</td>
-          <td>-4.287227</td>
-          <td>0.426047</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.612245</th>
-          <td>0.182642</td>
-          <td>0.612245</td>
-          <td>0.766298</td>
-          <td>0.293093</td>
-          <td>1</td>
-          <td>-2.778307</td>
-          <td>-0.021814</td>
-          <td>0</td>
-          <td>5.471191</td>
-          <td>0.638907</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.816327</th>
-          <td>0.242457</td>
-          <td>0.816327</td>
-          <td>0.199296</td>
-          <td>0.288641</td>
-          <td>1</td>
-          <td>-1.661737</td>
-          <td>-0.027114</td>
-          <td>0</td>
-          <td>11.980007</td>
-          <td>0.851574</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
+      File "<ipython-input-16-49dc1e1adae1>", line 2
+        x         y         z        vx  vy  1970-01-01 00:00:00.000000  0.000000  0.000000  0.258768  0.299813   1
+        ^
+    IndentationError: unexpected indent
 
 
 
 .. code:: python
 
-    f,a = traj.plot()
+    >>> f,a = traj.plot()
 
 
+::
 
-.. image:: Body_files/Body_48_0.png
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-17-857ecb065353> in <module>()
+    ----> 1 f,a = traj.plot()
+    
+
+    NameError: name 'traj' is not defined
 
 
 settopos () method
@@ -396,43 +473,74 @@ settopos takes as argument
 
 .. code:: python
 
-    traj.__repr__()
+    >>> traj.__repr__()
+    'Trajectory of agent MyNameIsNoBody with ID 1\n--------------------------------------------\nt (s) : 0.00 : 0.20 : 9.59\ndtot (m) : 9.79\nVmoy (m/s) : 1.02\n                                   x         y         z        vx  vy  \\\n1970-01-01 00:00:00.000000  0.000000  0.000000  0.258768  0.299813   1   \n1970-01-01 00:00:00.204082  0.061186  0.204082 -0.073361  0.298689   1   \n\n                                  vz        ax  ay         az         s  \n1970-01-01 00:00:00.000000 -1.627431 -0.005505   0  21.083835  0.000000  \n1970-01-01 00:00:00.204082  2.675393 -0.010989   0 -18.925740  0.213056  \n'
 
 
+::
 
 
-.. parsed-literal::
+    
 
-    'Trajectory of agent MyNameIsNoBody with ID 1\n--------------------------------------------\nt (s) : 0.00 : 0.20 : 9.59\ndtot (m) : 9.79\nVmoy (m/s) : 1.02\n                                   x         y         z        vx  vy  \\\n1970-01-01 00:00:00.000000  0.000000  0.000000 -0.119779  0.299813   1   \n1970-01-01 00:00:00.204082  0.061186  0.204082  0.430119  0.298689   1   \n\n                                 vz        ax  ay         az         s  \n1970-01-01 00:00:00.000000  2.69450 -0.005505   0   4.195088  0.000000  \n1970-01-01 00:00:00.204082  3.55064 -0.010989   0 -26.724612  0.213056  \n'
+    NameErrorTraceback (most recent call last)
 
-
-
-.. code:: python
-
-    John.settopos(traj,t=5)
-
-.. code:: python
-
-    plt.figure(figsize=(15,20))
-    for t in np.arange(traj.tmin+0.4,traj.tmax,0.5):
-        John.settopos(traj,t=t)
-        f,a=John.show(color='b',plane='yz',topos=True)
-        axis('off')
+    <ipython-input-18-dbb00a516da3> in <module>()
+    ----> 1 traj.__repr__()
+          2 'Trajectory of agent MyNameIsNoBody with ID 1\n--------------------------------------------\nt (s) : 0.00 : 0.20 : 9.59\ndtot (m) : 9.79\nVmoy (m/s) : 1.02\n                                   x         y         z        vx  vy  \\\n1970-01-01 00:00:00.000000  0.000000  0.000000  0.258768  0.299813   1   \n1970-01-01 00:00:00.204082  0.061186  0.204082 -0.073361  0.298689   1   \n\n                                  vz        ax  ay         az         s  \n1970-01-01 00:00:00.000000 -1.627431 -0.005505   0  21.083835  0.000000  \n1970-01-01 00:00:00.204082  2.675393 -0.010989   0 -18.925740  0.213056  \n'
 
 
-
-.. image:: Body_files/Body_55_0.png
+    NameError: name 'traj' is not defined
 
 
 .. code:: python
 
-    John
+    >>> John.settopos(traj,t=5)
 
 
+::
 
 
-.. parsed-literal::
+    
 
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-19-9a9cc7cb823f> in <module>()
+    ----> 1 John.settopos(traj,t=5)
+    
+
+    NameError: name 'John' is not defined
+
+
+.. code:: python
+
+    >>> plt.figure(figsize=(15,20))
+    >>> for t in np.arange(traj.tmin+0.4,traj.tmax,0.5):
+    ...     John.settopos(traj,t=t)
+    ...     f,a=John.show(color='b',plane='yz',topos=True)
+    ...     axis('off')
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-20-2ed97db33ec1> in <module>()
+    ----> 1 plt.figure(figsize=(15,20))
+          2 for t in np.arange(traj.tmin+0.4,traj.tmax,0.5):
+          3     John.settopos(traj,t=t)
+          4     f,a=John.show(color='b',plane='yz',topos=True)
+          5     axis('off')
+
+
+    NameError: name 'plt' is not defined
+
+
+.. code:: python
+
+    >>> John
     My name is : John
     
     I have a Galaxy Gear device with id #1 on the left forearm witn antenna defant.vsh3
@@ -445,26 +553,24 @@ settopos takes as argument
     filename : 07_01.c3d
     nframes : 316
     Centered : True
-    Mocap Speed : 13.649 m/s 
+    Mocap Speed : 13.649 m/s
 
+
+::
+
+
+      File "<ipython-input-21-515f2d2050a3>", line 2
+        My name is : John
+              ^
+    SyntaxError: invalid syntax
 
 
 
 .. code:: python
 
-    Francois = Body(_filebody='Francois.ini')
-    Francois
-
-
-.. parsed-literal::
-
+    >>> Francois = Body(_filebody='Francois.ini')
+    >>> Francois
     **** Processor coding : Intel-PC
-
-
-
-
-.. parsed-literal::
-
     My name is : Francois
     
     I have a Galaxy Gear device with id #1 on the left forearm witn antenna defant.vsh3
@@ -476,21 +582,23 @@ settopos takes as argument
     filename : 07_01.c3d
     nframes : 300
     Centered : True
-    Mocap Speed : 13.702 m/s 
+    Mocap Speed : 13.702 m/s
 
+
+::
+
+
+      File "<ipython-input-22-8171543fafee>", line 3
+        **** Processor coding : Intel-PC
+         ^
+    SyntaxError: invalid syntax
 
 
 
 .. code:: python
 
-    Francois.settopos(traj,t=6)
-    Francois
-
-
-
-
-.. parsed-literal::
-
+    >>> Francois.settopos(traj,t=6)
+    >>> Francois
     My name is : Francois
     
     I have a Galaxy Gear device with id #1 on the left forearm witn antenna defant.vsh3
@@ -503,8 +611,16 @@ settopos takes as argument
     filename : 07_01.c3d
     nframes : 300
     Centered : True
-    Mocap Speed : 13.702 m/s 
+    Mocap Speed : 13.702 m/s
 
+
+::
+
+
+      File "<ipython-input-23-5dda83b6890b>", line 3
+        My name is : Francois
+              ^
+    SyntaxError: invalid syntax
 
 
 
@@ -520,15 +636,23 @@ Centering the motion
 
 .. code:: python
 
-    John.centered
-
-
-
-
-.. parsed-literal::
-
+    >>> John.centered
     True
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-24-7b22a282a12b> in <module>()
+    ----> 1 John.centered
+          2 True
+
+
+    NameError: name 'John' is not defined
 
 
 In order to translate the motion in any point in space-time, a
@@ -540,37 +664,86 @@ the (O,x,y) plane
 
 .. code:: python
 
-    John.center()
+    >>> John.center()
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-25-ebfbcfdb5097> in <module>()
+    ----> 1 John.center()
+    
+
+    NameError: name 'John' is not defined
+
 
 .. code:: python
 
-    a = np.hstack((John.vg,John.vg[:,-1][:,np.newaxis]))
+    >>> a = np.hstack((John.vg,John.vg[:,-1][:,np.newaxis]))
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-26-62fe445082ba> in <module>()
+    ----> 1 a = np.hstack((John.vg,John.vg[:,-1][:,np.newaxis]))
+    
+
+    NameError: name 'np' is not defined
+
 
 :math:`\mathbf{v}_g` is the velocity vector of the gravity center of the
 body.
 
 .. code:: python
 
-    print np.shape(John.pg)
-    print np.shape(John.vg)
-
-
-.. parsed-literal::
-
+    >>> print np.shape(John.pg)
+    >>> print np.shape(John.vg)
     (3, 316)
     (3, 316)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-27-405d7b6ec7fb> in <module>()
+    ----> 1 print np.shape(John.pg)
+          2 print np.shape(John.vg)
+          3 (3, 316)
+          4 (3, 316)
+
+
+    NameError: name 'np' is not defined
 
 
 .. code:: python
 
-    print John.vg[:,145]
-    print John.vg[:,298]
-
-
-.. parsed-literal::
-
+    >>> print John.vg[:,145]
+    >>> print John.vg[:,298]
     [ 0.11498696 -0.00263353  0.        ]
     [ 0.10812351  0.00072441  0.        ]
+
+
+::
+
+
+      File "<ipython-input-28-61352f67f530>", line 3
+        [ 0.11498696 -0.00263353  0.        ]
+                                   ^
+    SyntaxError: invalid syntax
+
 
 
 At that point the body structure is centered.
@@ -580,28 +753,44 @@ configuration of points the projection of the body in the xy plane.
 
 .. code:: python
 
-    np.shape(John.d)
-
-
-
-
-.. parsed-literal::
-
+    >>> np.shape(John.d)
     (3, 16, 316)
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-29-15c7b1850afe> in <module>()
+    ----> 1 np.shape(John.d)
+          2 (3, 16, 316)
+
+
+    NameError: name 'np' is not defined
 
 
 .. code:: python
 
-    John.npoints
-
-
-
-
-.. parsed-literal::
-
+    >>> John.npoints
     16
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-30-8d72d237bd62> in <module>()
+    ----> 1 John.npoints
+          2 16
+
+
+    NameError: name 'John' is not defined
 
 
 Each frame is centered above the origin. For example for a walk motion
@@ -611,103 +800,159 @@ conveyor belt.
 
 .. code:: python
 
-    pgc = np.sum(John.d[:,:,0],axis=1)/16
-    pg0 = John.pg[:,0]
-    print "True center of gravity", pg0
-    print "Center of gravity of the centered frame",pgc
-
-
-.. parsed-literal::
-
+    >>> pgc = np.sum(John.d[:,:,0],axis=1)/16
+    >>> pg0 = John.pg[:,0]
+    >>> print "True center of gravity", pg0
+    >>> print "Center of gravity of the centered frame",pgc
     True center of gravity [-17.42515686   4.93730766   0.        ]
     Center of gravity of the centered frame [  4.44089210e-16  -1.05471187e-15   8.94887349e+00]
 
 
+::
+
+
+      File "<ipython-input-31-2a0792541303>", line 5
+        True center of gravity [-17.42515686   4.93730766   0.        ]
+                  ^
+    SyntaxError: invalid syntax
+
+
+
 .. code:: python
 
-    np.shape(John.pg)
-
-
-
-
-.. parsed-literal::
-
+    >>> np.shape(John.pg)
     (3, 316)
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-32-a514f05b4de7> in <module>()
+    ----> 1 np.shape(John.pg)
+          2 (3, 316)
+
+
+    NameError: name 'np' is not defined
 
 
 The current file contains 300 frames
 
 .. code:: python
 
-    tframe = np.arange(John.nframes)
+    >>> tframe = np.arange(John.nframes)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-33-a3c618a1cd37> in <module>()
+    ----> 1 tframe = np.arange(John.nframes)
+    
+
+    NameError: name 'np' is not defined
+
 
 .. code:: python
 
-    np.shape(John.pg[0:-1,:])
-
-
-
-
-.. parsed-literal::
-
+    >>> np.shape(John.pg[0:-1,:])
     (2, 316)
 
 
+::
 
-.. code:: python
 
-    xg = John.pg[0,:]
-    yg = John.pg[1,:]
-    zg = John.pg[2,:]
-    figure(figsize=(8,8))
-    subplot(311)
-    plot(tframe,xg)
-    title('x component')
-    ylabel('m')
-    subplot(312)
-    xlabel('frame index')
-    title('y component')
-    ylabel('m')
-    plot(tframe,yg)
-    subplot(313)
-    xlabel('frame index')
-    title('Motion capture centroid trajectory')
-    ylabel('m')
-    plot(xg,yg,'.b')
     
-    d = John.pg[0:-1,1:]-John.pg[0:-1,0:-1]
-    smocap = np.cumsum(np.sqrt(np.sum(d*d,axis=0)))
-    
-    Vmocap = smocap[-1]/Tfseq
-    title('Length = '+str(smocap[-1])+' V = '+str(Vmocap*3.6)+' km/h')
-    axis('scaled')
-    axis('off')
-    plt.tight_layout()
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-34-6856dba40a3e> in <module>()
+    ----> 1 np.shape(John.pg[0:-1,:])
+          2 (2, 316)
 
 
-
-.. image:: Body_files/Body_80_0.png
+    NameError: name 'np' is not defined
 
 
 .. code:: python
 
-    plot(smocap)
-    title('evolution of curvilinear abscisse from motion capture centroid trajectory')
-    xlabel('frame index')
-    ylabel('distance (meters)')
+    >>> xg = John.pg[0,:]
+    >>> yg = John.pg[1,:]
+    >>> zg = John.pg[2,:]
+    >>> figure(figsize=(8,8))
+    >>> subplot(311)
+    >>> plot(tframe,xg)
+    >>> title('x component')
+    >>> ylabel('m')
+    >>> subplot(312)
+    >>> xlabel('frame index')
+    >>> title('y component')
+    >>> ylabel('m')
+    >>> plot(tframe,yg)
+    >>> subplot(313)
+    >>> xlabel('frame index')
+    >>> title('Motion capture centroid trajectory')
+    >>> ylabel('m')
+    >>> plot(xg,yg,'.b')
+    >>> 
+    >>> d = John.pg[0:-1,1:]-John.pg[0:-1,0:-1]
+    >>> smocap = np.cumsum(np.sqrt(np.sum(d*d,axis=0)))
+    >>> 
+    >>> Vmocap = smocap[-1]/Tfseq
+    >>> title('Length = '+str(smocap[-1])+' V = '+str(Vmocap*3.6)+' km/h')
+    >>> axis('scaled')
+    >>> axis('off')
+    >>> plt.tight_layout()
 
 
+::
 
 
-.. parsed-literal::
+    
 
-    <matplotlib.text.Text at 0x2b8487d5d090>
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-35-c2e826e9024b> in <module>()
+    ----> 1 xg = John.pg[0,:]
+          2 yg = John.pg[1,:]
+          3 zg = John.pg[2,:]
+          4 figure(figsize=(8,8))
+          5 subplot(311)
 
 
+    NameError: name 'John' is not defined
 
 
-.. image:: Body_files/Body_81_1.png
+.. code:: python
+
+    >>> plot(smocap)
+    >>> title('evolution of curvilinear abscisse from motion capture centroid trajectory')
+    >>> xlabel('frame index')
+    >>> ylabel('distance (meters)')
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-36-105ab687e339> in <module>()
+    ----> 1 plot(smocap)
+          2 title('evolution of curvilinear abscisse from motion capture centroid trajectory')
+          3 xlabel('frame index')
+          4 ylabel('distance (meters)')
+
+
+    NameError: name 'plot' is not defined
 
 
 Defining a large scale trajectory
@@ -719,136 +964,79 @@ A large scale trajectory is defined in the :math:`(O,x,y)` plane.
 
 .. code:: python
 
-    v = Vmocap
-    print v*3.6,"Kmph"
-
-
-.. parsed-literal::
-
+    >>> v = Vmocap
+    >>> print v*3.6,"Kmph"
     51.5920052862 Kmph
 
 
+::
+
+
+      File "<ipython-input-37-44979d6b75b7>", line 3
+        51.5920052862 Kmph
+                         ^
+    SyntaxError: invalid syntax
+
+
+
 .. code:: python
 
-    # time in seconds
-    time = np.arange(0,10,0.01)
-    x = v*time
-    y = np.zeros(len(time))
-    z = np.zeros(len(time))
-    traj = Trajectory()
-    traj.generate()
-    traj.tmax
-
-
-
-
-.. parsed-literal::
-
+    >>> # time in seconds
+    ... time = np.arange(0,10,0.01)
+    >>> x = v*time
+    >>> y = np.zeros(len(time))
+    >>> z = np.zeros(len(time))
+    >>> traj = Trajectory()
+    >>> traj.generate()
+    >>> traj.tmax
     9.591837
 
 
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-38-1f973ff14291> in <module>()
+          1 # time in seconds
+    ----> 2 time = np.arange(0,10,0.01)
+          3 x = v*time
+          4 y = np.zeros(len(time))
+          5 z = np.zeros(len(time))
+
+
+    NameError: name 'np' is not defined
+
 
 .. code:: python
 
-    fig ,ax = traj.plot()
-    traj.head()
+    >>> fig ,ax = traj.plot()
+    >>> traj.head()
+                                       x         y         z        vx  vy  \
+    1970-01-01 00:00:00.000000  0.000000  0.000000 -0.693310  0.299813   1   
+    1970-01-01 00:00:00.204082  0.061186  0.204082 -0.163032  0.298689   1   
+    1970-01-01 00:00:00.408163  0.122143  0.408163  0.333526  0.296446   1   
+    1970-01-01 00:00:00.612245  0.182642  0.612245  0.072201  0.293093   1   
+    1970-01-01 00:00:00.816327  0.242457  0.816327  1.596583  0.288641   1   
+    
+                                       vz        ax  ay         az         s  
+    1970-01-01 00:00:00.000000   2.598362 -0.005505   0  -0.809629  0.000000  
+    1970-01-01 00:00:00.204082   2.433132 -0.010989   0 -18.196762  0.213056  
+    1970-01-01 00:00:00.408163  -1.280493 -0.016433   0  42.874848  0.426047  
+    1970-01-01 00:00:00.612245   7.469476 -0.021814   0 -94.011202  0.638907  
+    1970-01-01 00:00:00.816327 -11.716484 -0.027114   0  77.964982  0.851574
 
 
+::
 
 
-.. raw:: html
+      File "<ipython-input-39-5c0ab9e6ed20>", line 3
+        x         y         z        vx  vy  1970-01-01 00:00:00.000000  0.000000  0.000000 -0.693310  0.299813   1
+        ^
+    IndentationError: unexpected indent
 
-    <div>
-    <table border="1" class="dataframe">
-      <thead>
-        <tr style="text-align: right;">
-          <th></th>
-          <th>x</th>
-          <th>y</th>
-          <th>z</th>
-          <th>vx</th>
-          <th>vy</th>
-          <th>vz</th>
-          <th>ax</th>
-          <th>ay</th>
-          <th>az</th>
-          <th>s</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>1970-01-01 00:00:00.000000</th>
-          <td>0.000000</td>
-          <td>0.000000</td>
-          <td>0.253679</td>
-          <td>0.299813</td>
-          <td>1</td>
-          <td>0.145261</td>
-          <td>-0.005505</td>
-          <td>0</td>
-          <td>-8.730777</td>
-          <td>0.000000</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.204082</th>
-          <td>0.061186</td>
-          <td>0.204082</td>
-          <td>0.283324</td>
-          <td>0.298689</td>
-          <td>1</td>
-          <td>-1.636531</td>
-          <td>-0.010989</td>
-          <td>0</td>
-          <td>17.513389</td>
-          <td>0.213056</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.408163</th>
-          <td>0.122143</td>
-          <td>0.408163</td>
-          <td>-0.050662</td>
-          <td>0.296446</td>
-          <td>1</td>
-          <td>1.937630</td>
-          <td>-0.016433</td>
-          <td>0</td>
-          <td>-30.359379</td>
-          <td>0.426047</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.612245</th>
-          <td>0.182642</td>
-          <td>0.612245</td>
-          <td>0.344773</td>
-          <td>0.293093</td>
-          <td>1</td>
-          <td>-4.258161</td>
-          <td>-0.021814</td>
-          <td>0</td>
-          <td>15.393231</td>
-          <td>0.638907</td>
-        </tr>
-        <tr>
-          <th>1970-01-01 00:00:00.816327</th>
-          <td>0.242457</td>
-          <td>0.816327</td>
-          <td>-0.524239</td>
-          <td>0.288641</td>
-          <td>1</td>
-          <td>-1.116685</td>
-          <td>-0.027114</td>
-          <td>0</td>
-          <td>11.431038</td>
-          <td>0.851574</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-
-
-
-
-.. image:: Body_files/Body_87_1.png
 
 
 Trajectory
@@ -890,30 +1078,50 @@ passing the whole trajectory.
 
 .. code:: python
 
-    John.settopos(traj=traj,t=3)
+    >>> John.settopos(traj=traj,t=3)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-40-d448890daedc> in <module>()
+    ----> 1 John.settopos(traj=traj,t=3)
+    
+
+    NameError: name 'John' is not defined
+
 
 There is now a new data structure in the Body objet. This data structure
 is called a ``topos``.
 
 .. code:: python
 
-    print np.shape(John.topos)
-
-
-.. parsed-literal::
-
+    >>> print np.shape(John.topos)
     (3, 16)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-41-03e6a6632455> in <module>()
+    ----> 1 print np.shape(John.topos)
+          2 (3, 16)
+
+
+    NameError: name 'np' is not defined
 
 
 .. code:: python
 
-    John.topos
-
-
-
-
-.. parsed-literal::
-
+    >>> John.topos
     array([[  0.74198686,   0.76931593,   1.80846633,   2.26719915,
              -0.91675363,   3.25586636,  -1.86053098,   3.82194596,
              -2.06245933,   2.15021298,  -0.55180885,   2.02586803,
@@ -928,32 +1136,48 @@ is called a ``topos``.
               4.54000305,   0.44698982,   1.7794635 ,   9.25912567]])
 
 
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-42-0622d00683be> in <module>()
+    ----> 1 John.topos
+          2 array([[  0.74198686,   0.76931593,   1.80846633,   2.26719915,
+          3          -0.91675363,   3.25586636,  -1.86053098,   3.82194596,
+          4          -2.06245933,   2.15021298,  -0.55180885,   2.02586803,
+          5          -0.94510502,   1.36586716,  -0.57366714,   0.79920206],
+
+
+    NameError: name 'John' is not defined
+
 
 .. code:: python
 
-    John.settopos(traj=traj,t=1)
-    fig,ax=John.plot3d(topos=True,col='#87CEEB')
-    John.settopos(traj=traj,t=2)
-    John.plot3d(topos=True,fig=fig,ax=ax,col='#7EC0EE')
-    John.settopos(traj=traj,t=3)
-    John.plot3d(topos=True,fig=fig,ax=ax,col='#6A5ACD')
-    John.settopos(traj=traj,t=4)
-    John.plot3d(topos=True,fig=fig,ax=ax,col='#7A67EE')
-    John.settopos(traj=traj,t=5)
-    John.plot3d(topos=True,fig=fig,ax=ax,col='#473C8B')
+    >>> John.settopos(traj=traj,t=1)
+    >>> fig,ax=John.plot3d(topos=True,col='#87CEEB')
+    >>> John.settopos(traj=traj,t=2)
+    >>> John.plot3d(topos=True,fig=fig,ax=ax,col='#7EC0EE')
+    >>> John.settopos(traj=traj,t=3)
+    >>> John.plot3d(topos=True,fig=fig,ax=ax,col='#6A5ACD')
+    >>> John.settopos(traj=traj,t=4)
+    >>> John.plot3d(topos=True,fig=fig,ax=ax,col='#7A67EE')
+    >>> John.settopos(traj=traj,t=5)
+    >>> John.plot3d(topos=True,fig=fig,ax=ax,col='#473C8B')
+    (<matplotlib.figure.Figure at 0x7f9882d7c6d0>,
+     <matplotlib.axes._subplots.Axes3DSubplot at 0x7f9882c0f990>)
 
 
+::
 
 
-.. parsed-literal::
+      File "<ipython-input-43-2f87b04ce92a>", line 11
+        (<matplotlib.figure.Figure at 0x7f9882d7c6d0>,
+         ^
+    SyntaxError: invalid syntax
 
-    (<matplotlib.figure.Figure at 0x2b84a0e12390>,
-     <matplotlib.axes._subplots.Axes3DSubplot at 0x2b84a0eef490>)
-
-
-
-
-.. image:: Body_files/Body_102_1.png
 
 
 Definition of Several Coordinates systems
@@ -1008,23 +1232,44 @@ To create the CCS :
 
 .. code:: python
 
-    John.setccs()
+    >>> John.setccs()
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-44-84a77b2d6e2b> in <module>()
+    ----> 1 John.setccs()
+    
+
+    NameError: name 'John' is not defined
+
 
 .. code:: python
 
-    import scipy.linalg as la
-    print "ccs dimensions : ",np.shape(John.ccs)
-    print John.ccs[0,:,:]
-    print "Check determinant : ", la.det(John.ccs[0,:,:])
-
-
-.. parsed-literal::
-
+    >>> import scipy.linalg as la
+    >>> print "ccs dimensions : ",np.shape(John.ccs)
+    >>> print John.ccs[0,:,:]
+    >>> print "Check determinant : ", la.det(John.ccs[0,:,:])
     ccs dimensions :  (11, 3, 3)
     [[ 0.94678656  0.05306765 -0.31745715]
      [-0.06834689  0.99696857 -0.03718026]
      [ 0.31452173  0.05689898  0.94754345]]
     Check determinant :  1.0
+
+
+::
+
+
+      File "<ipython-input-45-7702e01f11e3>", line 5
+        ccs dimensions :  (11, 3, 3)
+                     ^
+    SyntaxError: invalid syntax
+
 
 
 Create a Wireframe body representation from the body graph model
@@ -1041,20 +1286,14 @@ A DCS is refered by 4 numbers :math:`(Id,l,h,\alpha)`
 
 .. code:: python
 
-    Id = 4 # 4 Left Arm
-    l  = 0.1 # Longitudinal coordinates
-    h  = 0.03 # height
-    alpha = 45 # angle degrees
+    >>> Id = 4 # 4 Left Arm
+    >>> l  = 0.1 # Longitudinal coordinates
+    >>> h  = 0.03 # height
+    >>> alpha = 45 # angle degrees
 
 .. code:: python
 
-    John.dcyl
-
-
-
-
-.. parsed-literal::
-
+    >>> John.dcyl
     {'arml': 3,
      'armr': 2,
      'calfl': 9,
@@ -1067,23 +1306,49 @@ A DCS is refered by 4 numbers :math:`(Id,l,h,\alpha)`
      'trunkb': 10,
      'trunku': 0}
 
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-47-2e7f2d84246d> in <module>()
+    ----> 1 John.dcyl
+          2 {'arml': 3,
+          3  'armr': 2,
+          4  'calfl': 9,
+          5  'calfr': 8,
+
+
+    NameError: name 'John' is not defined
 
 
 Rotate Matrix around z
 
 .. code:: python
 
-    John.settopos(traj=traj,t=6,cs=True)
+    >>> John.settopos(traj=traj,t=6,cs=True)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-48-c370666e2cfd> in <module>()
+    ----> 1 John.settopos(traj=traj,t=6,cs=True)
+    
+
+    NameError: name 'John' is not defined
+
 
 .. code:: python
 
-    John.dcyl
-
-
-
-
-.. parsed-literal::
-
+    >>> John.dcyl
     {'arml': 3,
      'armr': 2,
      'calfl': 9,
@@ -1097,11 +1362,58 @@ Rotate Matrix around z
      'trunku': 0}
 
 
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-49-2e7f2d84246d> in <module>()
+    ----> 1 John.dcyl
+          2 {'arml': 3,
+          3  'armr': 2,
+          4  'calfl': 9,
+          5  'calfr': 8,
+
+
+    NameError: name 'John' is not defined
+
 
 .. code:: python
 
-    John.show3(topos=True,dcs=True)
+    >>> John.show3(topos=True,dcs=True)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-50-031da074d021> in <module>()
+    ----> 1 John.show3(topos=True,dcs=True)
+    
+
+    NameError: name 'John' is not defined
+
 
 .. code:: python
 
-    John.show3(topos=True,pattern=True)
+    >>> John.show3(topos=True,pattern=True)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-51-a9fdbef0bd42> in <module>()
+    ----> 1 John.show3(topos=True,pattern=True)
+    
+
+    NameError: name 'John' is not defined
+

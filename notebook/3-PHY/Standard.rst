@@ -1,20 +1,20 @@
 
 .. code:: python
 
-    import pylayers.signal.standard as std
+    >>> import pylayers.signal.standard as std
 
 Parameters of different standards are stored in ``wstd.json`` file. The
 class which handles wireless standards is ``standard``
 
 .. code:: python
 
-    ws1 = std.Wstandard('ieee80211b')
+    >>> ws1 = std.Wstandard('ieee80211b')
 
 To list the available standard :
 
 .. code:: python
 
-    ws1.ls()
+    >>> ws1.ls()
 
 
 .. parsed-literal::
@@ -24,11 +24,11 @@ To list the available standard :
 
 .. code:: python
 
-    wifi= ws1.load('ieee80211b')
+    >>> wifi= ws1.load('ieee80211b')
 
 .. code:: python
 
-    ws1
+    >>> ws1
 
 
 
@@ -56,19 +56,19 @@ To list the available standard :
 
 .. code:: python
 
-    AP1 = std.AP()
+    >>> AP1 = std.AP()
 
 .. code:: python
 
-    ws2 = std.Wstandard('ieee80211g')
+    >>> ws2 = std.Wstandard('ieee80211g')
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    TypeError                                 Traceback (most recent call last)
+    TypeErrorTraceback (most recent call last)
 
     <ipython-input-7-c21d9b04bd47> in <module>()
     ----> 1 ws2 = std.Wstandard('ieee80211g')
@@ -95,15 +95,15 @@ To list the available standard :
 
 .. code:: python
 
-    ws2
+    >>> ws2
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-8-8be99413ae52> in <module>()
     ----> 1 ws2
@@ -114,15 +114,15 @@ To list the available standard :
 
 .. code:: python
 
-    ws3 = std.Wstandard('ieee80211a')
+    >>> ws3 = std.Wstandard('ieee80211a')
 
 .. code:: python
 
-    ws3 = std.Wstandard('bluetooth-class3')
+    >>> ws3 = std.Wstandard('bluetooth-class3')
 
 .. code:: python
 
-    ws3
+    >>> ws3
 
 
 

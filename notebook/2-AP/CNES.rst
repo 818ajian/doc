@@ -10,12 +10,6 @@ Example of Utilisation of Coverage
 
     >>> from pylayers.antprop.coverage import *
 
-
-.. parsed-literal::
-
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
-
 .. code:: python
 
     >>> C = Coverage('cnes.ini')
@@ -24,23 +18,23 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NoSectionError                            Traceback (most recent call last)
+    NoSectionErrorTraceback (most recent call last)
 
     <ipython-input-3-704dc907214d> in <module>()
     ----> 1 C = Coverage('cnes.ini')
     
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/antprop/coverage.pyc in __init__(self, _fileini)
-        102         self.config.read(pyu.getlong(_fileini,pstruc['DIRSIMUL']))
-        103 
-    --> 104         self.layoutopt = dict(self.config.items('layout'))
-        105         self.gridopt   = dict(self.config.items('grid'))
-        106         self.apopt     = dict(self.config.items('ap'))
+        100         self.config.read(pyu.getlong(_fileini,pstruc['DIRSIMUL']))
+        101 
+    --> 102         self.layoutopt = dict(self.config.items('layout'))
+        103         self.gridopt   = dict(self.config.items('grid'))
+        104         self.apopt     = dict(self.config.items('ap'))
 
 
-    /home/uguen/anaconda/lib/python2.7/ConfigParser.pyc in items(self, section, raw, vars)
+    /home/uguen/anaconda2/lib/python2.7/ConfigParser.pyc in items(self, section, raw, vars)
         640         except KeyError:
         641             if section != DEFAULTSECT:
     --> 642                 raise NoSectionError(section)
@@ -59,9 +53,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-4-b39bfc0e26a3> in <module>()
     ----> 1 C
@@ -79,9 +73,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-5-308e8a4b41f8> in <module>()
     ----> 1 fig=figure(figsize=(10,10))
@@ -99,9 +93,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-6-5987c1a5e5e0> in <module>()
     ----> 1 C.L.sl.mat
@@ -118,9 +112,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-7-233cb0e618ea> in <module>()
     ----> 1 C.L.sl
@@ -137,9 +131,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-8-9941b6287d95> in <module>()
     ----> 1 C.L.sla
@@ -156,9 +150,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-9-0e75a4f1a346> in <module>()
     ----> 1 C.cover()
@@ -179,9 +173,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-10-85139ae1f152> in <module>()
           2 a1 = fig.add_subplot(121)
@@ -209,9 +203,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-11-3e022033b6de> in <module>()
           2 a1 = fig.add_subplot(121)
@@ -239,9 +233,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-12-2ba6eb5982ea> in <module>()
           2 a1 = fig.add_subplot(121)
@@ -269,9 +263,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-13-41038f4b7d64> in <module>()
           2 a1 = fig.add_subplot(121)
@@ -299,9 +293,9 @@ Example of Utilisation of Coverage
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-14-99eac4ac2ce0> in <module>()
           2 a1 = fig.add_subplot(121)

@@ -27,9 +27,9 @@ anchor nodes.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-2-79b4e5964fd9> in <module>()
           5 #AN_TDOAr1 = np.roll(AN_TDOA,1,axis=1)
@@ -50,8 +50,8 @@ anchor nodes.
 
 .. parsed-literal::
 
-    array([[ 0.55876239,  0.08363696,  0.4812062 ,  0.11405118,  0.09545324],
-           [ 0.89561928,  0.70859709,  0.03454619,  0.93278095,  0.09827916]])
+    array([[ 0.58292152,  0.35540612,  0.98027353,  0.39872618,  0.25619099],
+           [ 0.44256616,  0.9522736 ,  0.17645851,  0.67688177,  0.28602975]])
 
 
 
@@ -77,9 +77,9 @@ anchor nodes.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-5-436f1e4f0ad6> in <module>()
     ----> 1 AN_TDOAr2
@@ -102,9 +102,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-6-92be54b6c82d> in <module>()
     ----> 1 plot(AN_TDOA[0,:],AN_TDOA[1,:],'or')
@@ -126,9 +126,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-7-25d284671896> in <module>()
     ----> 1 d = dist(AN_TDOA,BN,0)
@@ -153,9 +153,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-8-3d7b60d1ff7d> in <module>()
     ----> 1 tdoa1 = (d-dr1)/0.3
@@ -182,9 +182,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-9-d6830f92a80e> in <module>()
           1 node={}
@@ -205,9 +205,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-10-bb0e749f8356> in <module>()
     ----> 1 S=algloc(nodes,ldp)
@@ -224,9 +224,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-11-7e129c87000d> in <module>()
     ----> 1 S.info()
@@ -243,9 +243,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-12-61c872391df3> in <module>()
     ----> 1 S = algloc(nodes,ldp)
@@ -262,9 +262,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-13-4c8efe0f5b1d> in <module>()
     ----> 1 S.ls_locate(tdoa=True,toa=False,rss=False)
@@ -281,9 +281,9 @@ blue star is the blind node.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    KeyError                                  Traceback (most recent call last)
+    KeyErrorTraceback (most recent call last)
 
     <ipython-input-14-406418aaf451> in <module>()
     ----> 1 nodes['BN']

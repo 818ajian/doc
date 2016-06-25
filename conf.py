@@ -21,7 +21,8 @@ needs_sphinx = '1.0.1'
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 #extensions = ['sphinx.ext.doctest', 'sphinx.ext.pngmath', 'sphinx.ext.ifconfig']
 
-sys.path.insert(0, os.path.abspath('../../pylayers/pylayers'))
+#sys.path.insert(0, os.path.abspath('../../pylayers/pylayers'))
+sys.path.insert(0, os.path.abspath('https://github.com/pylayers/pylayers/tree/master/pylayers'))
 sys.path.insert(0,os.path.abspath('./sphinxext'))
 
 extensions = [
@@ -50,14 +51,14 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The encoding of source files.
-source_encoding = 'utf-8-sig'
+source_encoding = 'utf-8'
 
 # The master toctree document.
 master_doc = 'index'
 
 # General information about the project.
 #project = 'PyLayers'
-copyright = '2015, PyLayers developer team'
+copyright = '2016, PyLayers developer team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

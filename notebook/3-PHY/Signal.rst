@@ -1,7 +1,7 @@
 
 .. code:: python
 
-    %pylab inline
+    >>> %pylab inline
 
 
 .. parsed-literal::
@@ -26,16 +26,10 @@ electromagnetic simulation.
 
 .. code:: python
 
-    from pylayers.signal.bsignal import *
-    from pylayers.signal.waveform import *
-    from pylayers.antprop.channel import *
-    from pylayers.simul.simulem import *
-
-
-.. parsed-literal::
-
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
+    >>> from pylayers.signal.bsignal import *
+    >>> from pylayers.signal.waveform import *
+    >>> from pylayers.antprop.channel import *
+    >>> from pylayers.simul.simulem import *
 
 Generation of an Impulse of normalized energy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -57,19 +51,19 @@ the pulse.
 
 .. code:: python
 
-    fc     = 4
-    band   = 2
-    thresh = 10
-    fe     = 100
-    ip     = EnImpulse([],fc,band,thresh,fe)
+    >>> fc     = 4
+    >>> band   = 2
+    >>> thresh = 10
+    >>> fe     = 100
+    >>> ip     = EnImpulse([],fc,band,thresh,fe)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-3-eb9e61732349> in <module>()
           3 thresh = 10
@@ -82,15 +76,15 @@ the pulse.
 
 .. code:: python
 
-    ip.info()
+    >>> ip.info()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-4-f2dd061e0735> in <module>()
     ----> 1 ip.info()
@@ -104,16 +98,16 @@ Verification of energy normalization in both domains
 
 .. code:: python
 
-    E1= sum(ip.y*ip.y)*ip.dx()
-    print "Integration in time",E1
+    >>> E1= sum(ip.y*ip.y)*ip.dx()
+    >>> print "Integration in time",E1
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-5-2ff960551bb1> in <module>()
     ----> 1 E1= sum(ip.y*ip.y)*ip.dx()
@@ -125,17 +119,17 @@ Verification of energy normalization in both domains
 
 .. code:: python
 
-    P = ip.esd()
-    E2 = sum(P.y)*P.dx()
-    print "Integration in frequency domain ",E2
+    >>> P = ip.esd()
+    >>> E2 = sum(P.y)*P.dx()
+    >>> print "Integration in frequency domain ",E2
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-6-f88fbaeebaf0> in <module>()
     ----> 1 P = ip.esd()
@@ -153,17 +147,23 @@ We choose to load a simple floor plan.
 
 .. code:: python
 
-    S = Simul()
-    S.L = Layout('defstr3.ini')
+    >>> S = Simul()
+    >>> S.L = Layout('defstr3.ini')
+
+
+.. parsed-literal::
+
+    new file defstr3.ini
+
 
 A simulation object has an ``info`` method providing a summary of
 simulation informations.
 
 .. code:: python
 
-    st = S.wav.st
-    sf = S.wav.sf
-    S.wav.info()
+    >>> st = S.wav.st
+    >>> sf = S.wav.sf
+    >>> S.wav.info()
 
 
 .. parsed-literal::
@@ -182,7 +182,7 @@ The waveform associated with the simulation object is
 
 .. code:: python
 
-    S.wav
+    >>> S.wav
 
 
 
@@ -202,11 +202,11 @@ The waveform associated with the simulation object is
 
 .. code:: python
 
-    S.wav.show()
+    >>> S.wav.show()
 
 
 
-.. image:: Signal_files/Signal_24_0.png
+.. image:: Signal_files/Signal_15_0.png
 
 
 Above the waveform is a generic UWB waveform. The interested user can
@@ -225,16 +225,16 @@ especially waveforms compliants with the current IEEE 802.15.4a and IEEE
 
 .. code:: python
 
-    wavmeasured = Waveform(typ='W1compensate')
-    wavmeasured.show()
+    >>> wavmeasured = Waveform(typ='W1compensate')
+    >>> wavmeasured.show()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    IndexError                                Traceback (most recent call last)
+    IndexErrorTraceback (most recent call last)
 
     <ipython-input-11-22a822769751> in <module>()
           1 wavmeasured = Waveform(typ='W1compensate')
@@ -253,17 +253,17 @@ especially waveforms compliants with the current IEEE 802.15.4a and IEEE
 
 
 
-.. image:: Signal_files/Signal_27_1.png
+.. image:: Signal_files/Signal_17_1.png
 
 
 .. code:: python
 
-    wavmeasured = Waveform(typ='W1offset')
-    wavmeasured.show()
+    >>> wavmeasured = Waveform(typ='W1offset')
+    >>> wavmeasured.show()
 
 
 
-.. image:: Signal_files/Signal_28_0.png
+.. image:: Signal_files/Signal_18_0.png
 
 
 Here the time domain waveform is measured and the anticausal part of the
@@ -279,8 +279,8 @@ representation.
 
 .. code:: python
 
-    print type(S.wav.sf)
-    print type(S.wav.st)
+    >>> print type(S.wav.sf)
+    >>> print type(S.wav.st)
 
 
 .. parsed-literal::
@@ -304,22 +304,52 @@ channel.
 
 .. code:: python
 
-    from pylayers.antprop.signature import *
-    from pylayers.antprop.channel import *
+    >>> from pylayers.antprop.signature import *
+    >>> from pylayers.antprop.channel import *
 
 .. code:: python
 
-    S.L.build()
+    >>> S.L.build()
 
 
 .. parsed-literal::
 
-    check len(ncycles) == 2 passed
+    building Layout ...
+
+
+::
+
+
+    
+
+    KeyErrorTraceback (most recent call last)
+
+    <ipython-input-15-775c93de59f6> in <module>()
+    ----> 1 S.L.build()
+    
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
+       4778             if verbose:
+       4779                 print "Gt"
+    -> 4780             self.buildGt()
+       4781             self.lbltg.extend('t')
+       4782 
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGt(self, check)
+       5451 
+       5452             seg = p.vnodes[p.vnodes>0]
+    -> 5453             lair = [x in (self.name['AIR']+self.name['_AIR']) for x in seg]
+       5454 
+       5455             if sum(lair)>0:
+
+
+    KeyError: 'AIR'
 
 
 .. code:: python
 
-    S.L
+    >>> S.L
 
 
 
@@ -329,65 +359,80 @@ channel.
     
     ----------------
     defstr3.ini
-    Image('/home/uguen/Bureau/P1/struc/images/TA-Office.png')
     ----------------
     
-    Number of points  : 8
-    Number of segments  : 9
-    Number of sub segments  : 3
-    Number of cycles  : 3
-    Number of rooms  : 2
-    degree 0 : []
-    degree 1 : [-8 -7]
-    number of node point of degree 2 : 4
-    number of node point of degree 3 : 2
+    Number of points  : 4
+    Number of segments  : 4
+    Number of sub segments  : 0
+    Number of cycles  : 0
+    Number of rooms  : 0
     
-    xrange :(758.49, 768.516)
-    yrange :(1111.9, 1115.963)
+    xrange :(-30.0, 30.0)
+    yrange :(-20.0, 20.0)
     
     Useful dictionnaries
     ----------------
-    dca {cycle : []} cycle with an airwall
-    sl {slab name : slab dictionary}
     name :  {slab :seglist} 
     
     Useful arrays
     ----------------
-    pt : numpy array of points 
-    normal : numpy array of normal 
-    offset : numpy array of offset 
-    tsg : get segment index in Gs from tahe
-    isss :  sub-segment index above Nsmax
-    tgs : get segment index in tahe from self.Gs
-    upnt : get point id index from self.pt
-    iupnt : get point index in self.pt from point id  
-    lsss : list of segments with sub-segment
-    sla : list of all slab names (Nsmax+Nss+1)
-    degree : degree of nodes 
+    
+    Useful tip
+    ----------------
+    Point p in Gs => p_coord:
+    p -> u = self.iupnt[-p] -> p_coord = self.pt[:,u]
+    
+    Segment s in Gs => s_ab coordinates 
+    s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
+
 
 
 
 .. code:: python
 
-    S.L.Gt.pos
+    >>> S.L.Gt.pos
 
 
 
 
 .. parsed-literal::
 
-    {0: (758.49, 1111.9),
-     1: array([  761.00289669,  1113.91576981]),
-     2: array([  766.00300113,  1113.94747911])}
+    {}
 
 
 
 .. code:: python
 
-    tx=np.array([759,1114,1.0])
-    rx=np.array([767,1114,1.5])
-    ctx = S.L.pt2cy(tx)
-    crx = S.L.pt2cy(rx)
+    >>> tx=np.array([759,1114,1.0])
+    >>> rx=np.array([767,1114,1.5])
+    >>> ctx = S.L.pt2cy(tx)
+    >>> crx = S.L.pt2cy(rx)
+
+
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-18-14f0bff94dac> in <module>()
+          1 tx=np.array([759,1114,1.0])
+          2 rx=np.array([767,1114,1.5])
+    ----> 3 ctx = S.L.pt2cy(tx)
+          4 crx = S.L.pt2cy(rx)
+
+
+    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in pt2cy(self, pt)
+       8381                     return(ncy)
+       8382         if not cycle_exists:
+    -> 8383             raise NameError(str(pt)+" is not in any cycle")
+       8384 
+       8385     def cy2pt(self, cy=0, h=1.2):
+
+
+    NameError: [  7.59000000e+02   1.11400000e+03   1.00000000e+00] is not in any cycle
+
 
 The sequence of command below :
 
@@ -403,37 +448,37 @@ The sequence of command below :
 
 .. code:: python
 
-    Si = Signatures(S.L,ctx,crx)
-    Si.run5(cutoff=5)
-    r2d = Si.rays(tx,rx)
-    r3d = r2d.to3D(S.L)
-    r3d.locbas(S.L)
-    r3d.fillinter(S.L)
+    >>> Si = Signatures(S.L,ctx,crx)
+    >>> Si.run5(cutoff=5)
+    >>> r2d = Si.rays(tx,rx)
+    >>> r3d = r2d.to3D(S.L)
+    >>> r3d.locbas(S.L)
+    >>> r3d.fillinter(S.L)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    AttributeError                            Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-19-2b87940b94c6> in <module>()
-          1 Si = Signatures(S.L,ctx,crx)
-    ----> 2 Si.run5(cutoff=5)
+    ----> 1 Si = Signatures(S.L,ctx,crx)
+          2 Si.run5(cutoff=5)
           3 r2d = Si.rays(tx,rx)
           4 r3d = r2d.to3D(S.L)
           5 r3d.locbas(S.L)
 
 
-    AttributeError: 'Signatures' object has no attribute 'run5'
+    NameError: name 'ctx' is not defined
 
 
 Define a frequency base in GHz.
 
 .. code:: python
 
-    fGHz = np.arange(2,10,0.01)
+    >>> fGHz = np.arange(2,10,0.01)
 
 Evaluate the propagation channel :math:`\tilde{\mathbf{C}}`. Here the
 meaning of tilde is that the complex value of the channel do not include
@@ -441,15 +486,15 @@ the phase term due to delay along the ray.
 
 .. code:: python
 
-    C = r3d.eval(fGHz)
+    >>> C = r3d.eval(fGHz)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-21-6de7eb6ea340> in <module>()
     ----> 1 C = r3d.eval(fGHz)
@@ -468,15 +513,15 @@ the ``prop2tran`` method of the ``Ctilde`` class.
 
 .. code:: python
 
-    sc = C.prop2tran()
+    >>> sc = C.prop2tran()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-22-b1508994e444> in <module>()
     ----> 1 sc = C.prop2tran()
@@ -493,7 +538,7 @@ during the **FP7 project WHERE1** measurement campaign M1.
 
 .. code:: python
 
-    sc
+    >>> sc
 
 
 
@@ -510,15 +555,15 @@ information about the content of the antenna object.
 
 .. code:: python
 
-    S.tx.A.info()
+    >>> S.tx.A.info()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    AttributeError                            Traceback (most recent call last)
+    AttributeErrorTraceback (most recent call last)
 
     <ipython-input-24-405e831617c9> in <module>()
     ----> 1 S.tx.A.info()
@@ -534,15 +579,15 @@ If a realistic antenna is applied it gives
 
 .. code:: python
 
-    sca = C.prop2tran(S.tx.A,S.rx.A)
+    >>> sca = C.prop2tran(S.tx.A,S.rx.A)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-25-a14d4505d552> in <module>()
     ----> 1 sca = C.prop2tran(S.tx.A,S.rx.A)
@@ -559,15 +604,15 @@ waveform with the channel impulse response to get the received waveform.
 
 .. code:: python
 
-    r = sca.applywavB(S.wav.sfg)
+    >>> r = sca.applywavB(S.wav.sfg)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    AttributeError                            Traceback (most recent call last)
+    AttributeErrorTraceback (most recent call last)
 
     <ipython-input-26-d44add68b43a> in <module>()
     ----> 1 r = sca.applywavB(S.wav.sfg)
@@ -578,15 +623,15 @@ waveform with the channel impulse response to get the received waveform.
 
 .. code:: python
 
-    r.y
+    >>> r.y
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-27-4953123faa92> in <module>()
     ----> 1 r.y
@@ -597,17 +642,17 @@ waveform with the channel impulse response to get the received waveform.
 
 .. code:: python
 
-    fig,ax = r.plot(typ=['l20'])
-    plt.axis([15,90,-120,-60])
-    plt.title(u'Received Waveform $r(t)$')
+    >>> fig,ax = r.plot(typ=['l20'])
+    >>> plt.axis([15,90,-120,-60])
+    >>> plt.title(u'Received Waveform $r(t)$')
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-28-59cb5c50134a> in <module>()
     ----> 1 fig,ax = r.plot(typ=['l20'])
@@ -620,17 +665,17 @@ waveform with the channel impulse response to get the received waveform.
 
 .. code:: python
 
-    r.plot(typ=['v'])
-    #plt.axis([15,60,-0.3,0.3])
-    plt.title(u'Received Waveform $r(t)$')
+    >>> r.plot(typ=['v'])
+    >>> #plt.axis([15,60,-0.3,0.3])
+    ... plt.title(u'Received Waveform $r(t)$')
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-29-dec00a202aac> in <module>()
     ----> 1 r.plot(typ=['v'])
@@ -660,19 +705,19 @@ indexation either in time or in frequency domain.
 
 .. code:: python
 
-    wgam = S.wav.sfg
-    Y    = sc.apply(wgam)
-    tau  = Y.taud
-    dod = Y.dod
-    doa = Y.doa
+    >>> wgam = S.wav.sfg
+    >>> Y    = sc.apply(wgam)
+    >>> tau  = Y.taud
+    >>> dod = Y.dod
+    >>> doa = Y.doa
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-30-3c9fdd777ddd> in <module>()
           1 wgam = S.wav.sfg
@@ -691,7 +736,7 @@ sorted.
 
 .. code:: python
 
-    print 'tau =', tau[0:20]
+    >>> print 'tau =', tau[0:20]
 
 
 .. parsed-literal::
@@ -701,9 +746,9 @@ sorted.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-31-b39f17c8cbc1> in <module>()
     ----> 1 print 'tau =', tau[0:20]
@@ -714,15 +759,15 @@ sorted.
 
 .. code:: python
 
-    h = plt.hist(tau,20)
+    >>> h = plt.hist(tau,20)
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-32-daaa7a3adee0> in <module>()
     ----> 1 h = plt.hist(tau,20)
@@ -735,7 +780,7 @@ Direction of arrival :math:`(\theta_r,\phi_r)` in radians
 
 .. code:: python
 
-    print "doa = ", doa[1:10,:]
+    >>> print "doa = ", doa[1:10,:]
 
 
 .. parsed-literal::
@@ -745,9 +790,9 @@ Direction of arrival :math:`(\theta_r,\phi_r)` in radians
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-33-70fae1c8afa3> in <module>()
     ----> 1 print "doa = ", doa[1:10,:]
@@ -758,31 +803,31 @@ Direction of arrival :math:`(\theta_r,\phi_r)` in radians
 
 .. code:: python
 
-    plt.subplot(221)
-    ht = plt.hist(doa[:,0],20)
-    plt.xlabel(u'$\\theta_r$')
-    plt.ylabel('#')
-    plt.subplot(222)
-    hp = plt.hist(doa[:,1],20)
-    plt.xlabel(u'$\phi_r$')
-    plt.ylabel('#')
-    plt.subplot(223)
-    ht = plt.hist(dod[:,0],20)
-    plt.xlabel(u'$\\theta_t$')
-    plt.ylabel('#')
-    plt.subplot(224)
-    hp = plt.hist(dod[:,1],20)
-    plt.xlabel(u'$\phi_t$')
-    plt.ylabel('#')
-    plt.tight_layout()
+    >>> plt.subplot(221)
+    >>> ht = plt.hist(doa[:,0],20)
+    >>> plt.xlabel(u'$\\theta_r$')
+    >>> plt.ylabel('#')
+    >>> plt.subplot(222)
+    >>> hp = plt.hist(doa[:,1],20)
+    >>> plt.xlabel(u'$\phi_r$')
+    >>> plt.ylabel('#')
+    >>> plt.subplot(223)
+    >>> ht = plt.hist(dod[:,0],20)
+    >>> plt.xlabel(u'$\\theta_t$')
+    >>> plt.ylabel('#')
+    >>> plt.subplot(224)
+    >>> hp = plt.hist(dod[:,1],20)
+    >>> plt.xlabel(u'$\phi_t$')
+    >>> plt.ylabel('#')
+    >>> plt.tight_layout()
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-34-cfe931a2177d> in <module>()
           1 plt.subplot(221)
@@ -796,5 +841,5 @@ Direction of arrival :math:`(\theta_r,\phi_r)` in radians
 
 
 
-.. image:: Signal_files/Signal_76_1.png
+.. image:: Signal_files/Signal_53_1.png
 

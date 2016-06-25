@@ -19,12 +19,6 @@ The transmission channel
     >>> import matplotlib.pyplot as plt
     >>> import time
 
-
-.. parsed-literal::
-
-    WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
-
-
 We start by constructing a propagation channel with the dedicated class
 ``DLink``. We specify a Layout as well as the two extremities of the
 link. Antennas are also specified. The frequency range is determined by
@@ -46,14 +40,15 @@ the frequency range of antennas.
 .. parsed-literal::
 
     new file defstr3.ini
+    building Layout ...
 
 
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    AttributeError                            Traceback (most recent call last)
+    KeyErrorTraceback (most recent call last)
 
     <ipython-input-3-5fb46505a749> in <module>()
           1 L = Layout('defstr3.ini')
@@ -64,46 +59,22 @@ the frequency range of antennas.
 
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in build(self, graph, verbose)
-       4691             if verbose:
-       4692                 print "Gt"
-    -> 4693             self.buildGt()
-       4694             self.lbltg.extend('t')
-       4695 
+       4778             if verbose:
+       4779                 print "Gt"
+    -> 4780             self.buildGt()
+       4781             self.lbltg.extend('t')
+       4782 
 
 
     /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in buildGt(self, check)
-       5462 
-       5463 
-    -> 5464         self._find_diffractions()
-       5465         #
-       5466         #   VIII -  Construct the list of interactions associated to each cycle
+       5451 
+       5452             seg = p.vnodes[p.vnodes>0]
+    -> 5453             lair = [x in (self.name['AIR']+self.name['_AIR']) for x in seg]
+       5454 
+       5455             if sum(lair)>0:
 
 
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in _find_diffractions(self, tol)
-       8467 
-       8468         """
-    -> 8469         dangles = self.get_Gt_angles()
-       8470 
-       8471         #
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in get_Gt_angles(self)
-       1985         dangles = {}
-       1986         for cy in self.Gt.nodes():
-    -> 1987             uc,ac = self.get_singlGt_angles(cy,inside=True)
-       1988             dangles[cy]=np.array(([uc,ac]))
-       1989         return dangles
-
-
-    /home/uguen/Documents/rch/devel/pylayers/pylayers/gis/layout.pyc in get_singlGt_angles(self, cy, unit, inside)
-       1927         # rupt=np.roll(upt,1)         # for debug
-       1928         # rupt2=np.roll(upt,-1)         # for debug
-    -> 1929         pt = self.pt[:,self.iupnt[-upt]]
-       1930         if geu.SignedArea(pt)<0:
-       1931             upt = upt[::-1]
-
-
-    AttributeError: 'Layout' object has no attribute 'pt'
+    KeyError: 'AIR'
 
 
 The full evaluation and hdf5 storage of the channel is done with the
@@ -118,9 +89,9 @@ reevaluation.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-4-93695eef2a3c> in <module>()
     ----> 1 ak,tauk=Lk.eval()
@@ -138,9 +109,9 @@ reevaluation.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-5-b4eee5c9d035> in <module>()
           1 f = plt.figure(figsize=(15,15))
@@ -153,7 +124,7 @@ reevaluation.
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b22b93ed2d0>
+    <matplotlib.figure.Figure at 0x7fb32b377fd0>
 
 
 The transmission channel is stored in ``H``
@@ -166,9 +137,9 @@ The transmission channel is stored in ``H``
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-6-345dfe201bf5> in <module>()
     ----> 1 Lk.H
@@ -205,9 +176,9 @@ channel.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-9-5e7aed51dc8f> in <module>()
     ----> 1 f,a=Lk.show()
@@ -226,9 +197,9 @@ The ``Ctilde`` channel can be sorted with respect to delay
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-10-345dfe201bf5> in <module>()
     ----> 1 Lk.H
@@ -245,9 +216,9 @@ The ``Ctilde`` channel can be sorted with respect to delay
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-11-00ef4b2c8627> in <module>()
     ----> 1 len(Lk.fGHz)
@@ -265,9 +236,9 @@ The ``Ctilde`` channel can be sorted with respect to delay
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-12-f5a32547e4dd> in <module>()
           1 f = plt.figure(figsize=(20,10))
@@ -280,7 +251,7 @@ The ``Ctilde`` channel can be sorted with respect to delay
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b22b93dcb10>
+    <matplotlib.figure.Figure at 0x7fb328eae190>
 
 
 The Friis factor
@@ -302,9 +273,9 @@ can be checked at the end of the **repr** of ``H``.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-13-345dfe201bf5> in <module>()
     ----> 1 Lk.H
@@ -325,9 +296,9 @@ can be checked at the end of the **repr** of ``H``.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-14-86decd824c1e> in <module>()
     ----> 1 Emean=Lk.H.energy(mode='mean')
@@ -348,9 +319,9 @@ can be checked at the end of the **repr** of ``H``.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-15-4b40c4a26243> in <module>()
     ----> 1 print Efirst[0],Elast[0]
@@ -374,9 +345,9 @@ level.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-16-3fd9ccc926f4> in <module>()
     ----> 1 Lk.H.y.shape
@@ -412,9 +383,9 @@ level.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-17-22c3e61e964c> in <module>()
           3 f3 = 6
@@ -430,7 +401,7 @@ level.
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b22bbbba4d0>
+    <matplotlib.figure.Figure at 0x7fb328e75390>
 
 
 .. code:: python
@@ -444,9 +415,9 @@ level.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-18-79fa43f184e0> in <module>()
     ----> 1 a = plt.semilogx(Lk.H.taud,10*np.log10(Emean),'.b',label='mean')
@@ -469,9 +440,9 @@ level.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-19-e688100b13ed> in <module>()
     ----> 1 CIR=bs.TUsignal(tauk,np.zeros(len(tauk)))
@@ -510,9 +481,9 @@ level.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-21-61834b1cbc3e> in <module>()
           1 f = plt.figure(figsize=(20,10))
@@ -525,7 +496,7 @@ level.
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b22bbaca490>
+    <matplotlib.figure.Figure at 0x7fb3282781d0>
 
 
 The cut method applies an energy thresholding on the transmission
@@ -539,9 +510,9 @@ channel.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-22-c50272a814d0> in <module>()
     ----> 1 Lk.H.cut()
@@ -559,9 +530,9 @@ channel.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-23-61834b1cbc3e> in <module>()
           1 f = plt.figure(figsize=(20,10))
@@ -574,7 +545,7 @@ channel.
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b22bbaca9d0>
+    <matplotlib.figure.Figure at 0x7fb328278450>
 
 
 The tap method
@@ -613,9 +584,9 @@ htap has 4 axes.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-25-1e46705dbeb0> in <module>()
     ----> 1 htap,b,c,d = Lk.H.tap(WMHz=WMHz,Ns=Ns,Nm=Nm,Va=Va,Vb=Vb,Ntap=Ntap)
@@ -632,9 +603,9 @@ htap has 4 axes.
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-26-ac45a4e5a814> in <module>()
     ----> 1 np.shape(htap)
@@ -658,9 +629,9 @@ The second parameter is the time integration of htap
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-27-9be9b775c895> in <module>()
     ----> 1 b.shape
@@ -679,9 +650,9 @@ The second parameter is the time integration of htap
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-28-0e61c3a383ad> in <module>()
     ----> 1 np.shape(c)
@@ -700,9 +671,9 @@ The second parameter is the time integration of htap
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-29-50f043f5a600> in <module>()
     ----> 1 d.shape
@@ -727,9 +698,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-30-0b5eab508be1> in <module>()
     ----> 1 img = plt.imshow(abs(b[:,:,0]),interpolation='nearest',extent=(0,1000,fGHz[-1],fGHz[0]))
@@ -751,9 +722,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-31-67e5429df22c> in <module>()
           1 f = plt.figure(figsize=(10,4))
@@ -766,7 +737,7 @@ for the first channel tap. :exit
 
 .. parsed-literal::
 
-    <matplotlib.figure.Figure at 0x2b22bbbba150>
+    <matplotlib.figure.Figure at 0x7fb328e75f10>
 
 
 .. code:: python
@@ -783,9 +754,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-32-b96e2c6d4018> in <module>()
           1 mmax = 0.3*WMHz*1e6/(2*fcGHz*(Va+Vb))
@@ -806,9 +777,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-33-0f4c005a4ee8> in <module>()
     ----> 1 plt.plot(abs(c[0,:,0]))
@@ -825,9 +796,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-34-45f737fc79d6> in <module>()
     ----> 1 h = c[:,:,2]
@@ -848,9 +819,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-36-7416bec9fa83> in <module>()
     ----> 1 H = fft.fft(h,axis=1)
@@ -867,9 +838,9 @@ for the first channel tap. :exit
 ::
 
 
-    ---------------------------------------------------------------------------
+    
 
-    NameError                                 Traceback (most recent call last)
+    NameErrorTraceback (most recent call last)
 
     <ipython-input-37-6325b7c4882e> in <module>()
     ----> 1 plt.imshow(fft.fftshift(abs(H)))

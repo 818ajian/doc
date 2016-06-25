@@ -4,8 +4,9 @@ Network Simulation Configuration
 
 .. code:: python
 
-    import ConfigParser
-    import pylayers.util.pyutil as pyu
+    >>> import ConfigParser
+    >>> import pylayers.util.pyutil as pyu
+
 PyLayers is designed to provide indoor radio channel simulation for
 mobile agents.
 
@@ -32,7 +33,86 @@ for obtaining the inforamtion about the format.
 
 .. code:: python
 
-    !cat $BASENAME/ini/simulnet.ini
+    >>> !cat $BASENAME/ini/simulnet.ini
+    [Mysql]
+    host = localhost
+    user = root
+    passwd = sqlsql
+    dbname = test
+    dumpdb =True
+    
+    [Save]
+    ; deprecated save option
+    save=[]
+    ;save=['csv','mysql','matlab','pyray','txt','ini']
+    ; save format using Save class..to be deprecatred soon
+    savep=True
+    ; pandas save format . only record mechanical. To be upgraded soon
+    savepd=True
+    
+    [Layout]
+    filename = TA-Office.ini
+    
+    x_offset  = 30
+    y_offset = 2
+    
+    the_world_width	 = 65
+    the_world_height = 20
+    the_world_scale	 = 20
+    
+    [Mechanics]
+    ; update time for agent movement
+    mecanic_update_time = 0.2
+    ; select how agnt choose destiantion
+    ;'random' ; file
+    choose_destination = 'random'
+    ; experimental show for debug purpose
+    pdshow=False
+    
+    [Network]
+    ; simulate the network
+    network=True
+    ; refresh TOA regulary 'synchro 'or with distance 'autionomous'
+    Communication_mode='autonomous'
+    ; update time for refreshing network
+    network_update_time = 0.1
+    ; show nodes moving & radio link
+    show = False
+    ; show in ipython notebook
+    ipython_nb_show = False
+    ; show signature ( not fully functionnal)
+    show_sg = False
+    ; show 2 tables : mecanic & network
+    show_table = False
+    ; show the same information but in terminal
+    dispinfo = False
+    
+    [Localization]
+    ; perform localization
+    localization = False
+    ; time to refresh localization
+    localization_update_time = 1.0
+    ; list of used methods method = ['alg','geo']
+    method = ['geo']
+    
+    
+    
+    [Simulation]
+    ; simulation filename for savepd
+    filename = 'simulnet'
+    ; Simulation duration
+    duration = 120.0
+    ; speed ratio ag
+    speedratio = 50.
+    ; time for refreshing tk plot ( obsolete)
+    show_interval = 0.5
+    ; show scene using tk renderer ( obsolete)
+    showtk   = False
+    ; choose seed for random mobiliity
+    seed = 1
+    ; verbose output
+    verbose = False
+
 
 .. parsed-literal::
 
@@ -48,7 +128,7 @@ for obtaining the inforamtion about the format.
     save=[]
     ;save=['csv','mysql','matlab','pyray','txt','ini']
     ; save format using Save class..to be deprecatred soon
-    savep=True
+    savep=False
     ; pandas save format . only record mechanical. To be upgraded soon
     savepd=True
     
@@ -103,7 +183,7 @@ for obtaining the inforamtion about the format.
     ; simulation filename for savepd
     filename = 'simulnet'
     ; Simulation duration
-    duration = 120.0
+    duration = 60.0
     ; speed ratio ag
     speedratio = 50.
     ; time for refreshing tk plot ( obsolete)
@@ -117,10 +197,30 @@ for obtaining the inforamtion about the format.
     
 
 
+::
+
+
+    
+
+    NameErrorTraceback (most recent call last)
+
+    <ipython-input-2-868bd92f5456> in <module>()
+          1 get_ipython().system(u'cat $BASENAME/ini/simulnet.ini')
+    ----> 2 [Mysql]
+          3 host = localhost
+          4 user = root
+          5 passwd = sqlsql
+
+
+    NameError: name 'Mysql' is not defined
+
+
 .. code:: python
 
-    Cp = ConfigParser.ConfigParser()
-    Cp.read(pyu.getlong('simulnet.ini','ini'))
+    >>> Cp = ConfigParser.ConfigParser()
+    >>> Cp.read(pyu.getlong('simulnet.ini','ini'))
+    ['/home/uguen/Bureau/P1/ini/simulnet.ini']
+
 
 
 
@@ -134,7 +234,15 @@ Current version of ``Simulnet.ini`` contains the following sections
 
 .. code:: python
 
-    Cp.sections()
+    >>> Cp.sections()
+    ['Mysql',
+     'Save',
+     'Layout',
+     'Mechanics',
+     'Network',
+     'Localization',
+     'Simulation']
+
 
 
 
@@ -157,7 +265,9 @@ The save section handles the output files of the simulation.
 
 .. code:: python
 
-    dict(Cp.items('Save'))
+    >>> dict(Cp.items('Save'))
+    {'save': '[]', 'savep': 'True', 'savepd': 'True'}
+
 
 
 
@@ -171,7 +281,9 @@ The ``savep`` boolean enable/disable saving of the simulation.
 
 .. code:: python
 
-    dict(Cp.items('Save'))['savep']
+    >>> dict(Cp.items('Save'))['savep']
+    'True'
+
 
 
 
@@ -186,14 +298,18 @@ in ``$BASENAME/netsave``
 
 .. code:: python
 
-    !ls $BASENAME/netsave/*
+    >>> !ls $BASENAME/netsave/*
+    /home/uguen/Bureau/P1/netsave/save  /home/uguen/Bureau/P1/netsave/save.mat  /home/uguen/Bureau/P1/netsave/simulnet_TA-Office.h5  /home/uguen/Bureau/P1/netsave/traj_nicta.h5
 
-.. parsed-literal::
 
-    /home/uguen/Bureau/P1/netsave/save
-    /home/uguen/Bureau/P1/netsave/save.mat
-    /home/uguen/Bureau/P1/netsave/simulnet_TA-Office.h5
-    /home/uguen/Bureau/P1/netsave/traj_nicta.h5
+::
+
+
+      File "<ipython-input-7-64bad4e82dff>", line 2
+        home(/uguen/Bureau/P1/netsave/save, /home/uguen/Bureau/P1/netsave/save.mat, /home/uguen/Bureau/P1/netsave/simulnet_TA-Office.h5, /home/uguen/Bureau/P1/netsave/traj_nicta.h5)
+             ^
+    SyntaxError: invalid syntax
+
 
 
 Layout section
@@ -204,7 +320,14 @@ simulation
 
 .. code:: python
 
-    dict(Cp.items('Layout'))
+    >>> dict(Cp.items('Layout'))
+    {'filename': 'TA-Office.ini',
+     'the_world_height': '20',
+     'the_world_scale': '20',
+     'the_world_width': '65',
+     'x_offset': '30',
+     'y_offset': '2'}
+
 
 
 
@@ -223,7 +346,9 @@ Choose the used Layout for simulation
 
 .. code:: python
 
-    dict(Cp.items('Layout'))['filename']
+    >>> dict(Cp.items('Layout'))['filename']
+    'TA-Office.ini'
+
 
 
 
@@ -237,8 +362,11 @@ Setup an offset for defining the coordinate system origin
 
 .. code:: python
 
-    print dict(Cp.items('Layout'))['x_offset']
-    print dict(Cp.items('Layout'))['y_offset']
+    >>> print dict(Cp.items('Layout'))['x_offset']
+    >>> print dict(Cp.items('Layout'))['y_offset']
+    30
+    2
+
 
 .. parsed-literal::
 
@@ -246,12 +374,29 @@ Setup an offset for defining the coordinate system origin
     2
 
 
+
+
+.. parsed-literal::
+
+    2
+
+
+
 Network section
 ~~~~~~~~~~~~~~~
 
 .. code:: python
 
-    dict(Cp.items('Network'))
+    >>> dict(Cp.items('Network'))
+    {'communication_mode': "'autonomous'",
+     'dispinfo': 'False',
+     'ipython_nb_show': 'False',
+     'network': 'True',
+     'network_update_time': '0.1',
+     'show': 'False',
+     'show_sg': 'False',
+     'show_table': 'False'}
+
 
 
 
@@ -279,7 +424,9 @@ Setup communication mode between node:
 
 .. code:: python
 
-    dict(Cp.items('Network'))['communication_mode']
+    >>> dict(Cp.items('Network'))['communication_mode']
+    "'autonomous'"
+
 
 
 
@@ -293,7 +440,9 @@ Time step for the refresh network information
 
 .. code:: python
 
-    dict(Cp.items('Network'))['network_update_time']
+    >>> dict(Cp.items('Network'))['network_update_time']
+    '0.1'
+
 
 
 
@@ -307,7 +456,9 @@ Vizualization of the simulation using matplotlib
 
 .. code:: python
 
-    dict(Cp.items('Network'))['show']
+    >>> dict(Cp.items('Network'))['show']
+    'False'
+
 
 
 
@@ -321,7 +472,9 @@ Vizualization of a table summing up the data exchange of the nodes
 
 .. code:: python
 
-    dict(Cp.items('Network'))['show_table']
+    >>> dict(Cp.items('Network'))['show_table']
+    'False'
+
 
 
 
@@ -335,7 +488,9 @@ Vizualization of the simulation inside ipython notebook
 
 .. code:: python
 
-    dict(Cp.items('Network'))['ipython_nb_show']
+    >>> dict(Cp.items('Network'))['ipython_nb_show']
+    'False'
+
 
 
 
@@ -352,7 +507,11 @@ This section specifies agents dynamic during simulation
 
 .. code:: python
 
-    dict(Cp.items('Mechanics'))
+    >>> dict(Cp.items('Mechanics'))
+    {'choose_destination': "'random'",
+     'mecanic_update_time': '0.2',
+     'pdshow': 'False'}
+
 
 
 
@@ -372,7 +531,9 @@ Setup how agent choose their target:
 
 .. code:: python
 
-    dict(Cp.items('Mechanics'))['choose_destination']
+    >>> dict(Cp.items('Mechanics'))['choose_destination']
+    "'random'"
+
 
 
 
@@ -386,7 +547,9 @@ Time step for refreshing the mechanical layer (ground truth position)
 
 .. code:: python
 
-    dict(Cp.items('Mechanics'))['mecanic_update_time']
+    >>> dict(Cp.items('Mechanics'))['mecanic_update_time']
+    '0.2'
+
 
 
 
@@ -403,7 +566,11 @@ Setup Localization algorithms
 
 .. code:: python
 
-    dict(Cp.items('Localization'))
+    >>> dict(Cp.items('Localization'))
+    {'localization': 'False',
+     'localization_update_time': '1.0',
+     'method': "['geo']"}
+
 
 
 
@@ -419,7 +586,9 @@ enable/disable localizaiton of the agents
 
 .. code:: python
 
-    dict(Cp.items('Localization'))['localization']
+    >>> dict(Cp.items('Localization'))['localization']
+    'False'
+
 
 
 
@@ -436,7 +605,9 @@ Select localization methods :
 
 .. code:: python
 
-    dict(Cp.items('Localization'))['method']
+    >>> dict(Cp.items('Localization'))['method']
+    "['geo']"
+
 
 
 
@@ -450,7 +621,9 @@ Time step for localization update
 
 .. code:: python
 
-    dict(Cp.items('Localization'))['localization_update_time']
+    >>> dict(Cp.items('Localization'))['localization_update_time']
+    '1.0'
+
 
 
 
@@ -465,7 +638,15 @@ Simulation section
 
 .. code:: python
 
-    dict(Cp.items('Simulation'))
+    >>> dict(Cp.items('Simulation'))
+    {'duration': '120.0',
+     'filename': "'simulnet'",
+     'seed': '1',
+     'show_interval': '0.5',
+     'showtk': 'False',
+     'speedratio': '50.',
+     'verbose': 'False'}
+
 
 
 
@@ -485,7 +666,9 @@ Setup simulation duration in second
 
 .. code:: python
 
-    dict(Cp.items('Simulation'))['duration']
+    >>> dict(Cp.items('Simulation'))['duration']
+    '120.0'
+
 
 
 
@@ -499,7 +682,9 @@ Setup random seed for simulation
 
 .. code:: python
 
-    dict(Cp.items('Simulation'))['seed']
+    >>> dict(Cp.items('Simulation'))['seed']
+    '1'
+
 
 
 
@@ -513,7 +698,9 @@ Display messages during simulation
 
 .. code:: python
 
-    dict(Cp.items('Simulation'))['verbose']
+    >>> dict(Cp.items('Simulation'))['verbose']
+    'False'
+
 
 
 
@@ -527,18 +714,16 @@ See Also
 
 .. code:: python
 
-    FileLink('../4-MOB/Mobility.ipynb')
+    >>> FileLink('../4-MOB/Mobility.ipynb')
+    /home/uguen/Documents/rch/devel/pylayers/doc/notebook/4-MOB/Mobility.ipynb
+
 
 ::
 
 
-    ---------------------------------------------------------------------------
+      File "<ipython-input-28-57f968ffd901>", line 2
+        home(/uguen/Documents/rch/devel/pylayers/doc/notebook/4-MOB/Mobility.ipynb)
+             ^
+    SyntaxError: invalid syntax
 
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-28-53c5d5fd520c> in <module>()
-    ----> 1 FileLink('../4-MOB/Mobility.ipynb')
-    
-
-    NameError: name 'FileLink' is not defined
 

@@ -18,4 +18,4 @@ rst: $(RST)
 	echo "====================" >> ../errors.log
 	runipy -o --skip-exception $<  >/dev/null 2>> ../errors.log
 	jupyter nbconvert $< --to rst 
-	rm $<
+	utf82ascii $@
