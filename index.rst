@@ -3,5 +3,6 @@
 .. toctree::
    :hidden:
 
-   notebook/TOC.rst 
+   notebook/TOC 
    modules/pylayers
+   auto_examples/index

@@ -41,12 +41,16 @@ extensions = [
     'sphinx.ext.coverage',
 #    'sphinx.ext.pngmath',
 #    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode'
+    'sphinx.ext.viewcode',
+    'sphinx_gallery.gen_gallery'
     ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
+sphinx_gallery_conf = {
+        'examples_dirs':'examples',
+        'gallery_dirs':'auto_examples'}
 # The suffix of source filenames.
 source_suffix = '.rst'
 
