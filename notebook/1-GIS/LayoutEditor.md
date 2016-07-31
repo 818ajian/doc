@@ -15,8 +15,8 @@ The `pylayers.gis.osmparser` module parses `osm` files.
 
 See the following methods of the layout object
 
-+ `loadosm()`
-+ `saveosm()`
++ `importosm()`
++ `exportosm()`
 
 ### Structure of a Layout
 
@@ -43,8 +43,6 @@ A `subsegment` belongs to a `segment`, it has mainly 2 attached parameters :
 + `ss_name` : subsegment slab name
 + `ss_z` : [(zmin1,zmax1),(zmin2,zmax2),...,(zminK,zmaxK))] list of minimum and maximum height of associated subsegments (meters)
 
-
-
 When appearing in a 3D ray a subsegment should have a unique index different from the segment index.
 
 ### The different layout format
@@ -52,9 +50,7 @@ When appearing in a 3D ray a subsegment should have a unique index different fro
 The layout format has regularly evolved over time and is going to evolve again.
 Currently, the different recognized file extensions are the following :
 
-+ `.str2`: a ASCII file (Node list + edge list)
-+ `.str`  : a binary file which includes visibility relations between point and segments
-+ `.ini`  : an ini file which gather node list and edge list as well as the state of the current `display` dictionnary
++ `.ini`  : an ini file which gather node list and edge list as well as the involved slabs and materials of the current `display` dictionnary
 + `.osm`  : an xml file which can be edited with [JOSM](http://josm.openstreetmap.de/)
 
 ```python
@@ -63,15 +59,14 @@ Currently, the different recognized file extensions are the following :
 >>> %matplotlib inline
 ```
 
-### Reading an exiting Layout
+### Reading a Layout
 
-To read an existing layout it is sufficient to create a Layout object with, as an argument, a file name with
+To read an existing layout, it is sufficient to create a Layout object with, as an argument, a file name with
 one of the recognized extension. All files are stored in the `pstruc['DIRSTRUC']` directory of the project. The project root directory
 is defined in the `$BASENAME` environment variable.
 
 ```python
 >>> print pstruc['DIRSTRUC']
-struc/str
 ```
 
 `pstruc` is a dictionnary which gathers all directories which are used in `PyLayers`
@@ -86,7 +81,6 @@ The structure of the `.osm` file is shown below
 >>> %%bash
     cd $BASENAME/struc
     ls *.osm
-
 ```
 
 ```python
@@ -117,7 +111,7 @@ The different graphs associated with the layout are then built
 >>> L.build()
 ```
 
-The topological graph $\mathcal{G}_t$ or graph of non overlapping cycles.
+The topological graph $\mathcal{G}_t$ or graph of convex cycles.
 
 ```python
 >>> f,a=L.showG('t')
@@ -128,15 +122,15 @@ The graph of room $\mathcal{G}_r$. Two rooms which share at least a wall are con
 Two rooms which share only a corner (punctual connection) are not connected
 
 ```python
->>> f,a=L.showG('r')
->>> b=plt.axis('off')
+>>> # f,a=L.showG('r')
+>>> # b=plt.axis('off')
 ```
 
-The graph of waypath $\mathcal{G}_w$. This graph is used for agent mobility. This allows to determine the shortest path between 2 rooms. This information could be included in the osm file. This is not the case yet
+The graph of waypath $\mathcal{G}_w$. This graph is used for agent mobility. It allows to determine the shortest path between 2 rooms. 
 
 ```python
->>> f,a=L.showG('w')
->>> b=plt.axis('off')
+>>> # f,a=L.showG('w')
+>>> # b=plt.axis('off')
 ```
 
 The graph of visibility $\mathcal{G_v}$
@@ -205,6 +199,7 @@ The layout can be displayed using matplotlib plotting primitive. Several display
 
 ### Interactive Editor
 
+
 The command L.editor() launches an interactive editor. The state machine is implemented in module `pylayers.gis.selectl.py`.
 
 To have an idea of all available options, look in the 
@@ -216,15 +211,15 @@ This editor is more suited for modifying constitutive properties of walls. In th
 could be a much better solution.
 
 
-There are two different modes of edition
+There are two different modes of edition 
 
-+ A create points mode CP
++ A `create points` mode CP
 
     + left clic   : free point
     + right clic  : same x point
     + center clic : same y point
 
-+ A create segments mode
++ A `create segments` mode
     + left clic   : select point 1
     + left clic   : select point 2
     + left clic   : create a segment between point 1 and point 2

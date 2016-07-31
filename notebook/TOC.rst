@@ -128,8 +128,6 @@ Indoor and Outdoor Layout
   :maxdepth: 2
 
   1-GIS/Layout.rst 
-  
-  1-GIS/LayoutEditor.rst
 
   1-GIS/Multisubsegments.rst
 

@@ -3,5 +3,5 @@
 .. toctree::
    :hidden:
 
-   notebook/index.rst
+   notebook/TOC.rst 
    modules/pylayers

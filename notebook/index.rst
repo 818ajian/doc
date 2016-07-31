@@ -7,5 +7,6 @@ User Manual
    :maxdepth: 2 
    :numbered:
 
-   ./UserManual.rst
+   ./TOC.rst
+
 

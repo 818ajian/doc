@@ -5,8 +5,7 @@
 # Effect of Modifying the Nature of Sub-Segments
 
 This notebook illustrates a simple ray tracing simulation with different
-material properties for a single segment separating 2 rooms which contains multi
-subsegments. The notebook illustrates in details the whole steps.
+material properties for a single segment separating 2 rooms which contains multi subsegments. The notebook illustrates in details the whole steps.
 
 ```python
 from pylayers.simul.link import *
@@ -19,7 +18,6 @@ import pylayers.signal.bsignal as bs
 import pylayers.signal.waveform as wvf
 from pylayers.simul.simulem import *
 import matplotlib.pyplot as plt
-%matplotlib inline
 ```
 
 Let's start by loading a simple layout with 2 single rooms. The multi subsegment
@@ -42,7 +40,7 @@ wood again until the ceiling.
 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
 ```
 
-As the Layout structure has been modified it is required to rebuild the
+As the Layout structure has been modified, it is required to rebuild the
 structure.
 
 ```python

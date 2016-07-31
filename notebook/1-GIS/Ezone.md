@@ -45,7 +45,7 @@ In this initial phase no data is loaded yet, to load all the data gathered for t
 ```
 
 ```python
->>> z
+>>>z
 ```
 
 This object contains the `srtm` DEM data, the aster data and a filtration of the `open street map` database selecting only the ways with `building` attribute. Let's have a look to the data with the `show` method.

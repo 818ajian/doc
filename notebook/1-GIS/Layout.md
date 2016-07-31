@@ -24,10 +24,10 @@ Creating a default Layout is as simple as :
 >>> L
 ```
 
-Querying the file name associated with the Layout
+Querying the file name associated with the Layout.
 
 ```python
->>> L.filename
+>>> L._filename
 ```
 
  The Layout is described in an `.ini` file. 
@@ -59,14 +59,8 @@ L.ax  provides the boundary of the layout with the following format :  (xmin,xma
 >>> L.build()
 ```
 
-L.ma is the polygon mask of the layout 
-
-```python
->>> L.ma
-```
-
 This Layout has several convex cycles which are stored in the Gt graph. 
-The diffraction points are stored in a dictionnary L.ddiff. The keys of this diction-nary are the diffraction points and the values are both the list of output cycles and the corresponding wedge angles.
+The diffraction points are stored in the dictionnary `L.ddiff`. The keys of this dictionnary are the diffraction points number and the values are a zipped list of output cycles and corresponding wedge angles.
 
 ```python
 >>> L.Gv.node

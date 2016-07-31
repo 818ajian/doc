@@ -24,6 +24,7 @@ pylayers.gis.cycles.Cycles
       ~Cycles.add_weighted_edges_from
       ~Cycles.adjacency_iter
       ~Cycles.adjacency_list
+      ~Cycles.check
       ~Cycles.clear
       ~Cycles.copy
       ~Cycles.decompose
@@ -41,7 +42,6 @@ pylayers.gis.cycles.Cycles
       ~Cycles.in_edges
       ~Cycles.in_edges_iter
       ~Cycles.inclusion
-      ~Cycles.info
       ~Cycles.is_directed
       ~Cycles.is_multigraph
       ~Cycles.nbunch_iter
@@ -66,6 +66,7 @@ pylayers.gis.cycles.Cycles
       ~Cycles.remove_nodes_from
       ~Cycles.reverse
       ~Cycles.selfloop_edges
+      ~Cycles.show
       ~Cycles.size
       ~Cycles.subgraph
       ~Cycles.successors
