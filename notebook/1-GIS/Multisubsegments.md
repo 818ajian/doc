@@ -4,8 +4,9 @@
 
 # Effect of Modifying the Nature of Sub-Segments
 
-This notebook illustrates a simple ray tracing simulation with different
-material properties for a single segment separating 2 rooms which contains multi subsegments. The notebook illustrates in details the whole steps.
+This notebook illustrates a simple ray tracing simulation. The environement 
+is a building with 2 rooms. At the interface betweebn the two rooms there is 
+a segment with 3 sub-segment whose material properties are changed in the simulation. The notebook illustrates in details the different steps of the simulation. First we need to import several specialized modules. 
 
 ```python
 from pylayers.simul.link import *
@@ -18,6 +19,7 @@ import pylayers.signal.bsignal as bs
 import pylayers.signal.waveform as wvf
 from pylayers.simul.simulem import *
 import matplotlib.pyplot as plt
+%matplotlib inline
 ```
 
 Let's start by loading a simple layout with 2 single rooms. The multi subsegment
@@ -40,13 +42,6 @@ wood again until the ceiling.
 L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
 ```
 
-As the Layout structure has been modified, it is required to rebuild the
-structure.
-
-```python
-L.build()
-L.save()
-```
 
 The $\mathcal{G}_s$ graph dictionary has the following structure
 
@@ -54,7 +49,7 @@ The $\mathcal{G}_s$ graph dictionary has the following structure
 L.Gs.node
 ```
 
-We define now two points which are the termination of a radio link.
+We define now, the position of the transmitter and the receiver, the two points which are always the termination of a radio link.
 
 ```python
 #tx=np.array([759,1114,1.5])
@@ -63,10 +58,6 @@ tx=np.array([759,1114,1.5])
 rx=np.array([767,1114,1.5])
 ```
 
-```python
-L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
-L.save()
-```
 
 ```python
 fGHz=np.linspace(1,11,100)
@@ -102,15 +93,6 @@ Lk.C.Ctt
 ```
 
 ```python
-#f,a=Lk.show(rays=True)
-f,a=Lk.show(rays=True,aw=0)
-```
-
-On the figure above, we can see the Tx and Rx each placed in a different room
-apart from a wall with a subsegment placed in the middle.
-Then for evaluating the radio link, simply type:
-
-```python
 ak,tauk=Lk.eval(force=True,a=tx,b=rx,applywav=True)
 ```
 
@@ -133,9 +115,13 @@ wav.show()
 Lk = DLink(L=L,a=tx,b=rx,fGHz=fGHz)
 ```
 
+Position of the transmitter 
+
 ```python
 Lk.a
 ```
+
+Position of the receiver
 
 ```python
 Lk.b
@@ -149,51 +135,31 @@ cir = Lk.H.applywavB(wav.sf)
 layer = ['AIR','AIR','AIR']
 Lk.L.chgmss(1,ss_name=layer)
 Lk.L.Gs.node[1]['ss_name']=layer
-Lk.L.g2npy()
-Lk.L.save()
 #Aa = Antenna('Omni',fGHz=fGHz)
 #Aa = Antenna('Omni',fGHz=fGHz)
 ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
-#plt.stem(Lk.H.taud,Lk.H.ak)
-#plt.stem(Lk.H.taud,Lk.H.ak[:,0,50])
-```
-
-```python
-Lk.H.ak.shape
-```
-
-```python
-cirair = Lk.H.applywavB(wav.sf)
-```
-
-```python
+plt.stem(Lk.H.taud,Lk.H.ak[:,0,20])
+plt.title(str(layer))
+plt.figure()
 layer = ['METAL','METAL','METAL']
 Lk.L.chgmss(1,ss_name=layer)
 Lk.L.Gs.node[1]['ss_name']=layer
-Lk.L.g2npy()
-Lk.L.save()
-Lk.eval(force=True)
-cirmet = Lk.H.applywavB(wav.sf)
-cirmet.plot(typ=['v'],xmin=20,xmax=180)
+ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
+plt.stem(Lk.H.taud,Lk.H.ak[:,0,20])
+plt.title(str(layer))
+#plt.stem(Lk.H.taud,Lk.H.ak[:,0,50])
+plt.figure()
+layer = ['WOOD','AIR','WOOD']
+Lk.L.chgmss(1,ss_name=layer)
+Lk.L.Gs.node[1]['ss_name']=layer
+ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
+plt.title(str(layer))
+plt.stem(Lk.H.taud,Lk.H.ak[:,0,20])
 ```
 
-```python
-#fig2=plt.figure()
-f,a=cirair.plot(typ=['l20'],color='b')
-plt.axis([0,120,-120,-40])
-plt.title('A simple illustration of shadowing effect')
-plt.legend(['air'])
-f,a=cirmet.plot(typ=['l20'],color='r')
-plt.axis([0,120,-120,-40])
-plt.legend(['metal'])
-```
 
 We have modified successively the nature of the 3 surfaces in the sub segment
 placed in the separation partition. The first was AIR, the second WOOD and the
 third METAL. As the subsegment is placed on the LOS path the blockage effect is
 clearly visible.
 The chosen antennas were omni directional `Antenna('Omni')`
-
-```python
-Lk.ir.plot(typ='v')
-```

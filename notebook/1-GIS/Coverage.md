@@ -4,7 +4,7 @@ import matplotlib.tri as tri
 %matplotlib inline
 ```
 
-
+We load 
 
 ```python
 z = Ezone('N48W002')
@@ -417,10 +417,6 @@ UL[(u[0,:],u[1,:],u[2,:])]=RF[(u[0,:],u[1,:],u[2,:])]
 UR[(v[0,:],v[1,:],v[2,:])]=RF[(v[0,:],v[1,:],v[2,:])]
 ```
 
-
-```python
-k=U[(u[0,:],u[1,:],u[2,:])]=RF[(u[0,:],u[1,:],u[2,:])].max()
-```
 
 
 ```python

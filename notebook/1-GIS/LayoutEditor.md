@@ -54,37 +54,35 @@ Currently, the different recognized file extensions are the following :
 + `.osm`  : an xml file which can be edited with [JOSM](http://josm.openstreetmap.de/)
 
 ```python
->>> from pylayers.gis.layout import *
->>> from pylayers.util.project import *
->>> %matplotlib inline
+    from pylayers.gis.layout import *
+    from pylayers.util.project import *
+    %matplotlib inline
 ```
 
 ### Reading a Layout
 
 To read an existing layout, it is sufficient to create a Layout object with, as an argument, a file name with
-one of the recognized extension. All files are stored in the `pstruc['DIRSTRUC']` directory of the project. The project root directory
+one of the recognized extension. All files are stored in the `pstruc['DIRINI']` directory of the project. The project root directory
 is defined in the `$BASENAME` environment variable.
 
-```python
->>> print pstruc['DIRSTRUC']
-```
+
 
 `pstruc` is a dictionnary which gathers all directories which are used in `PyLayers`
 
 ```python
->>> pstruc
+    pstruc
 ```
 
 The structure of the `.osm` file is shown below
 
 ```python
->>> %%bash
+    %%bash
     cd $BASENAME/struc
     ls *.osm
 ```
 
 ```python
->>> %%bash
+    %%bash
      cd $BASENAME/struc
      head DLR.osm
      echo '---'
@@ -94,71 +92,71 @@ The structure of the `.osm` file is shown below
 To read a new layout in osm format :
 
 ```python
->>> L=Layout('DLR.ini')
+    L=Layout('DLR.ini')
 ```
 
 ```python
->>> fig,ax=L.showGs()
+    fig,ax=L.showGs()
 ```
 
 ```python
->>> L.info()
+    L.info()
 ```
 
 The different graphs associated with the layout are then built
 
 ```python
->>> L.build()
+    L.build()
 ```
 
 The topological graph $\mathcal{G}_t$ or graph of convex cycles.
 
 ```python
->>> f,a=L.showG('t')
->>> b=plt.axis('off')
+    f,a=L.showG('t')
+    b=plt.axis('off')
 ```
 
 The graph of room $\mathcal{G}_r$. Two rooms which share at least a wall are connected.
 Two rooms which share only a corner (punctual connection) are not connected
 
 ```python
->>> # f,a=L.showG('r')
->>> # b=plt.axis('off')
+    # f,a=L.showG('r')
+    # b=plt.axis('off')
 ```
 
 The graph of waypath $\mathcal{G}_w$. This graph is used for agent mobility. It allows to determine the shortest path between 2 rooms. 
 
 ```python
->>> # f,a=L.showG('w')
->>> # b=plt.axis('off')
+    # f,a=L.showG('w')
+    # b=plt.axis('off')
 ```
 
 The graph of visibility $\mathcal{G_v}$
 
 ```python
->>> f,a=L.showG('v')
->>> b=plt.axis('off')
+    f,a=L.showG('v')
+    b=plt.axis('off')
 ```
 
 The graph of interactions $\mathcal{G}_i$ used to determine the ray signatures.
 
 ```python
->>> f=plt.figure(figsize=(15,15))
->>> a = f.gca()
->>> f,a=L.showG('i',fig=f,ax=a)
->>> b= plt.axis('off')
+    f=plt.figure(figsize=(15,15))
+    a = f.gca()
+    f,a=L.showG('i',fig=f,ax=a)
+    b= plt.axis('off')
 ```
 
 ### The display options dictionnary
 
 ```python
->>> L.info()
+    L.info()
 ```
 
 The layout can be displayed using matplotlib plotting primitive. Several display options are specified in the display dictionary. Those options are exploited in `showGs()` visualization method.
 
 ```python
->>> L.display
+    L.display
 ```
 
 #### Layers
@@ -214,15 +212,14 @@ could be a much better solution.
 There are two different modes of edition 
 
 + A `create points` mode CP
-
-    + left clic   : free point
-    + right clic  : same x point
-    + center clic : same y point
+    - left clic   : free point
+    - right clic  : same x point
+    - center clic : same y point
 
 + A `create segments` mode
-    + left clic   : select point 1
-    + left clic   : select point 2
-    + left clic   : create a segment between point 1 and point 2
+    - left clic   : select point 1
+    - left clic   : select point 2
+    - left clic   : create a segment between point 1 and point 2
 
 **m**  : to switch from one mode to an other
 
@@ -234,21 +231,21 @@ It is useful while editing a layout to have an overlay of an image in order to h
 or a filename. In that case the file is stored in
 
 ```python
->>> L=Layout()
->>> L.display['fileoverlay']='http://images.wikia.com/theoffice/images/9/9e/Layout.jpg'
+    L=Layout()
+    L.display['fileoverlay']='http://images.wikia.com/theoffice/images/9/9e/Layout.jpg'
 ```
 
 ```python
->>> L.display['overlay']=True
->>> L.display['alpha']=1
->>> L.display['scaled']=False
->>> L.display['ticksoff']=False
->>> L.display['inverse']=True
+    L.display['overlay']=True
+    L.display['alpha']=1
+    L.display['scaled']=False
+    L.display['ticksoff']=False
+    L.display['inverse']=True
 ```
 
 ```python
->>> plt.figure(figsize=(10,10))
->>> L.showGs()
+    plt.figure(figsize=(10,10))
+    L.showGs()
 ```
 
 #### Scaling the figure overlay
@@ -270,31 +267,28 @@ This is done by the following commands :
 In that sequence of operation it is useful to rescale the figure with 'r'.
 
 At that stage, it is possible to start creating points
-
-        'b'  : selct a segment
-        'l'  : select activelayer
-        'i'  : back to init state
-        'e'  : edit segment
-        't'  : translate  structure
-        'h'  : add subsegment
-        'd'  : delete subsegment
-        'r'  : refresh
-        'o'  : toggle overlay
-        'm'  : toggle mode (point or segment)
-        'z'  : change display parameters
-        'q'  : quit interactive mode
-        'x'  : save .str2 file
-        'w'  : display all layers
+    'b'  : select a segment
+    'l'  : select activelayer
+    'i'  : back to init state
+    'e'  : edit segment
+    't'  : translate  structure
+    'h'  : add subsegment
+    'd'  : delete subsegment
+    'r'  : refresh
+    'o'  : toggle overlay
+    'm'  : toggle mode (point or segment)
+    'z'  : change display parameters
+    'q'  : quit interactive mode
+    'x'  : save .str2 file
+    'w'  : display all layers
 
 #### Vizualisation of the layout
 
 ```python
->>> L = Layout('TA-Office.ini')
->>> L.dumpr()
->>> fig = plt.figure(figsize=(25,25))
->>> ax = fig.gca()
->>> fig,ax = L.showG(fig=fig,ax=ax,graph='s',labels=True,font_size=9,node_size=220,node_color='c')
->>> a = plt.axis('off')
+    L = Layout('TA-Office.ini')
+    fig = plt.figure(figsize=(25,25))
+    fig,ax = L.showG(graph='s',labels=True,font_size=9,node_size=220,node_color='c')
+    plt.axis('off')
 ```
 
 Each node of $\mathcal{G}_s$ with a negative index is a point.

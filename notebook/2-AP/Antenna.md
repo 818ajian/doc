@@ -8,28 +8,20 @@ In the following, some features of the `Antenna` class are illustrated.
 The  `Antenna` class is stored in the [antenna.py](http://pylayers.github.io/pylayers/modules/pylayers.antprop.antenna.html) module which is placed in the `antprop` module.
 
 ```python
->>> from pylayers.antprop.antenna import *
->>> %matplotlib inline
+from pylayers.antprop.antenna import *
+%matplotlib inline
 ```
 
 An antenna object can not be loaded in specifying an existing antenna file name as argument of the constructor. Lets start by loading an antenna from a `vsh3` file which correspond to a vector spherical harmonics representation of an antenna measured in SATIMO near field chamber.
 
 ```python
->>> A = Antenna('S1R1.vsh3')
+A = Antenna('S1R1.vsh3')
 ```
 
 The object antenna can show itself just by typing it's name.
 
 ```python
->>> A
-Antenna type : vsh3
-------------------------
-file name : S1R1.vsh3
-fmin : 0.80GHz
-fmax : 5.95GHz
-step : 50.00MHz
-Nf : 104
-Not evaluated
+A
 ```
 
 We got information about the antenna filename and the frequency band where it has been defined.
@@ -42,31 +34,25 @@ Antenna files should be stored in the sub-directory `ant` of the current project
 The current project is located with the `$BASENAME` environment variable.
 
 ```python
->>> !echo $BASENAME
-/home/uguen/Bureau/P1
+!echo $BASENAME
 ```
 
 We can use the `ls` method to determine the number of files of different type
 
 ```python
->>> lvsh3 = A.ls('vsh3')
->>> lssh3 = A.ls('sh3')
->>> lmat = A.ls('mat')
->>> print "Number of antenna in .vsh3 format : ",len(lvsh3)
->>> print "Number of antenna in .sh3 format : ",len(lssh3)
->>> print lvsh3[0:5]
->>> print lssh3[0:5]
->>> print lmat[0:5]
-Number of antenna in .vsh3 format :  2
-Number of antenna in .sh3 format :  4
-['S1R1.vsh3', 'defant.vsh3']
-['S17R1.sh3', 'S17R2m.sh3', 'S1R1.sh3', 'S2R2.sh3']
-[]
+lvsh3 = A.ls('vsh3')
+lssh3 = A.ls('sh3')
+lmat = A.ls('mat')
+print "Number of antenna in .vsh3 format : ",len(lvsh3)
+print "Number of antenna in .sh3 format : ",len(lssh3)
+print lvsh3[0:5]
+print lssh3[0:5]
+print lmat[0:5]
 ```
 
-As already mentionned, the radiation pattern of the antenna has not yet been evaluated. The method to evaluate the pattern is `eval()` with the `grid` option set to true. If the `grid` option is set to False, the antenna is evaluated for only the specified direction. This mode is used in the ray tracing, while the former is used to visualize the whole antenna pattern.
+As already mentionned, the radiation pattern of the antenna has not yet been evaluated. The method to evaluate the pattern is `eval()` with the `grid` option set to `True. If the `grid` option is set to `False`, the antenna is evaluated for only the specified direction. This mode is used in the ray tracing, while the former is used to visualize the whole antenna pattern.
 
-The vector spherical coefficient are strored in `A.C`. This C refers to the coefficients.
+The vector spherical coefficients are strored in `A.C`. This C letter refers to the coefficients.
 Those coefficients are obtained thanks to the [Spherepack Module](http://nldr.library.ucar.edu/repository/assets/technotes/TECH-NOTE-000-000-000-380.pdf).
 
 Adams, J.C., and P.N. Swarztrauber, 1997: Spherepack 2.0: A Model Development Facility. NCAR Technical Note NCAR/TN-436+STR, DOI: 10.5065/D6Z899CF.
@@ -81,34 +67,7 @@ Only the vector spherical analysis is done using the `vha` function `Spherepack`
 The coefficients of the antenna also have a __repr__
 
 ```python
->>> A.C
-Br
--------------
-Nf   : 104
-fmin (GHz) : 0.8
-fmax (GHz) : 5.95
-Ncoeff s3 : 72
-
-Bi
--------------
-Nf   : 104
-fmin (GHz) : 0.8
-fmax (GHz) : 5.95
-Ncoeff s3 : 72
-
-Cr
--------------
-Nf   : 104
-fmin (GHz) : 0.8
-fmax (GHz) : 5.95
-Ncoeff s3 : 72
-
-Ci
--------------
-Nf   : 104
-fmin (GHz) : 0.8
-fmax (GHz) : 5.95
-Ncoeff s3 : 72
+A.C
 ```
 
 ## Synthesis of the radiation pattern
@@ -116,63 +75,55 @@ Ncoeff s3 : 72
 The radiation pattern is synthetized with the following call
 
 ```python
->>> A.eval(grid=True)
+A.eval(grid=True)
 ```
 
 ```python
->>> 20*log10(np.max(A.sqG))
-2.2267467105871743
-```
-
-```python
+20*np.log10(np.max(A.sqG))
 
 ```
+
 
 The `plotG()` method allow to superpose different pattern for a list of frequencies `fGHz`
 + If `phd` (phi in degree) is specified the diagram is given as a function of $\theta$
 + If `thd` (theta in degree) is specified the diagram is given as a function of $\phi$
 
 ```python
->>> f = plt.figure(figsize=(20,10))
->>> a1 = f.add_subplot(121,projection='polar')
->>> f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,GmaxdB=5,fig=f,ax=a1,show=False)
->>> a2 = f1.add_subplot(122,projection='polar')
->>> f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f,ax=a2)
->>> f2.tight_layout()
+f = plt.figure(figsize=(20,10))
+a1 = f.add_subplot(121,projection='polar')
+f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,GmaxdB=5,fig=f,ax=a1,show=False)
+a2 = f1.add_subplot(122,projection='polar')
+f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f,ax=a2)
+f2.tight_layout()
 ```
 
 ```python
->>> f = plt.figure(figsize=(20,10))
->>> a1 = f.add_subplot(121)
->>> f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,fig=f,ax=a1,show=False,polar=False)
->>> a2 = f.add_subplot(122)
->>> f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f1,ax=a2,polar=False)
->>> f2.tight_layout()
+f = plt.figure(figsize=(20,10))
+a1 = f.add_subplot(121)
+f1,a1 = A.plotG(fGHz=[3,4,5.6],plan='theta',angdeg=0,fig=f,ax=a1,show=False,polar=False)
+a2 = f.add_subplot(122)
+f2,a2 = A.plotG(fGHz=[3,4,5.6],plan='phi',angdeg=90,GmaxdB=5,fig=f1,ax=a2,polar=False)
+f2.tight_layout()
 ```
 
 ```python
->>> A.fGHz[96]
-5.6000000000000005
+A.fGHz[96]
 ```
 
 ```python
->>> A.plotG(fGHz=[5.6],plan='phi',angdeg=90,GmaxdB=5)
-(<matplotlib.figure.Figure at 0x7f140c466090>,
- <matplotlib.projections.polar.PolarAxes at 0x7f140c4663d0>)
+A.plotG(fGHz=[5.6],plan='phi',angdeg=90,GmaxdB=5)
 ```
 
 ```python
->>> A.pol3d(R=5,St=8,Sp=8)
+A.pol3d(R=5,St=8,Sp=8)
 ```
 
 The vector spherical coefficients can be dispalayed as follows
 
 ```python
->>> fig = plt.figure(figsize=(8,8))
->>> A.C.show(typ='s3')
->>> plt.tight_layout()
-/home/uguen/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-  if self._edgecolors == str('face'):
+fig = plt.figure(figsize=(8,8))
+A.C.show(typ='s3')
+plt.tight_layout()
 ```
 
 ## Defining Antenna gain from analytic formulas
@@ -184,31 +135,25 @@ An antenna can also be defined from closed-form expressions. Available antennas 
 + 3GPP
 
 ```python
->>> Ag = Antenna(typ='Gauss')
+Ag = Antenna(typ='Gauss')
 ```
 
 ```python
->>> Ag.plotG()
-(<matplotlib.figure.Figure at 0x7f140978add0>,
- <matplotlib.projections.polar.PolarAxes at 0x7f13ff5b7c90>)
+Ag.plotG()
 ```
 
 ```python
->>> Ao = Antenna('Omni')
+Ao = Antenna('Omni')
 ```
 
 ```python
->>> Ao.plotG()
-(<matplotlib.figure.Figure at 0x7f13ff4f0e90>,
- <matplotlib.projections.polar.PolarAxes at 0x7f14881dcc90>)
+Ao.plotG()
 ```
 
 ```python
->>> A3 = Antenna('3gpp')
+A3 = Antenna('3gpp')
 ```
 
 ```python
->>> A3.plotG()
-(<matplotlib.figure.Figure at 0x7f13ff41f710>,
- <matplotlib.projections.polar.PolarAxes at 0x7f13ff410650>)
+A3.plotG()
 ```
