@@ -106,12 +106,8 @@ The basic usage is first to build a description of the radio propagation
 scene. This means : 
 
 1. Describing a propagation environment 
-2. Setting a Transmitter and a Receiver and a given standard. 
-3. Producing Output for further analysis.   
-
-There are mostly two kind of situations : 
-
-Indoor environment situations and outdoor situations.
+2. Setting a transmitter and a receiver and a given standard. 
+3. Producing different kind of outputs for further upper layer analysis.   
 
 
 
@@ -165,6 +161,7 @@ Multiwall Motley-Keenan Simulation
   :maxdepth: 2
 
   2-AP/Coverage.rst
+  2-AP/Coverage2.rst
   2-AP/MultiWall.rst
 
 Ray Tracing Tool

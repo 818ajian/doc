@@ -1,48 +1,50 @@
+# Radio standards 
+
 ```python
->>> import pylayers.signal.standard as std
+import pylayers.signal.standard as std
 ```
 
 Parameters of different standards are stored in `wstd.json` file.
 The class which handles wireless standards is ` standard`
 
 ```python
->>> ws1 = std.Wstandard('ieee80211b')
+ws1 = std.Wstandard('ieee80211b')
 ```
 
 To list the available standard :
 
 ```python
->>> ws1.ls()
+ws1.ls()
 ```
 
 ```python
->>> wifi= ws1.load('ieee80211b')
+wifi= ws1.load('ieee80211b')
 ```
 
 ```python
->>> ws1
+ws1
 ```
 
 ```python
->>> AP1 = std.AP()
+AP1 = std.AP()
 ```
 
 ```python
->>> ws2 = std.Wstandard('ieee80211g')
+ws2 = std.Wstandard('ieee80211g')
 ```
 
 ```python
->>> ws2
+ws2
 ```
 
 ```python
->>> ws3 = std.Wstandard('ieee80211a')
+ws3 = std.Wstandard('ieee80211a')
 ```
 
 ```python
->>> ws3 = std.Wstandard('bluetooth-class3')
+ws3 = std.Wstandard('bluetooth-class3')
 ```
 
 ```python
->>> ws3
+ws3
 ```
