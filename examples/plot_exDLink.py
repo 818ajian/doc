@@ -9,7 +9,6 @@ position and evaluates the link
 """
 from pylayers.simul.link import *
 import pylayers.signal.waveform as wvf
-import pdb
 
 # set the frequency range from 2.4GHz to 10GHz
 fGHz=np.arange(2.4,10.,0.05)
@@ -29,7 +28,7 @@ DL.b=np.array([755,1110,1.2])
 # Diffraction : enabled
 # Vectorization : enabled
 #
-ak,tauk = DL.eval(force=['sig','ray','Ct','H'],ra_vectorized=True,diffraction=True)
+DL.eval(force=['sig','ray','Ct','H'],ra_vectorized=True,diffraction=True)
 DL.H.show()
 plt.title('Ray transfer funtion w.r.t frequency Modulus and Phase')
 plt.show()

@@ -163,6 +163,7 @@ Multiwall Motley-Keenan Simulation
   2-AP/Coverage.rst
   2-AP/Coverage2.rst
   2-AP/MultiWall.rst
+  2-AP/CoverageMetis.rst
 
 Ray Tracing Tool
 ****************
@@ -172,6 +173,7 @@ Ray Tracing Tool
 
   2-AP/Signatures.rst
   2-AP/Channel.rst
+  2-AP/CIR.rst
   5-SIM/LinkSimulation.rst
   
   
@@ -200,6 +202,7 @@ Some Simulation Examples
 .. toctree::
   :maxdepth: 2
 
+  2-AP/MetisRayTracing60GHzforTC1.rst
   5-SIM/DLR-WHERE2.rst
   5-SIM/PTIN.rst
   5-SIM/WHERE1-M1.rst
