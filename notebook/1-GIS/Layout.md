@@ -17,12 +17,39 @@ The `Layout` class contains the data structure for describing a propagation envi
 
 ## Getting the list of all available Layouts : the `ls()` method
 
-Creating a default Layout is as simple as :
+Creating an empty Layout is as simple as :
 
 ```python
 >>> L=Layout()
 >>> L
 ```
+
+The different argument of the __init__ function are listed below  
+
+```python
+>>> L=Layout(string='',
+                 _filematini='matDB.ini',
+                 _fileslabini='slabDB.ini',
+                 _filefur='',
+                 force=False,
+                 check=True,
+                 build=True,
+                 verbose=False,
+                 cartesian=True,
+                 dist_m=400,
+                 typ='floorplan')
+```
+
++ **string** is either an existing layout filename (.ini,.osm,.res) or the coordinates (lat,lon)
++ ** _filematini** is the material filename
++ ** _fileslabini** is the slab filename
++ ** _filefur** is th efurniture filename
++ ** check** is a boolean which force layout integrity checking 
++ ** build** is a boolean which force rebuilding the layouts graphs 
++ **verbose** is a boolean output verbosity
++ **cartesian** is a boolean controling the type of coordinates cartesian or (lat,lon)
++ **dist_m** is a number which indicates the zone radius in meters for openstreet map extraction 
++ **typ** is a string which takes values either 'floorplan' or 'outdoor'
 
 Querying the file name associated with the Layout.
 
@@ -30,9 +57,9 @@ Querying the file name associated with the Layout.
 >>> L._filename
 ```
 
- The Layout is described in an `.ini` file. 
+ The Layout is described in an `.ini` file, a `.osm`file or a `.res` filed
 
- The `ls()` method lists the layout files which are available in the `struc` directory of your current project, which is set up via the $BASENAME environment variable which should be defined in order PyLayers find the good directories.
+The `ls()` method lists the layout files which are available in the `struc` directory of your current project, which is set up via the $BASENAME environment variable which should be defined in order PyLayers find the good directories.
 
 ```python
 >>> L.ls('ini')
@@ -59,7 +86,7 @@ L.ax  provides the boundary of the layout with the following format :  (xmin,xma
 >>> L.build()
 ```
 
-This Layout has several convex cycles which are stored in the Gt graph. 
+This Layout is decomposed into convex cycles which are stored in the Gt graph. 
 The diffraction points are stored in the dictionnary `L.ddiff`. The keys of this dictionnary are the diffraction points number and the values are a zipped list of output cycles and corresponding wedge angles.
 
 ```python
@@ -85,10 +112,7 @@ The diffraction points are stored in the dictionnary `L.ddiff`. The keys of this
 To check which are the used slabs :
 
 ```python
->>> Slabs = np.unique(L.sla)
->>> for s in Slabs:
->>>     if s in L.sl:
-           print L.sl[s]
+>>> L.sl
 ```
 
 Let's load an other layout. This an indoor office where the FP7 WHERE project UWB impulse radio measuremnts have been performed. 
@@ -192,7 +216,6 @@ The figure below illustrates a Layout and a superimposition of the graph of cycl
 
 ```python
 >>> print L.Gs.pos[-8]
->>> print L.Gs.pos[-139]
 ```
 
 ```python

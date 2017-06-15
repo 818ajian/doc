@@ -87,15 +87,15 @@ The source code is distributed in the following directories
 + gis
     Handle geographical information system
 + antprop
-    Antenna and Propagation related modules
-+ measures
-    Measurement related tools 
+    Antenna and Propagation Channel related modules
 + simul 
     High level simulation tools
 + mobility 
     Human and vehicular mobility modules 
 + signal
     Signal and PHY tools
++ measures
+    Measurement related tools 
 + location 
     Location and positioning tools
 + util 

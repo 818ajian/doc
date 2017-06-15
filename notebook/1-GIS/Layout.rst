@@ -6,7 +6,7 @@
 
 .. parsed-literal::
 
-    mardi 30 aot 2016, 11:43:21 (UTC+0200)
+    dimanche 12 fvrier 2017, 10:09:31 (UTC+0100)
 
 
 Description of the propagation environment
@@ -42,7 +42,10 @@ Creating a default Layout is as simple as :
 
     
     ----------------
+    Project : /home/uguen/Bureau/P1
     newfile.ini
+    Not built 
+    Coordinates : cart
     ----------------
     
     Number of points  : 0
@@ -53,17 +56,6 @@ Creating a default Layout is as simple as :
     
     xrange :(-50, 50)
     yrange :(-50, 50)
-    
-    Useful dictionnaries
-    ----------------
-    name :  {slab :seglist} 
-    
-    Useful arrays
-    ----------------
-    
-    Useful tip
-    ----------------
-    Point p in Gs => p_coord:
     Segment s in Gs => s_ab coordinates 
     s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
 
@@ -104,24 +96,18 @@ find the good directories.
     ['11Dbibli.ini',
      'B11.ini',
      'CORM1.ini',
-     'Campus_de_Beaulieu_Rennes.ini',
      'DLR.ini',
      'DLR2.ini',
-     'IETR_Avenue_Jean_Perrin_Rennes.ini',
      'Luebbers.ini',
      'MOCAP-small.ini',
      'MOCAP-small2.ini',
      'MOCAP.ini',
      'MOCAPext.ini',
-     'Rennes.ini',
      'Scene.ini',
-     'Servon sur Vilaine.ini',
-     'Servon_sur_Vilaine.ini',
      'TA-Office.ini',
      'TA-Office3.ini',
      'TC1_METIS.ini',
      'TC2_METIS.ini',
-     'TC2_METIS_new.ini',
      'W2PTIN.ini',
      'WHERE1.ini',
      'defdiff.ini',
@@ -129,8 +115,6 @@ find the good directories.
      'defstr.ini',
      'edge.ini',
      'klepal.ini',
-     'lat_40_72847_lon_-74_00763.ini',
-     'lat_40_72919_lon_-73_99695.ini',
      'scattering.ini',
      'test.ini']
 
@@ -151,43 +135,24 @@ find the good directories.
 
     
     ----------------
-    defstr.ini
+    Project : /home/uguen/Bureau/P1
+    defstr.ini : ad95181c1d17466c25e2799901ca1da7
+    Built with : ad95181c1d17466c25e2799901ca1da7
+    Coordinates : cart
     ----------------
     
     Number of points  : 12
-    Number of segments  : 13
-    Number of sub segments  : 3
-    Number of cycles  : 0
+    Number of segments  : 19
+    Number of sub segments  : 0
+    Number of cycles  : 7
     Number of rooms  : 0
-    degree 0 : []
-    degree 1 : [-8 -7]
+    degree 0 : [-12 -11 -10  -9]
+    degree 1 : []
     number of node point of degree 2 : 4
-    number of node point of degree 3 : 2
+    number of node point of degree 3 : 4
     
     xrange :(757.0, 770.0)
-    yrange :(1110.955, 1116.545)
-    
-    Useful dictionnaries
-    ----------------
-    sl {slab name : slab dictionary}
-    name :  {slab :seglist} 
-    
-    Useful arrays
-    ----------------
-    pt : numpy array of points 
-    normal : numpy array of normal 
-    offset : numpy array of offset 
-    tsg : get segment index in Gs from tahe
-    isss :  sub-segment index above Nsmax
-    tgs : get segment index in tahe from self.Gs
-    upnt : get point id index from self.pt
-    lsss : list of segments with sub-segment
-    sla : list of all slab names (Nsmax+Nss+1)
-    degree : degree of nodes 
-    
-    Useful tip
-    ----------------
-    Point p in Gs => p_coord:
+    yrange :(1110.9549999999999, 1116.5450000000001)
     Segment s in Gs => s_ab coordinates 
     s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
 
@@ -215,7 +180,7 @@ L.ax provides the boundary of the layout with the following format :
 
 .. parsed-literal::
 
-    (757.0, 770.0, 1110.955, 1116.545)
+    (757.0, 770.0, 1110.9549999999999, 1116.5450000000001)
 
 
 
@@ -227,12 +192,13 @@ L.ax provides the boundary of the layout with the following format :
 .. parsed-literal::
 
     building Layout ...
-    check len(ncycles) == 2 passed
+    check len(ncycles) == 2
+    passed
 
 
-This Layout has several convex cycles which are stored in the Gt graph.
-The diffraction points are stored in the dictionnary ``L.ddiff``. The
-keys of this dictionnary are the diffraction points number and the
+This Layout is decomposed into convex cycles which are stored in the Gt
+graph. The diffraction points are stored in the dictionnary ``L.ddiff``.
+The keys of this dictionnary are the diffraction points number and the
 values are a zipped list of output cycles and corresponding wedge
 angles.
 
@@ -245,9 +211,7 @@ angles.
 
 .. parsed-literal::
 
-    {-8: {},
-     -7: {},
-     -6: {},
+    {-6: {},
      -4: {},
      -3: {},
      -1: {},
@@ -260,10 +224,12 @@ angles.
      7: {},
      8: {},
      9: {},
-     15: {},
-     19: {},
-     25: {},
-     28: {}}
+     10: {},
+     11: {},
+     17: {},
+     21: {},
+     27: {},
+     30: {}}
 
 
 
@@ -276,9 +242,7 @@ angles.
 
 .. parsed-literal::
 
-    {-8: ([2, 5], 6.283185307179586),
-     -7: ([2, 5], 6.283185307179586),
-     -6: ([4, 1], 4.7123889803846897),
+    {-6: ([4, 1], 4.7123889803846897),
      -4: ([6, 4], 4.7123889803846897),
      -3: ([6, 3], 4.7123889803846897),
      -1: ([3, 1], 4.7723171355059337)}
@@ -294,17 +258,17 @@ angles.
 
 .. parsed-literal::
 
-    {0: {'hash': '518b90eb90362b8b6593ea7426b17eda', 'indoor': False},
+    {0: {'hash': 'ad95181c1d17466c25e2799901ca1da7', 'indoor': False},
      1: {'indoor': False,
-      'inter': [(13, 1, 0),
-       (13, 0, 1),
-       (19, 1, 4),
-       (19, 4, 1),
-       (4, 1),
-       (4, 1, 2),
-       (4, 2, 1),
-       (15, 1, 3),
-       (15, 3, 1),
+      'inter': [(15, 1, 0),
+       (15, 0, 1),
+       (21, 1, 4),
+       (21, 4, 1),
+       (7, 1),
+       (7, 1, 2),
+       (7, 2, 1),
+       (17, 1, 3),
+       (17, 3, 1),
        (-3,),
        (-4,)],
       'isopen': True,
@@ -313,26 +277,31 @@ angles.
       (758.5,1115.9)
       (758.5,1111.6)
       
-      vnodes : (-9 13 -12 19 -6 4 -1 15 )},
+      vnodes : (-9 15 -12 21 -6 7 -1 17 )},
      2: {'indoor': True,
       'inter': [(1, 2),
        (1, 2, 5),
        (1, 5, 2),
-       (2, 2),
        (2, 2, 5),
        (2, 5, 2),
-       (9, 2),
-       (9, 2, 3),
-       (9, 3, 2),
-       (4, 2),
-       (4, 2, 1),
-       (4, 1, 2),
-       (5, 2),
-       (5, 2, 4),
-       (5, 4, 2),
        (3, 2),
        (3, 2, 5),
        (3, 5, 2),
+       (5, 2),
+       (5, 2, 5),
+       (5, 5, 2),
+       (10, 2),
+       (10, 2, 3),
+       (10, 3, 2),
+       (7, 2),
+       (7, 2, 1),
+       (7, 1, 2),
+       (6, 2),
+       (6, 2, 4),
+       (6, 4, 2),
+       (4, 2),
+       (4, 2, 5),
+       (4, 5, 2),
        (-3,),
        (-4,)],
       'isopen': True,
@@ -343,20 +312,20 @@ angles.
       (758.5,1115.9)
       (763.5,1115.9)
       
-      vnodes : (-7 1 -8 2 -2 9 -1 4 -6 5 -5 3 )},
+      vnodes : (-7 1 2 3 -8 5 -2 10 -1 7 -6 6 -5 4 )},
      3: {'indoor': False,
-      'inter': [(8, 3),
-       (8, 3, 5),
-       (8, 5, 3),
-       (25, 3, 6),
-       (25, 6, 3),
-       (10, 3, 0),
-       (10, 0, 3),
-       (15, 3, 1),
-       (15, 1, 3),
-       (9, 3),
-       (9, 3, 2),
-       (9, 2, 3),
+      'inter': [(11, 3),
+       (11, 3, 5),
+       (11, 5, 3),
+       (27, 3, 6),
+       (27, 6, 3),
+       (12, 3, 0),
+       (12, 0, 3),
+       (17, 3, 1),
+       (17, 1, 3),
+       (10, 3),
+       (10, 3, 2),
+       (10, 2, 3),
        (-3,),
        (-4,)],
       'isopen': True,
@@ -366,20 +335,20 @@ angles.
       (757.0,1110.955)
       (758.5,1111.6)
       
-      vnodes : (-2 8 -3 25 -10 10 -9 15 -1 9 )},
+      vnodes : (-2 11 -3 27 -10 12 -9 17 -1 10 )},
      4: {'indoor': False,
-      'inter': [(28, 4, 6),
-       (28, 6, 4),
+      'inter': [(30, 4, 6),
+       (30, 6, 4),
+       (9, 4),
+       (9, 4, 5),
+       (9, 5, 4),
        (6, 4),
-       (6, 4, 5),
-       (6, 5, 4),
-       (5, 4),
-       (5, 4, 2),
-       (5, 2, 4),
-       (19, 4, 1),
-       (19, 1, 4),
-       (12, 4, 0),
-       (12, 0, 4),
+       (6, 4, 2),
+       (6, 2, 4),
+       (21, 4, 1),
+       (21, 1, 4),
+       (14, 4, 0),
+       (14, 0, 4),
        (-3,),
        (-4,)],
       'isopen': True,
@@ -389,26 +358,31 @@ angles.
       (758.5,1115.9)
       (757.0,1116.545)
       
-      vnodes : (-11 28 -4 6 -5 5 -6 19 -12 12 )},
+      vnodes : (-11 30 -4 9 -5 6 -6 21 -12 14 )},
      5: {'indoor': True,
-      'inter': [(3, 5),
-       (3, 5, 2),
-       (3, 2, 5),
-       (6, 5),
-       (6, 5, 4),
-       (6, 4, 5),
-       (7, 5),
-       (7, 5, 6),
-       (7, 6, 5),
+      'inter': [(4, 5),
+       (4, 5, 2),
+       (4, 2, 5),
+       (9, 5),
+       (9, 5, 4),
+       (9, 4, 5),
        (8, 5),
-       (8, 5, 3),
-       (8, 3, 5),
-       (2, 5),
-       (2, 5, 2),
-       (2, 2, 5),
+       (8, 5, 6),
+       (8, 6, 5),
+       (11, 5),
+       (11, 5, 3),
+       (11, 3, 5),
+       (5, 5),
+       (5, 5, 2),
+       (5, 2, 5),
        (1, 5),
        (1, 5, 2),
        (1, 2, 5),
+       (2, 5, 2),
+       (2, 2, 5),
+       (3, 5),
+       (3, 5, 2),
+       (3, 2, 5),
        (-3,),
        (-4,)],
       'isopen': True,
@@ -419,17 +393,17 @@ angles.
       (763.5,1111.9)
       (763.5,1113.432)
       
-      vnodes : (-7 3 -5 6 -4 7 -3 8 -2 2 -8 1 )},
+      vnodes : (-7 4 -5 9 -4 8 -3 11 -2 5 -8 1 2 3 )},
      6: {'indoor': False,
-      'inter': [(7, 6),
-       (7, 6, 5),
-       (7, 5, 6),
-       (28, 6, 4),
-       (28, 4, 6),
-       (11, 6, 0),
-       (11, 0, 6),
-       (25, 6, 3),
-       (25, 3, 6),
+      'inter': [(8, 6),
+       (8, 6, 5),
+       (8, 5, 6),
+       (30, 6, 4),
+       (30, 4, 6),
+       (13, 6, 0),
+       (13, 0, 6),
+       (27, 6, 3),
+       (27, 3, 6),
        (-3,),
        (-4,)],
       'isopen': True,
@@ -438,7 +412,7 @@ angles.
       (770.0,1116.545)
       (770.0,1110.955)
       
-      vnodes : (-3 7 -4 28 -11 11 -10 25 )}}
+      vnodes : (-3 8 -4 30 -11 13 -10 27 )}}
 
 
 
@@ -459,32 +433,36 @@ To check which are the used slabs :
 
 .. code:: python
 
-    >>> Slabs = np.unique(L.sla)
-    >>> for s in Slabs:
-    >>>     if s in L.sl:
-               print L.sl[s]
+    >>> L.sl
+
+
 
 
 .. parsed-literal::
 
-    3D_WINDOW_GLASS : GLASS | AIR | GLASS | [0.05, 0.05, 0.05]
-           blue3 1
+    List of Slabs
+    -----------------------------
     
-    AIR : AIR | [0.05]
+    _AIR : AIR | [0.05]
            white 1
-    
     DOOR : WOOD | [0.05]
            red1 1
-    
-    METAL : METAL | [0.05]
-           black 4
-    
-    PARTITION : PLASTER | [0.05]
-           grey80 4
-    
+    FLOOR : REINFORCED_CONCRETE | [0.05]
+           grey40 1
     WALL : BRICK | [0.05]
            grey20 3
-    
+    3D_WINDOW_GLASS : GLASS | AIR | GLASS | [0.05, 0.05, 0.05]
+           blue3 1
+    PARTITION : PLASTER | [0.05]
+           grey80 4
+    METAL : METAL | [0.05]
+           black 4
+    AIR : AIR | [0.05]
+           white 1
+    CEIL : REINFORCED_CONCRETE | [0.05]
+           grey20 1
+
+
 
 
 Let's load an other layout. This an indoor office where the FP7 WHERE
@@ -493,6 +471,14 @@ project UWB impulse radio measuremnts have been performed.
 .. code:: python
 
     >>> L=Layout('WHERE1.ini')
+
+
+.. parsed-literal::
+
+    building Layout ...
+    check len(ncycles) == 2
+    passed
+
 
 The showG method provides many possible visualization of the layout
 
@@ -513,6 +499,9 @@ The showG method provides many possible visualization of the layout
 .. parsed-literal::
 
     It exists degree 1 points : [-80]
+    building Layout ...
+    check len(ncycles) == 2
+    passed
 
 
 
@@ -561,7 +550,7 @@ The point coordinates are stored in two different places
 
 .. parsed-literal::
 
-    (2, 181)
+    (2, 185)
     185
 
 
@@ -586,7 +575,8 @@ Where :math:`k` is the index of a given segment (starting in 0).
 .. parsed-literal::
 
     building Layout ...
-    check len(ncycles) == 2 passed
+    check len(ncycles) == 2
+    passed
 
 
 The figure below illustrates a Layout and a superimposition of the graph
@@ -616,7 +606,7 @@ connected to the origin (corresponding to exterior cycle).
 
 .. parsed-literal::
 
-    <matplotlib.collections.LineCollection at 0x7ff8ffa2a1d0>
+    <matplotlib.collections.LineCollection at 0x7fadde3fedd0>
 
 
 
@@ -651,7 +641,7 @@ because none segment has 0 as an index.
 
 .. parsed-literal::
 
-    [ 29.785   6.822]
+    [ 24.574  23.297]
 
 
 .. code:: python
@@ -661,7 +651,7 @@ because none segment has 0 as an index.
 
 .. parsed-literal::
 
-    [ 27.414   6.822]
+    [ 24.573  23.19 ]
 
 
 .. code:: python
@@ -673,10 +663,11 @@ because none segment has 0 as an index.
 
 .. parsed-literal::
 
-    {'connect': [-8, -139],
+    {'connect': [-165, -163],
+     'iso': [],
      'name': 'PARTITION',
-     'ncycles': [70, 72],
-     'norm': array([ 0., -1.,  0.]),
+     'ncycles': [88, 89],
+     'norm': array([-0.99995633,  0.00934539,  0.        ]),
      'offset': 0,
      'transition': False,
      'z': (0, 3.0)}
@@ -686,13 +677,11 @@ because none segment has 0 as an index.
 .. code:: python
 
     >>> print L.Gs.pos[-8]
-    >>> print L.Gs.pos[-139]
 
 
 .. parsed-literal::
 
     (29.785, 6.822)
-    (27.414, 6.822)
 
 
 .. code:: python

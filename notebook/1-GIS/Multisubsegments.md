@@ -4,7 +4,7 @@
 
 # Effect of Modifying the Nature of Sub-Segments
 
-This notebook illustrates a simple ray tracing simulation. The environement 
+This illustrates a simple ray tracing simulation. The environement 
 is a building with 2 rooms. At the interface betweebn the two rooms there is 
 a segment with 3 sub-segment whose material properties are changed in the simulation. The notebook illustrates in details the different steps of the simulation. First we need to import several specialized modules. 
 
