@@ -80,17 +80,13 @@ Path Loss
 Geographical Information 
 ------------------------
 
-Indoor Description 
-~~~~~~~~~~~~~~~~~~
+Environent Description 
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
    :maxdepth: 1
     
    pylayers.gis.layout
-   pylayers.gis.cycles
-   pylayers.gis.selectl
-   pylayers.gis.selectl2
-   pylayers.gis.furniture
 
 Other Formats
 ~~~~~~~~~~~~~
