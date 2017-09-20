@@ -52,7 +52,6 @@ Channel
 
    pylayers.antprop.loss
    pylayers.antprop.channel
-   pylayers.antprop.channelc
    pylayers.antprop.coeffModel
    pylayers.antprop.rays
    pylayers.antprop.raysc
@@ -80,7 +79,7 @@ Path Loss
 Geographical Information 
 ------------------------
 
-Environent Description 
+Environment Description 
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::

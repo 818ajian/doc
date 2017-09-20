@@ -3,7 +3,7 @@
 About us
 ========
 
-.. include:: ../AUTHORS.rst
+.. include:: AUTHORS.rst
 
 .. _citing-pylayers:
 
