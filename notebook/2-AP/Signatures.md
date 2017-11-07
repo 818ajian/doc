@@ -1,3 +1,7 @@
+```
+!date 
+```
+
 # Ray Signatures
 
 Signatures are calculated from a cycle to an other cycle of the Layout. They are used for the determination of rays once the transmitter and receiver are known.
@@ -5,15 +9,10 @@ Signatures are calculated from a cycle to an other cycle of the Layout. They are
 The evaluation of a signature from one cycle to another is implemented in the `pylayers.simul.antprop.signature.Signature` class.
 
 ```python
-
 import time
-
 from pylayers.gis.layout import *
-
 from pylayers.antprop.signature import *
-
 from pylayers.antprop.rays import *
-
 %matplotlib inline
 ```
 
@@ -21,33 +20,33 @@ from pylayers.antprop.rays import *
 Let load a simple Layout 
 
 ```python
-
-L = Layout('defstr.ini')
+L = Layout('defstr.lay')
 L.build()
 ```
 
-Showing the graph of rooms with 2 rooms separated by a DOOR segment
+Showing the graph of visibilty
 
 ```python
 L.showG('sv',figsize=(8,8))
-
-a=plt.axis('off')
+plt.axis('off')
 ```
 
-The graph of interactions is shown below.
+The graph of interactions is shown below : 
 
 ```python
-
-L.showG('si',figsize=(10,5))
-
-a=plt.axis('off')
+L._showGi()
 ```
 
-All the interactions of a given cycle are stored as meta information in nodes of `Gt`
+The node of Gi are interactions. A transmission is noted Python_
+
+.. \_Python: http://www.python.org/
+
 
 ```python
 L.Gi.node
 ```
+
+All the interactions of a given cycle are stored as meta information in nodes of `Gt`
 
 ```python
 L.Gt.node[1]['inter']
@@ -77,10 +76,7 @@ L.Gt.pos
 ```python
 
 ptx = np.array(L.Gt.pos[1])+np.random.rand(2)
-
 prx = np.array(L.Gt.pos[2])+np.random.rand(2)
-
 print ptx
-
 print prx
 ```

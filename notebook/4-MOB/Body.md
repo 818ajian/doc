@@ -1,52 +1,60 @@
+```python
+!date
+```
+
 # Handling Body Description and Mobility
 
 ```python
->>> from pylayers.mobility.ban.body import *
->>> from pylayers.mobility.trajectory import Trajectory
->>> from IPython.display import Image
->>> from matplotlib.pyplot import *
->>> import pylayers.util.mayautil as mau
->>> %matplotlib inline
-WARNING:traits.has_traits:DEPRECATED: traits.has_traits.wrapped_class, 'the 'implements' class advisor has been deprecated. Use the 'provides' class decorator.
+from pylayers.mobility.ban.body import *
+from pylayers.mobility.trajectory import Trajectory
+from IPython.display import Image
+from matplotlib.pyplot import *
+import pylayers.util.mayautil as mau
+%matplotlib inline
 ```
 
 The body mobility is imported from motion capture files. This is the chosen manner to achieve a high degree of realism for the modeling of the human motion. Two kind of files exist :
 
-+ `c3d` files are a set of point which are evolving in time
-+ `bvh` files are a stuctured version of the motion capture.
++ `c3d` files are a set of points which are evolving in time
++ `bvh` files are a stuctured version of the motion capture description.
 
 Both type of file will be exploited in the following.
 
 ## `BodyCylinder` data structure
 
-To ease electromagnetic simulation a simplification of the motion capture data structure is necessary. Generally there is a large number of captured points, not all of them being useful for our modeling.
+To ease electromagnetic simulation a simplification of the motion capturedata structure is necessary. Generally there is a large number of captured points, not all of them being useful for our modeling.
 
 The body model is a restriction of key body segments which are transformed into $K$ cylinders of radius $r_k$.
 
-The chosen body model is made of 11 cylinders. 4 cylinders decribing the two arms, 4 cylinders decribing the two legs,  2 cylinders describing the trunk and 1 cylinder for the head.
+The chosen body model is made of 11 cylinders. 
 
-The body cylinder model is handled by the dedicated Python class call `Body`
++ 4 cylinders decribing the two arms,
++ 4 cylinders decribing the two legs, 
++ 2 cylinders describing the trunk and 
++ 1 cylinder describing the head.
 
-To create a void body, simply instantiate a Body object from the class
+The body cylinder model is handled by the dedicated Python class named  `Body`
+
+To create a void body, simply instantiate a Body object from the class constructor:
 
 ```python
->>> John = Body()
-**** Processor coding : Intel-PC
+John = Body()
 ```
 
 which is equivalent to :
 
 ```python
->>> John = Body(_filebody='John.ini',_filemocap='07_01.c3d',unit='cm')
-**** Processor coding : Intel-PC
+John = Body(_filebody='John.ini',
+	    _filemocap='07_01.c3d',
+	    unit='cm',
+	    traj)
 ```
 
-The default body filename is John.ini and the default motion capture filename is '07_01.c3d'. The creation of a Body consists in reading a `_filebody` and a `_filemocap`
+The default body filename is John.ini and the default motion capture filename is '07_01.c3d'. The creation of a Body consists in reading a `_filebody` and a `_filemocap`. The unit are also specified in the constructor argument.
 
 ```python
->>> John._show3()
->>> mau.inotshow('John',doc=True)
-<IPython.core.display.Image object>
+John._show3()
+mau.inotshow('John',doc=True)
 ```
 
 ## Description of a body file
@@ -57,80 +65,69 @@ An example of a body file is given below. It is a file in `ini` format with 4 se
 
    This section associates a node number to a c3d fils conventional  node number
 
-    NodeId = C3DNODE
-
 + [cylinder]
 
    This section associates a cylinder Id to a dictionnary wich contains cylinder tail head and radius information
 
-      CylId = {'t',NodeId1,'h',NodeId2,'r',float (m),'name',}
 
 + [device]
 
    This section associates a device name to a dictionnary wich contains cylinder device related information
 
-       DevId = {'typ' : {static|mobile}
-                 'cyl': CylId
-                 'l'  : length coordinate in ccs,
-                 'h'  : height coordinate in ccs,
-                 'a'  : angle coordinate in ccs,
-                 'file' : antenna file ,
-                 'T' : Rotation matrix }
 
 ## Example of a Body file
 
-    [nodes]
-    0 = [STRN,T10]
-    1 = [CLAV,C7]
-    2 = [RFHD,LFHD,LBHD,RBHD]
-    3 = RSHO
-    4 = LSHO
-    5 = [RRAD,RHUM]
-    6 = [LRAD,LHUM]
-    7 = [RWRA,RWRB]
-    8 = [LWRA,LWRB]
-    9 = [RFWT,RBWT]
-    10 = [LFWT,LBWT]
-    11 = [RKNE,RKNI]
-    12 = [LKNE,LKNI]
-    13 = RANI
-    14 = LANI
-    15 = [RFWT, LFWT,LBWT,RBWT]
-    [cylinder]
-    ; sternum (STRN) - clavicle (CLAV)
-    trunku = {'t':0,'h':1,'r':0.18,'i':0}
-    ; bottom  (BOTT) sternum (STRN)
-    trunkb = {'t':15,'h':0,'r':0.17,'i':10}
-    ; clavicle (CLAV)  - head (RFHD)
-    headu = {'t':1,'h':2,'r':0.12,'i':1}
-    ; right elbow (RELB)  right shoulder (RSHO)
-    armr = {'t':5,'h':3,'r':0.05,'i':2}
-    ; left elbow (LELB)  left shoulder (LSHO)
-    arml  = {'t':6,'h':4,'r':0.05,'i':3}
-    ; right wrist (RWRB) right elbow (RELB)
-    forearmr = {'t':7,'h':5,'r':0.05,'i':4}
-    ; left wrist (LWRB)  left elbow (LELB)
-    forearml = {'t':8,'h':6,'r':0.05,'i':5}
-    ; right knee (RKNE) right hip (RFWT)
-    thighr = {'t':11,'h':9,'r':0.05,'i':6}
-    ; left knee (LKNE)  left hip (LFWT)
-    thighl = {'t':12,'h':10,'r':0.05,'i':7}
-    ; right ankle (RANK) right knee (RKNE)
-    calfr = {'t':13,'h':11,'r':0.05,'i':8}
-    ; left ankle (LANK) left knee (LKNE)
-    calfl = {'t':14,'h':12,'r':0.05,'i':9}
-    [wearable]
-    file = real_suit1.ini
-    [mocap]
-    file = serie_017_noDEC_Real.c3d
-    ; unit of c3d file
-    unit = mm
-    ; number of frame to consider. if -1 : all frames
-    nframes = -1
+[nodes]
+0 = [STRN,T10]
+1 = [CLAV,C7]
+2 = [RFHD,LFHD,LBHD,RBHD]
+3 = RSHO
+4 = LSHO
+5 = [RRAD,RHUM]
+6 = [LRAD,LHUM]
+7 = [RWRA,RWRB]
+8 = [LWRA,LWRB]
+9 = [RFWT,RBWT]
+10 = [LFWT,LBWT]
+11 = [RKNE,RKNI]
+12 = [LKNE,LKNI]
+13 = RANI
+14 = LANI
+15 = [RFWT, LFWT,LBWT,RBWT]
+[cylinder]
+; sternum (STRN) - clavicle (CLAV)
+trunku = {'t':0,'h':1,'r':0.18,'i':0}
+; bottom  (BOTT) sternum (STRN)
+trunkb = {'t':15,'h':0,'r':0.17,'i':10}
+; clavicle (CLAV)  - head (RFHD)
+headu = {'t':1,'h':2,'r':0.12,'i':1}
+; right elbow (RELB)  right shoulder (RSHO)
+armr = {'t':5,'h':3,'r':0.05,'i':2}
+; left elbow (LELB)  left shoulder (LSHO)
+arml  = {'t':6,'h':4,'r':0.05,'i':3}
+; right wrist (RWRB) right elbow (RELB)
+forearmr = {'t':7,'h':5,'r':0.05,'i':4}
+; left wrist (LWRB)  left elbow (LELB)
+forearml = {'t':8,'h':6,'r':0.05,'i':5}
+; right knee (RKNE) right hip (RFWT)
+thighr = {'t':11,'h':9,'r':0.05,'i':6}
+; left knee (LKNE)  left hip (LFWT)
+thighl = {'t':12,'h':10,'r':0.05,'i':7}
+; right ankle (RANK) right knee (RKNE)
+calfr = {'t':13,'h':11,'r':0.05,'i':8}
+; left ankle (LANK) left knee (LKNE)
+calfl = {'t':14,'h':12,'r':0.05,'i':9}
+[wearable]
+file = real_suit1.ini
+[mocap]
+file = serie_017_noDEC_Real.c3d
+; unit of c3d file
+unit = mm
+; number of frame to consider. if -1 : all frames
+nframes = -1
 
 ```python
->>> Bernard = Body(_filebody='Bernard.ini',_filemocap='serie_017.c3d')
-**** Processor coding : DEC-VAX
+Bernard = Body(_filebody='Bernard.ini',_filemocap='serie_017.c3d')
 ```
 
 ## Loading a Motion Capture File
@@ -142,26 +139,25 @@ The motion is represented as a sequence of frames stored in the **`d`** variable
 It is possible to get the information from the C3D header by using the verbose option of the `read_c3d` function
 
 ```python
->>> # Video Frame Rate
-... Vrate = 120
->>> # Inter Frame
-... Tframe = 1./120
->>> # select a number of frame
-... nframes = 300
->>> # Time duration of the whole selected frame sequence
-... Tfseq = Tframe*nframes
->>> #
-... # load a .c3dmotion capture file
-... # this update the g.pos
-... #
-... #bc.loadC3D(filename='07_01.c3d',nframes=nframes,centered=True)
+# Video Frame Rate
+Vrate = 120
+# Inter Frame
+Tframe = 1./120
+# select a number of frame
+nframes = 300
+# Time duration of the whole selected frame sequence
+Tfseq = Tframe*nframes
+#
+# load a .c3dmotion capture file
+# this update the g.pos
+#
+#bc.loadC3D(filename='07_01.c3d',nframes=nframes,centered=True)
 ```
 
 The duration of the capture is
 
 ```python
->>> print "Duration of the motion capture sequence", Tfseq," seconds"
-Duration of the motion capture sequence 2.5  seconds
+print "Duration of the motion capture sequence", Tfseq," seconds"
 ```
 
 `d` is a MDA of shape `(3,npoint,nframe)`. It contains all the possible configurations of the body. In general it is supposed to be a cyclic motion as an integer number of walking steps. This allows to instantiate the body configuration anywhere else in space in a given trajectory.
@@ -169,8 +165,7 @@ Duration of the motion capture sequence 2.5  seconds
 A specific space-time configuration of the body is called a **`topos`**.
 
 ```python
->>> np.shape(Bernard.d)
-(3, 16, 11213)
+np.shape(Bernard.d)
 ```
 
 ## Defining a trajectory
@@ -181,45 +176,30 @@ A Trajectory is a class which :
 + is a container for time,position,velocity and acceleration.
 
 ```python
->>> traj = Trajectory()
+traj = Trajectory()
 ```
 
 To define a default trajectory :
 
 ```python
->>> t = traj.generate()
+t = traj.generate()
 ```
 
 ```python
->>> print traj.columns
-Index([u'x', u'y', u'z', u'vx', u'vy', u'vz', u'ax', u'ay', u'az', u's'], dtype='object')
+print traj.columns
 ```
 
 ```python
->>> traj.head()
-                                   x         y         z        vx  vy  \
-1970-01-01 00:00:00.000000  0.000000  0.000000  0.258768  0.299813   1   
-1970-01-01 00:00:00.204082  0.061186  0.204082 -0.073361  0.298689   1   
-1970-01-01 00:00:00.408163  0.122143  0.408163  0.472638  0.296446   1   
-1970-01-01 00:00:00.612245  0.182642  0.612245  0.230392  0.293093   1   
-1970-01-01 00:00:00.816327  0.242457  0.816327 -0.345044  0.288641   1   
-
-                                  vz        ax  ay         az         s  
-1970-01-01 00:00:00.000000 -1.627431 -0.005505   0  21.083835  0.000000  
-1970-01-01 00:00:00.204082  2.675393 -0.010989   0 -18.925740  0.213056  
-1970-01-01 00:00:00.408163 -1.187003 -0.016433   0  -7.999922  0.426047  
-1970-01-01 00:00:00.612245 -2.819640 -0.021814   0  -9.910813  0.638907  
-1970-01-01 00:00:00.816327 -4.842255 -0.027114   0  30.434337  0.851574
+traj.head()
 ```
 
 ```python
->>> f,a = traj.plot()
+f,a = traj.plot()
 ```
 
 ### settopos () method
 
-Once the trajectory has been defined it is possible to send the body at the position corresponding to any time
-of the trajectory with the **`settopos`** method.
+Once the trajectory has been defined it is possible to send the body at the position corresponding to any time of the trajectory with the **`settopos`** method.
 
 settopos takes as argument
 
@@ -227,73 +207,31 @@ settopos takes as argument
 + A time index
 
 ```python
->>> traj.__repr__()
-'Trajectory of agent MyNameIsNoBody with ID 1\n--------------------------------------------\nt (s) : 0.00 : 0.20 : 9.59\ndtot (m) : 9.79\nVmoy (m/s) : 1.02\n                                   x         y         z        vx  vy  \\\n1970-01-01 00:00:00.000000  0.000000  0.000000  0.258768  0.299813   1   \n1970-01-01 00:00:00.204082  0.061186  0.204082 -0.073361  0.298689   1   \n\n                                  vz        ax  ay         az         s  \n1970-01-01 00:00:00.000000 -1.627431 -0.005505   0  21.083835  0.000000  \n1970-01-01 00:00:00.204082  2.675393 -0.010989   0 -18.925740  0.213056  \n'
+traj.__repr__()
 ```
 
 ```python
->>> John.settopos(traj,t=5)
+John.settopos(traj,t=5)
 ```
 
 ```python
->>> plt.figure(figsize=(15,20))
->>> for t in np.arange(traj.tmin+0.4,traj.tmax,0.5):
-...     John.settopos(traj,t=t)
-...     f,a=John.show(color='b',plane='yz',topos=True)
-...     axis('off')
+plt.figure(figsize=(15,20))
+for t in np.arange(traj.tmin+0.4,traj.tmax,0.5):
+   John.settopos(traj,t=t)
+   f,a=John.show(color='b',plane='yz',topos=True)
+   axis('off')
 ```
 
 ```python
->>> John
-My name is : John
-
-I have a Galaxy Gear device with id #1 on the left forearm witn antenna defant.vsh3
-I have a cardio device with id #0 on the upper part of trunk witn antenna defant.vsh3
-
-@ t=0.708333333333 (frameID=85),
-My centroid position is [-7.87435024  5.23416696]
-
-filewear : suit2.ini
-filename : 07_01.c3d
-nframes : 316
-Centered : True
-Mocap Speed : 13.649 m/s
+John
 ```
 
 ```python
->>> Francois = Body(_filebody='Francois.ini')
->>> Francois
-**** Processor coding : Intel-PC
-My name is : Francois
-
-I have a Galaxy Gear device with id #1 on the left forearm witn antenna defant.vsh3
-I have a cardio device with id #0 on the upper part of trunk witn antenna defant.vsh3
-
-I am nowhere yet
-
-filewear : suit2.ini
-filename : 07_01.c3d
-nframes : 300
-Centered : True
-Mocap Speed : 13.702 m/s
+Francois = Body(_filebody='Francois.ini')
 ```
 
 ```python
->>> Francois.settopos(traj,t=6)
->>> Francois
-My name is : Francois
-
-I have a Galaxy Gear device with id #1 on the left forearm witn antenna defant.vsh3
-I have a cardio device with id #0 on the upper part of trunk witn antenna defant.vsh3
-
-@ t=0.441666666667 (frameID=53),
-My centroid position is [-11.4689352    4.97981336]
-
-filewear : suit2.ini
-filename : 07_01.c3d
-nframes : 300
-Centered : True
-Mocap Speed : 13.702 m/s
+Francois.settopos(traj,t=6)
 ```
 
 + 3  : dimension of space
@@ -305,8 +243,7 @@ The figure below shows the projection in a vertival plane of the body nodes.
 ## Centering the motion
 
 ```python
->>> John.centered
-True
+John.centered
 ```
 
 In order to translate the motion in any point in space-time, a distinction is made between the real motion or topos and the centered motion capture which acts as a virtual motion.
@@ -314,27 +251,23 @@ In order to translate the motion in any point in space-time, a distinction is ma
 Let $\mathbf{p}^k$ denotes the center of gravity of the body in the (O,x,y) plane
 
 ```python
->>> John.center()
+John.center()
 ```
 
 ```python
->>> a = np.hstack((John.vg,John.vg[:,-1][:,np.newaxis]))
+a = np.hstack((John.vg,John.vg[:,-1][:,np.newaxis]))
 ```
 
 $\mathbf{v}_g$ is the velocity vector of the gravity center of the body.
 
 ```python
->>> print np.shape(John.pg)
->>> print np.shape(John.vg)
-(3, 316)
-(3, 316)
+print np.shape(John.pg)
+print np.shape(John.vg)
 ```
 
 ```python
->>> print John.vg[:,145]
->>> print John.vg[:,298]
-[ 0.11498696 -0.00263353  0.        ]
-[ 0.10812351  0.00072441  0.        ]
+print John.vg[:,145]
+print John.vg[:,298]
 ```
 
 At that point the body structure is centered.
@@ -344,77 +277,71 @@ At that point the body structure is centered.
 The frame is centered in the xy plane by substracting from the configuration of points the projection of the body in the xy plane.
 
 ```python
->>> np.shape(John.d)
-(3, 16, 316)
+np.shape(John.d)
 ```
 
 ```python
->>> John.npoints
-16
+John.npoints
 ```
 
 Each frame is centered above the origin. For example for a walk motion the effect of the centering is just like if the body was still walking but not moving forward exactly in the same manner as a walk on a conveyor belt.
 
 ```python
->>> pgc = np.sum(John.d[:,:,0],axis=1)/16
->>> pg0 = John.pg[:,0]
->>> print "True center of gravity", pg0
->>> print "Center of gravity of the centered frame",pgc
-True center of gravity [-17.42515686   4.93730766   0.        ]
-Center of gravity of the centered frame [  4.44089210e-16  -1.05471187e-15   8.94887349e+00]
+pgc = np.sum(John.d[:,:,0],axis=1)/16
+pg0 = John.pg[:,0]
+print "True center of gravity", pg0
+print "Center of gravity of the centered frame",pgc
 ```
 
 ```python
->>> np.shape(John.pg)
-(3, 316)
+np.shape(John.pg)
 ```
 
 The current file contains 300 frames
 
 ```python
->>> tframe = np.arange(John.nframes)
+tframe = np.arange(John.nframes)
 ```
 
 ```python
->>> np.shape(John.pg[0:-1,:])
-(2, 316)
+np.shape(John.pg[0:-1,:])
 ```
 
 ```python
->>> xg = John.pg[0,:]
->>> yg = John.pg[1,:]
->>> zg = John.pg[2,:]
->>> figure(figsize=(8,8))
->>> subplot(311)
->>> plot(tframe,xg)
->>> title('x component')
->>> ylabel('m')
->>> subplot(312)
->>> xlabel('frame index')
->>> title('y component')
->>> ylabel('m')
->>> plot(tframe,yg)
->>> subplot(313)
->>> xlabel('frame index')
->>> title('Motion capture centroid trajectory')
->>> ylabel('m')
->>> plot(xg,yg,'.b')
->>> 
->>> d = John.pg[0:-1,1:]-John.pg[0:-1,0:-1]
->>> smocap = np.cumsum(np.sqrt(np.sum(d*d,axis=0)))
->>> 
->>> Vmocap = smocap[-1]/Tfseq
->>> title('Length = '+str(smocap[-1])+' V = '+str(Vmocap*3.6)+' km/h')
->>> axis('scaled')
->>> axis('off')
->>> plt.tight_layout()
+xg = John.pg[0,:]
+yg = John.pg[1,:]
+zg = John.pg[2,:]
+figure(figsize=(8,8))
+subplot(311)
+plot(tframe,xg)
+title('x component')
+ylabel('m')
+subplot(312)
+xlabel('frame index')
+title('y component')
+ylabel('m')
+plot(tframe,yg)
+subplot(313)
+xlabel('frame index')
+title('Motion capture centroid trajectory')
+ylabel('m')
+plot(xg,yg,'.b')
+
+d = John.pg[0:-1,1:]-John.pg[0:-1,0:-1]
+smocap = np.cumsum(np.sqrt(np.sum(d*d,axis=0)))
+
+Vmocap = smocap[-1]/Tfseq
+title('Length = '+str(smocap[-1])+' V = '+str(Vmocap*3.6)+' km/h')
+axis('scaled')
+axis('off')
+plt.tight_layout()
 ```
 
 ```python
->>> plot(smocap)
->>> title('evolution of curvilinear abscisse from motion capture centroid trajectory')
->>> xlabel('frame index')
->>> ylabel('distance (meters)')
+plot(smocap)
+title('evolution of curvilinear abscisse from motion capture centroid trajectory')
+xlabel('frame index')
+ylabel('distance (meters)')
 ```
 
 ## Defining a large scale trajectory
@@ -424,45 +351,29 @@ A large scale trajectory is defined in the $(O,x,y)$ plane.
 `traj` is a data structure (Npt,2)
 
 ```python
->>> v = Vmocap
->>> print v*3.6,"Kmph"
-51.5920052862 Kmph
+v = Vmocap
+print v*3.6,"Kmph"
 ```
 
 ```python
->>> # time in seconds
-... time = np.arange(0,10,0.01)
->>> x = v*time
->>> y = np.zeros(len(time))
->>> z = np.zeros(len(time))
->>> traj = Trajectory()
->>> traj.generate()
->>> traj.tmax
-9.591837
+# time in seconds
+time = np.arange(0,10,0.01)
+x = v*time
+y = np.zeros(len(time))
+z = np.zeros(len(time))
+traj = Trajectory()
+traj.generate()
+traj.tmax
 ```
 
 ```python
->>> fig ,ax = traj.plot()
->>> traj.head()
-                                   x         y         z        vx  vy  \
-1970-01-01 00:00:00.000000  0.000000  0.000000 -0.693310  0.299813   1   
-1970-01-01 00:00:00.204082  0.061186  0.204082 -0.163032  0.298689   1   
-1970-01-01 00:00:00.408163  0.122143  0.408163  0.333526  0.296446   1   
-1970-01-01 00:00:00.612245  0.182642  0.612245  0.072201  0.293093   1   
-1970-01-01 00:00:00.816327  0.242457  0.816327  1.596583  0.288641   1   
-
-                                   vz        ax  ay         az         s  
-1970-01-01 00:00:00.000000   2.598362 -0.005505   0  -0.809629  0.000000  
-1970-01-01 00:00:00.204082   2.433132 -0.010989   0 -18.196762  0.213056  
-1970-01-01 00:00:00.408163  -1.280493 -0.016433   0  42.874848  0.426047  
-1970-01-01 00:00:00.612245   7.469476 -0.021814   0 -94.011202  0.638907  
-1970-01-01 00:00:00.816327 -11.716484 -0.027114   0  77.964982  0.851574
+fig ,ax = traj.plot()
+traj.head()
 ```
 
 ## Trajectory
 
 ## `posvel()`
-
 
 
 The `posvel()` method (position and velocity) takes as arguments the following parameters
@@ -490,45 +401,30 @@ $t_f = \frac{T_{fs}}{Nf}$ is the interframe time or frame sampling period, it is
 In further version of the class, this function will be modified to avoid passing the whole trajectory.
 
 ```python
->>> John.settopos(traj=traj,t=3)
+John.settopos(traj=traj,t=3)
 ```
 
 There is now a new data structure in the Body objet. This data structure is called a `topos`.
 
 ```python
->>> print np.shape(John.topos)
-(3, 16)
+print np.shape(John.topos)
 ```
 
 ```python
->>> John.topos
-array([[  0.74198686,   0.76931593,   1.80846633,   2.26719915,
-         -0.91675363,   3.25586636,  -1.86053098,   3.82194596,
-         -2.06245933,   2.15021298,  -0.55180885,   2.02586803,
-         -0.94510502,   1.36586716,  -0.57366714,   0.79920206],
-       [  3.75720113,   3.13644711,   2.8414143 ,   2.20063108,
-          2.6901425 ,   1.78826275,   3.20212316,   1.7696506 ,
-          4.042258  ,   3.29688912,   3.60268634,   2.76571804,
-          3.90430304,   2.24259271,   1.0241781 ,   3.44978773],
-       [ 12.24457275,  13.88075684,  16.00988037,  14.0978418 ,
-         14.3736377 ,  10.74208496,  11.07206543,   7.98268372,
-          8.47460388,   9.31935974,   9.1988916 ,   4.30262299,
-          4.54000305,   0.44698982,   1.7794635 ,   9.25912567]])
+John.topos
 ```
 
 ```python
->>> John.settopos(traj=traj,t=1)
->>> fig,ax=John.plot3d(topos=True,col='#87CEEB')
->>> John.settopos(traj=traj,t=2)
->>> John.plot3d(topos=True,fig=fig,ax=ax,col='#7EC0EE')
->>> John.settopos(traj=traj,t=3)
->>> John.plot3d(topos=True,fig=fig,ax=ax,col='#6A5ACD')
->>> John.settopos(traj=traj,t=4)
->>> John.plot3d(topos=True,fig=fig,ax=ax,col='#7A67EE')
->>> John.settopos(traj=traj,t=5)
->>> John.plot3d(topos=True,fig=fig,ax=ax,col='#473C8B')
-(<matplotlib.figure.Figure at 0x7f9882d7c6d0>,
- <matplotlib.axes._subplots.Axes3DSubplot at 0x7f9882c0f990>)
+John.settopos(traj=traj,t=1)
+fig,ax=John.plot3d(topos=True,col='#87CEEB')
+John.settopos(traj=traj,t=2)
+John.plot3d(topos=True,fig=fig,ax=ax,col='#7EC0EE')
+John.settopos(traj=traj,t=3)
+John.plot3d(topos=True,fig=fig,ax=ax,col='#6A5ACD')
+John.settopos(traj=traj,t=4)
+John.plot3d(topos=True,fig=fig,ax=ax,col='#7A67EE')
+John.settopos(traj=traj,t=5)
+John.plot3d(topos=True,fig=fig,ax=ax,col='#473C8B')
 ```
 
 ## Definition of Several Coordinates systems
@@ -564,19 +460,14 @@ The outpout of `geomutil.onbframe` is an MDA  $(3\times n \times 3)$ of $n$ unit
 To create the CCS :
 
 ```python
->>> John.setccs()
+John.setccs()
 ```
 
 ```python
->>> import scipy.linalg as la
->>> print "ccs dimensions : ",np.shape(John.ccs)
->>> print John.ccs[0,:,:]
->>> print "Check determinant : ", la.det(John.ccs[0,:,:])
-ccs dimensions :  (11, 3, 3)
-[[ 0.94678656  0.05306765 -0.31745715]
- [-0.06834689  0.99696857 -0.03718026]
- [ 0.31452173  0.05689898  0.94754345]]
-Check determinant :  1.0
+import scipy.linalg as la
+print "ccs dimensions : ",np.shape(John.ccs)
+print John.ccs[0,:,:]
+print "Check determinant : ", la.det(John.ccs[0,:,:])
 ```
 
 Create a Wireframe body representation from the body graph model
@@ -591,14 +482,14 @@ A DCS is refered by 4 numbers $(Id,l,h,\alpha)$
 + alpha : angle from front direction (degrees)
 
 ```python
->>> Id = 4 # 4 Left Arm
->>> l  = 0.1 # Longitudinal coordinates
->>> h  = 0.03 # height
->>> alpha = 45 # angle degrees
+Id = 4 # 4 Left Arm
+l  = 0.1 # Longitudinal coordinates
+h  = 0.03 # height
+alpha = 45 # angle degrees
 ```
 
 ```python
->>> John.dcyl
+John.dcyl
 {'arml': 3,
  'armr': 2,
  'calfl': 9,
@@ -615,11 +506,11 @@ A DCS is refered by 4 numbers $(Id,l,h,\alpha)$
 Rotate Matrix around z
 
 ```python
->>> John.settopos(traj=traj,t=6,cs=True)
+John.settopos(traj=traj,t=6,cs=True)
 ```
 
 ```python
->>> John.dcyl
+John.dcyl
 {'arml': 3,
  'armr': 2,
  'calfl': 9,
@@ -634,9 +525,9 @@ Rotate Matrix around z
 ```
 
 ```python
->>> John.show3(topos=True,dcs=True)
+John.show3(topos=True,dcs=True)
 ```
 
 ```python
->>> John.show3(topos=True,pattern=True)
+John.show3(topos=True,pattern=True)
 ```

@@ -16,7 +16,7 @@
 
 # Geographical Information and the Earth Zone class : `Ezone`
 
-The `Ezone` class handles an earth zone which corresponds to the `strm` or `aster` DEM data. It has the same naming convention as `srtm` files
+The `Ezone` class handles an earth zone which corresponds to the `srtm` or `aster` DEM data. It has the same naming convention as `srtm` files
 and corresponds to a portion of earth corresponding to 1 latitude and 1 of longitude.
 An `Ezone` is an heterogeneous dataset stored in `hdf5` format.
 Let see an example with the file `N48W002.h5`.

@@ -1,4 +1,4 @@
-PyLayers 
+PyLayers Modules Reference 
 ========
 
 .. contents::
@@ -7,8 +7,8 @@ PyLayers
 Simulations  
 -----------
 
-This section describes the different high level modules 
-for running the different simulations. 
+This section describes the different simulation modules 
+for using PyLayers. 
 
 .. toctree::
    :maxdepth: 2
@@ -50,7 +50,7 @@ Channel
 .. toctree::
    :maxdepth: 1
 
-   pylayers.antprop.loss
+   antprop.loss
    pylayers.antprop.channel
    pylayers.antprop.coeffModel
    pylayers.antprop.rays
@@ -242,5 +242,4 @@ Utility classes and functions
    pylayers.util.utilnet
    pylayers.util.vect
    pylayers.util.versions
-   pylayers.util.voronoi
 

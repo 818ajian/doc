@@ -1,14 +1,22 @@
+```python
+!date
+```
+
 # Slabs and Materials
 
 ```python
 %matplotlib inline
 ```
 
-A slab is a set ol several layers of materials with specified thickness. Slabs are used to describe properties of the different constitutive elements of a building such as wall, windows ,...
+A slab is a set ol several layers of materials with specified thickness. 
+Slabs are used to describe properties of the different constitutive elements of a
+building such as wall, windows,...
 
 In practice when describing a specific building, it is necessary to specify a set of different slabs with different characteristics.
 
-The structure which gathers this set is `SlabDB`. If no file argument is given, this structure is initialized with the default file: [slabDB.ini](https://github.com/pylayers/pylayers/blob/master/data/ini/slabDB.ini)
+A structure which gathers this set is `SlabDB`. If no file argument is given,
+this structure is initialized with the default file:
+[slabDB.ini](https://github.com/pylayers/pylayers/blob/master/data/ini/slabDB.ini)
 
 This section demonstrates some features of the `pylayers.antprop.slab` module.
 
@@ -16,10 +24,12 @@ This section demonstrates some features of the `pylayers.antprop.slab` module.
 from pylayers.antprop.slab import *
 ```
 
-The Class `SlabDB` contains a dictionnary of all available Slabs. This information is read in the file `slabDB.ini` of the current project pointed by environment variable `$BASENAME`
+The Class `SlabDB` contains a dictionnary of all available Slabs. This
+information is read in the file `slabDB.ini` of the current project pointed by
+environment variable `$BASENAME`
 
 ```python
-S = SlabDB()
+S = SlabDB('slabDB.ini')
 ```
 
 A SlabDB is a dictionnary, the keys are for the current file are shown below
@@ -57,7 +67,7 @@ S['slab2']['lthick']
 ```python
 fGHz= np.arange(3,5,0.01)
 theta = np.arange(0,np.pi/2,0.01)
-S['slab2'].ev(fGHz,theta)
+S['slab2'].eval(fGHz,theta)
 ```
 
 ```python
@@ -128,7 +138,7 @@ Each Slab can be evaluated to obtain the Transmission and Reflexion coefficients
 fGHz = np.arange(3,5,0.01)
 theta = np.arange(0,np.pi/2,0.01)
 
-S['WOOD'].ev(fGHz,theta,compensate=True)
+S['WOOD'].eval(fGHz,theta,compensate=True)
 sR = np.shape(S['WOOD'].R)
 print '\nHere, slab is evaluted for',sR[0],'frequency(ies)', 'and',sR[1], 'angle(s)\n'
 ```
@@ -150,8 +160,8 @@ The method `plotwrt` can plot the different calculated coefficients with respect
 
 ```python
 S['WOOD']['lthick']=[0.02]
-S['WOOD'].ev()
-S['WOOD'].ev()
+S['WOOD'].eval()
+S['WOOD'].eval()
 f,a=S['WOOD'].plotwrt()
 ```
 
@@ -161,7 +171,7 @@ theta = np.arange(0,np.pi/2,0.01)
 
 S['3D_WINDOW_GLASS']['lthick']=[0.006,0.01,0.006]
 #S['3D_WINDOW_GLASS']['lmatname']=['GLASS','AIR','GLASS']
-S['3D_WINDOW_GLASS'].ev(fGHz,theta)
+S['3D_WINDOW_GLASS'].eval(fGHz,theta)
 ```
 
 plotwrt : plot with respect to frequency
@@ -175,7 +185,7 @@ plot with respect to angles
 ```python
 fig = plt.figure(figsize=(20,20))
 fGHz= np.array([2.4])
-S['WOOD'].ev(fGHz,theta)
+S['WOOD'].eval(fGHz,theta)
 fig,ax = S['WOOD'].plotwrt(var='a',coeff='R',fig=fig)
 plt.tight_layout()
 ```
@@ -185,7 +195,7 @@ wrt to angle and frequency, use pcolor
 ```python
 plt.figure(figsize=(10,10))
 fGHz= np.arange(0.7,5.2,0.1)
-S['WOOD'].ev(fGHz,theta)
+S['WOOD'].eval(fGHz,theta)
 S['WOOD'].pcolor()
 ```
 
@@ -222,9 +232,9 @@ fGHz=4
 theta = np.arange(0,np.pi/2,0.01)
 #figure(figsize=(8,8))
 # These Tessereau page 50
-sl['AIR-5cm'].ev(fGHz,theta,compensate=True)
-sl['AIR-10cm'].ev(fGHz,theta,compensate=True)
-sl['AIR-50cm'].ev(fGHz,theta,compensate=True)
+sl['AIR-5cm'].eval(fGHz,theta,compensate=True)
+sl['AIR-10cm'].eval(fGHz,theta,compensate=True)
+sl['AIR-50cm'].eval(fGHz,theta,compensate=True)
 
 # by default var='a' and kv = 0
 fig,ax = sl['AIR-5cm'].plotwrt(color='k',labels=['5cm'])
@@ -239,17 +249,17 @@ plt.tight_layout()
 fGHz = np.arange(2,16,0.1)
 theta = 0
 
-sl['AIR-5cm'].ev(fGHz,theta,compensate=False)
-sl['AIR-10cm'].ev(fGHz,theta,compensate=False)
-sl['AIR-50cm'].ev(fGHz,theta,compensate=False)
+sl['AIR-5cm'].eval(fGHz,theta,compensate=False)
+sl['AIR-10cm'].eval(fGHz,theta,compensate=False)
+sl['AIR-50cm'].eval(fGHz,theta,compensate=False)
 
 fig,ax = sl['AIR-5cm'].plotwrt('f',coeff='T',typ=['ru'],labels=[''],color='r')
 #print ax
 fig,ax = sl['AIR-10cm'].plotwrt('f',coeff='T',typ=['ru'],labels=[''],color='g',fig=fig,ax=ax)
 fig,ax = sl['AIR-50cm'].plotwrt('f',coeff='T',typ=['ru'],labels=[''],color='b',fig=fig,ax=ax)
-sl['AIR-5cm'].ev(fGHz,theta,compensate=True)
-sl['AIR-10cm'].ev(fGHz,theta,compensate=True)
-sl['AIR-50cm'].ev(fGHz,theta,compensate=True)
+sl['AIR-5cm'].eval(fGHz,theta,compensate=True)
+sl['AIR-10cm'].eval(fGHz,theta,compensate=True)
+sl['AIR-50cm'].eval(fGHz,theta,compensate=True)
 
 # by default var='a' and kv = 0
 fig,ax = sl['AIR-5cm'].plotwrt('f',coeff='T',typ=['ru'],labels=[''],color='r',linestyle='dashdot',fig=fig,ax=ax)
@@ -263,7 +273,7 @@ from pylayers.signal.bsignal import *
 ```
 
 ```python
-sl['AIR-5cm'].ev(fGHz,theta,compensate=False)
+sl['AIR-5cm'].eval(fGHz,theta,compensate=False)
 
 S = sl['AIR-5cm']
 f=S.fGHz
@@ -280,9 +290,9 @@ g.plot(typ='v')
 ```
 
 ```python
-sl['AIR-5cm'].ev(fGHz,theta,compensate=True)
-sl['AIR-10cm'].ev(fGHz,theta,compensate=True)
-sl['AIR-50cm'].ev(fGHz,theta,compensate=True)
+sl['AIR-5cm'].eval(fGHz,theta,compensate=True)
+sl['AIR-10cm'].eval(fGHz,theta,compensate=True)
+sl['AIR-50cm'].eval(fGHz,theta,compensate=True)
 
 fig,ax = sl['AIR-5cm'].plotwrt('f',coeff='T',typ=['ru'],labels=[''],color='k')
 #print ax
@@ -297,7 +307,7 @@ sl.mat.add(name='GlassJc',cval=2.55,alpha_cmm1=2.4,fGHz=120,typ='THz')
 sl.add('ConcreteJc',['ConcreteJc'],[0.049])
 
 theta = np.linspace(20,60,100)*np.pi/180
-sl['ConcreteJc'].ev(120,theta)
+sl['ConcreteJc'].eval(120,theta)
 fig,ax = sl['ConcreteJc'].plotwrt('a')
 ```
 
@@ -305,20 +315,20 @@ fig,ax = sl['ConcreteJc'].plotwrt('a')
 plt.figure(figsize=(20,10))
 fGHz = np.linspace(110,135,50)
 sl.add('DoubleGlass',['GlassJc','AIR','GlassJc'],[0.0029,0.0102,0.0029])
-sl['DoubleGlass'].ev(fGHz,theta)
+sl['DoubleGlass'].eval(fGHz,theta)
 sl['DoubleGlass'].pcolor(dB=True)
 ```
 
 ```python
 f = plt.figure(figsize=(4,4))
-f = sl['DoubleGlass'].ev(120,theta)
+f = sl['DoubleGlass'].eval(120,theta)
 fig,ax = sl['DoubleGlass'].plotwrt('a',figsize=(10,10))
 plt.tight_layout()
 ```
 
 ```python
 freq = np.linspace(110,135,50)
-sl['DoubleGlass'].ev(freq,theta)
+sl['DoubleGlass'].eval(freq,theta)
 fig,ax = sl['DoubleGlass'].plotwrt('f',figsize=(10,10))  # @20
 plt.tight_layout()
 ```

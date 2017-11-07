@@ -63,14 +63,14 @@ master_doc = 'index'
 
 # General information about the project.
 #project = 'PyLayers'
-copyright = '2016, PyLayers developer team'
+copyright = '2017, PyLayers developer team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '0.3'
+version = '0.4'
 # The full version, including alpha/beta/rc tags.
 release = '1'
 
@@ -106,16 +106,19 @@ add_module_names = True
 pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
-#modindex_common_prefix = []
+modindex_common_prefix = ['pylayers']
 highlight_language= "none"
 
 # -- Options for HTML output ---------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'pylayers'
+#html_theme = 'pylayers'
+html_theme = 'sphinx_rtd_theme'
 
-
+#autodoc_member_order = 'bysource'
+#autodoc_default_flags = ['members','undoc-members'] 
+#autosummary_generate = True
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.

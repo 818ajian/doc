@@ -1,6 +1,6 @@
 # Description of antennas
 
-PyLayers has a very rich set of tools for handling antenna radiation pattern. Antennas can be described in different manners and read from different specific file formats.
+PyLayers has a rich set of tools for handling antenna radiation pattern. Antennas can be described in different manners and read from different specific file formats.
 
 The description goes from a simple antenna gain formula to a full polarization description, compressed or not, using scalar or vector spherical harmonics decomposition.
 
@@ -18,7 +18,7 @@ An antenna object can not be loaded in specifying an existing antenna file name 
 A = Antenna('S1R1.vsh3')
 ```
 
-The object antenna can show itself just by typing it's name.
+The object antenna shows itself just by typing it's name.
 
 ```python
 A
@@ -50,7 +50,11 @@ print lssh3[0:5]
 print lmat[0:5]
 ```
 
-As already mentionned, the radiation pattern of the antenna has not yet been evaluated. The method to evaluate the pattern is `eval()` with the `grid` option set to `True. If the `grid` option is set to `False`, the antenna is evaluated for only the specified direction. This mode is used in the ray tracing, while the former is used to visualize the whole antenna pattern.
+As already mentionned, the radiation pattern of the antenna has not yet been
+evaluated. The method to evaluate the pattern is `eval()` with the `grid`
+option set to `True. If the `grid` option is set to `False`, the antenna is
+evaluated for only the specified direction. This mode is used in the ray
+tracing, while the former is used to visualize the whole antenna pattern.
 
 The vector spherical coefficients are strored in `A.C`. This C letter refers to the coefficients.
 Those coefficients are obtained thanks to the [Spherepack Module](http://nldr.library.ucar.edu/repository/assets/technotes/TECH-NOTE-000-000-000-380.pdf).
@@ -80,7 +84,6 @@ A.eval(grid=True)
 
 ```python
 20*np.log10(np.max(A.sqG))
-
 ```
 
 

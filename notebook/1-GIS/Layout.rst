@@ -1,12 +1,12 @@
 
-.. code:: python
+.. code:: 
 
     >>> !date 
 
 
 .. parsed-literal::
 
-    dimanche 12 fvrier 2017, 10:09:31 (UTC+0100)
+    samedi 4 novembre 2017, 10:14:00 (UTC+0100)
 
 
 Description of the propagation environment
@@ -18,7 +18,7 @@ implementation of the ray tracing. The class is implemented in the
 
 `layout.py <http://pylayers.github.io/pylayers/modules/pylayers.gis.layout.html>`__
 
-.. code:: python
+.. code:: 
 
     >>> from pylayers.gis.layout import *
     >>> from IPython.display import Image
@@ -28,9 +28,9 @@ implementation of the ray tracing. The class is implemented in the
 Getting the list of all available Layouts : the ``ls()`` method
 ---------------------------------------------------------------
 
-Creating a default Layout is as simple as :
+Creating an empty Layout is as simple as :
 
-.. code:: python
+.. code:: 
 
     >>> L=Layout()
     >>> L
@@ -43,28 +43,61 @@ Creating a default Layout is as simple as :
     
     ----------------
     Project : /home/uguen/Bureau/P1
-    newfile.ini
-    Not built 
+    
+    newfile.lay
+    Type : indoor
     Coordinates : cart
     ----------------
+    Gs : 0(0/0/0) :0
+    Gt : 0 : 0
+    Gr : 0 : 0
+    ----------------
     
-    Number of points  : 0
-    Number of segments  : 0
-    Number of sub segments  : 0
-    Number of cycles  : 0
-    Number of rooms  : 0
     
     xrange :(-50, 50)
     yrange :(-50, 50)
     Segment s in Gs => s_ab coordinates 
+    s2pc : segment to point coordinates (sparse) [p1,p2] = L.s2pc.toarray().reshape(2,2).T 
     s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
 
 
 
 
+The different argument of the **init** function are listed below
+
+.. code:: 
+
+    >>> L=Layout(string='',
+                     _filematini='matDB.ini',
+                     _fileslabini='slabDB.ini',
+                     _filefur='',
+                     bcheck=True,
+                     bbuild=True,
+                     bverbose=False,
+                     bcartesian=True,
+                     dist_m=400,
+                     typ='indoor')
+
+-  **string** is either an existing layout filename (.ini,.osm,.res) or
+   the coordinates (lat,lon)
+-  \*\* \_filematini\*\* is the a material filename material ans slab
+   are now described in .lay file
+-  \*\* \_fileslabini\*\* is the a slab filename
+-  \*\* \_filefur\*\* is the furniture filename
+-  \*\* bcheck\*\* is a boolean which force layout integrity checking
+-  \*\* bbuild\*\* is a boolean which force rebuilding the layouts
+   graphs
+-  \*\* bverbose\*\* is a boolean output verbosity
+-  \*\* bcartesian\*\* is a boolean controling the type of coordinates
+   cartesian or (lat,lon)
+-  **dist\_m** is a float value which indicates the zone radius in
+   meters for openstreet map extraction
+-  **typ** is a string which takes values either 'floorplan' or
+   'outdoor'
+
 Querying the file name associated with the Layout.
 
-.. code:: python
+.. code:: 
 
     >>> L._filename
 
@@ -73,58 +106,83 @@ Querying the file name associated with the Layout.
 
 .. parsed-literal::
 
-    'newfile.ini'
+    'newfile.lay'
 
 
 
-The Layout is described in an ``.ini`` file.
+The Layout is described in an ``.lay`` file, a ``.osm``\ file or a
+``.res`` file.
 
 The ``ls()`` method lists the layout files which are available in the
 ``struc`` directory of your current project, which is set up via the
 $BASENAME environment variable which should be defined in order PyLayers
 find the good directories.
 
-.. code:: python
+.. code:: 
 
-    >>> L.ls('ini')
+    >>> L.ls('lay')
 
 
 
 
 .. parsed-literal::
 
-    ['11Dbibli.ini',
-     'B11.ini',
-     'CORM1.ini',
-     'DLR.ini',
-     'DLR2.ini',
-     'Luebbers.ini',
-     'MOCAP-small.ini',
-     'MOCAP-small2.ini',
-     'MOCAP.ini',
-     'MOCAPext.ini',
-     'Scene.ini',
-     'TA-Office.ini',
-     'TA-Office3.ini',
-     'TC1_METIS.ini',
-     'TC2_METIS.ini',
-     'W2PTIN.ini',
-     'WHERE1.ini',
-     'defdiff.ini',
-     'defsthdiff.ini',
-     'defstr.ini',
-     'edge.ini',
-     'klepal.ini',
-     'scattering.ini',
-     'test.ini']
+    ['11Dbibli.lay',
+     'B11.lay',
+     'CEA2.lay',
+     'CEA2_.lay',
+     'CORM1.lay',
+     'DLR.lay',
+     'DLR2.lay',
+     'Luebbers.lay',
+     'Luebbers_v12.lay',
+     'MOCAP-small.lay',
+     'MOCAP-small2.lay',
+     'MOCAP.lay',
+     'MOCAPext.lay',
+     'Munich.lay',
+     'Munich_buildings.lay',
+     'Scene.lay',
+     'TA-Office.lay',
+     'TA-Office3.lay',
+     'TC1_METIS.lay',
+     'TC2_METIS.lay',
+     'W2PTIN.lay',
+     'WHERE1.lay',
+     'defdiff.lay',
+     'defsthdiff.lay',
+     'defstr.lay',
+     'edge.lay',
+     'espoo.lay',
+     'espoo2.lay',
+     'espoo3.lay',
+     'homeK_vf.lay',
+     'klepal.lay',
+     'klepal_.lay',
+     'klepal__.lay',
+     'library_I2_final.lay',
+     'office_I1.lay',
+     'office_I1_aki_4m.lay',
+     'office_I1_final.lay',
+     'otakaari5A.lay',
+     'otakari.lay',
+     'otakari_.lay',
+     'scattering.lay',
+     'stromberg15GHz.lay',
+     'stromberg28GHz.lay',
+     'stromberg83GHz.lay',
+     'test.lay',
+     'test_face.lay',
+     'testair0.lay',
+     'testair1.lay']
 
 
 
-.. code:: python
+.. code:: 
 
-    >>> L=Layout('defstr.ini')
+    >>> L=Layout('defstr.lay')
 
-.. code:: python
+.. code:: 
 
     >>> L
 
@@ -136,42 +194,47 @@ find the good directories.
     
     ----------------
     Project : /home/uguen/Bureau/P1
-    defstr.ini : ad95181c1d17466c25e2799901ca1da7
-    Built with : ad95181c1d17466c25e2799901ca1da7
+    
+    defstr.lay : 5b06adf51ef872a343dfa53c57a587a9
+    Type : indoor
     Coordinates : cart
     ----------------
+    Gs : 27(12/15/11) :30
+    Gt : 0 : 0
+    Gr : 0 : 0
+    ----------------
     
-    Number of points  : 12
-    Number of segments  : 19
-    Number of sub segments  : 0
-    Number of cycles  : 7
-    Number of rooms  : 0
-    degree 0 : [-12 -11 -10  -9]
+    degree 0 : [-11 -12 -10  -9]
     degree 1 : []
     number of node point of degree 2 : 4
     number of node point of degree 3 : 4
     
-    xrange :(757.0, 770.0)
-    yrange :(1110.9549999999999, 1116.5450000000001)
+    xrange :(-1.5, 11.5)
+    yrange :(-0.75, 5.75)
     Segment s in Gs => s_ab coordinates 
+    s2pc : segment to point coordinates (sparse) [p1,p2] = L.s2pc.toarray().reshape(2,2).T 
     s -> u = self.tgs[s] -> v = self.tahe[:,u] -> s_ab = self.pt[:,v]
 
 
 
 
-.. code:: python
+.. code:: 
 
-    >>> f,a=L.showG('s',nodes=True,slab=True,subseg=True,figsize=(10,10),labels=True)
+    >>> f,a=L.showG('s',
+                 nodes=True,
+     	     slab=True,
+    	     subseg=True,
+    	     figsize=(10,10),labels=True)
 
 
 
-.. image:: Layout_files/Layout_11_0.png
+.. image:: Layout_files/Layout_13_0.png
 
 
-L.ax provides the boundary of the layout with the following format :
-(xmin,xmax,ymin,ymax)
+L.ax provides the boundary of the layout with the following tuple format
+: (xmin,xmax,ymin,ymax)
 
-.. code:: python
+.. code:: 
 
     >>> L.ax
 
@@ -180,29 +243,21 @@ L.ax provides the boundary of the layout with the following format :
 
 .. parsed-literal::
 
-    (757.0, 770.0, 1110.9549999999999, 1116.5450000000001)
+    (-1.5, 11.5, -0.75, 5.75)
 
 
 
-.. code:: python
+.. code:: 
 
     >>> L.build()
 
-
-.. parsed-literal::
-
-    building Layout ...
-    check len(ncycles) == 2
-    passed
-
-
-This Layout is decomposed into convex cycles which are stored in the Gt
+A Layout is decomposed into convex cycles which are stored in the Gt
 graph. The diffraction points are stored in the dictionnary ``L.ddiff``.
 The keys of this dictionnary are the diffraction points number and the
 values are a zipped list of output cycles and corresponding wedge
 angles.
 
-.. code:: python
+.. code:: 
 
     >>> L.Gv.node
 
@@ -227,13 +282,13 @@ angles.
      10: {},
      11: {},
      17: {},
-     21: {},
-     27: {},
+     22: {},
+     28: {},
      30: {}}
 
 
 
-.. code:: python
+.. code:: 
 
     >>> L.ddiff
 
@@ -245,11 +300,11 @@ angles.
     {-6: ([4, 1], 4.7123889803846897),
      -4: ([6, 4], 4.7123889803846897),
      -3: ([6, 3], 4.7123889803846897),
-     -1: ([3, 1], 4.7723171355059337)}
+     -1: ([3, 1], 4.7123889803846897)}
 
 
 
-.. code:: python
+.. code:: 
 
     >>> L.Gt.node
 
@@ -258,12 +313,12 @@ angles.
 
 .. parsed-literal::
 
-    {0: {'hash': 'ad95181c1d17466c25e2799901ca1da7', 'indoor': False},
+    {0: {'hash': '5b06adf51ef872a343dfa53c57a587a9', 'indoor': False},
      1: {'indoor': False,
       'inter': [(15, 1, 0),
        (15, 0, 1),
-       (21, 1, 4),
-       (21, 4, 1),
+       (22, 1, 4),
+       (22, 4, 1),
        (7, 1),
        (7, 1, 2),
        (7, 2, 1),
@@ -272,12 +327,12 @@ angles.
        (-3,),
        (-4,)],
       'isopen': True,
-      'polyg': (757.0,1110.955)
-      (757.0,1116.545)
-      (758.5,1115.9)
-      (758.5,1111.6)
+      'polyg': (-1.5,-0.75)
+      (-1.5,5.75)
+      (0.0,5.0)
+      (0.0,0.0)
       
-      vnodes : (-9 15 -12 21 -6 7 -1 17 )},
+      vnodes : (-9 15 -12 22 -6 7 -1 17 )},
      2: {'indoor': True,
       'inter': [(1, 2),
        (1, 2, 5),
@@ -305,20 +360,20 @@ angles.
        (-3,),
        (-4,)],
       'isopen': True,
-      'polyg': (763.5,1114.432)
-      (763.5,1113.432)
-      (763.5,1111.9)
-      (758.5,1111.6)
-      (758.5,1115.9)
-      (763.5,1115.9)
+      'polyg': (5.0,4.0)
+      (5.0,3.0)
+      (5.0,0.0)
+      (0.0,0.0)
+      (0.0,5.0)
+      (5.0,5.0)
       
       vnodes : (-7 1 2 3 -8 5 -2 10 -1 7 -6 6 -5 4 )},
      3: {'indoor': False,
       'inter': [(11, 3),
        (11, 3, 5),
        (11, 5, 3),
-       (27, 3, 6),
-       (27, 6, 3),
+       (28, 3, 6),
+       (28, 6, 3),
        (12, 3, 0),
        (12, 0, 3),
        (17, 3, 1),
@@ -329,13 +384,13 @@ angles.
        (-3,),
        (-4,)],
       'isopen': True,
-      'polyg': (763.5,1111.9)
-      (768.5,1111.9)
-      (770.0,1110.955)
-      (757.0,1110.955)
-      (758.5,1111.6)
+      'polyg': (5.0,0.0)
+      (10.0,0.0)
+      (11.5,-0.75)
+      (-1.5,-0.75)
+      (0.0,0.0)
       
-      vnodes : (-2 11 -3 27 -10 12 -9 17 -1 10 )},
+      vnodes : (-2 11 -3 28 -10 12 -9 17 -1 10 )},
      4: {'indoor': False,
       'inter': [(30, 4, 6),
        (30, 6, 4),
@@ -345,20 +400,20 @@ angles.
        (6, 4),
        (6, 4, 2),
        (6, 2, 4),
-       (21, 4, 1),
-       (21, 1, 4),
+       (22, 4, 1),
+       (22, 1, 4),
        (14, 4, 0),
        (14, 0, 4),
        (-3,),
        (-4,)],
       'isopen': True,
-      'polyg': (770.0,1116.545)
-      (768.5,1115.9)
-      (763.5,1115.9)
-      (758.5,1115.9)
-      (757.0,1116.545)
+      'polyg': (11.5,5.75)
+      (10.0,5.0)
+      (5.0,5.0)
+      (0.0,5.0)
+      (-1.5,5.75)
       
-      vnodes : (-11 30 -4 9 -5 6 -6 21 -12 14 )},
+      vnodes : (-11 30 -4 9 -5 6 -6 22 -12 14 )},
      5: {'indoor': True,
       'inter': [(4, 5),
        (4, 5, 2),
@@ -386,12 +441,12 @@ angles.
        (-3,),
        (-4,)],
       'isopen': True,
-      'polyg': (763.5,1114.432)
-      (763.5,1115.9)
-      (768.5,1115.9)
-      (768.5,1111.9)
-      (763.5,1111.9)
-      (763.5,1113.432)
+      'polyg': (5.0,4.0)
+      (5.0,5.0)
+      (10.0,5.0)
+      (10.0,0.0)
+      (5.0,0.0)
+      (5.0,3.0)
       
       vnodes : (-7 4 -5 9 -4 8 -3 11 -2 5 -8 1 2 3 )},
      6: {'indoor': False,
@@ -402,36 +457,36 @@ angles.
        (30, 4, 6),
        (13, 6, 0),
        (13, 0, 6),
-       (27, 6, 3),
-       (27, 3, 6),
+       (28, 6, 3),
+       (28, 3, 6),
        (-3,),
        (-4,)],
       'isopen': True,
-      'polyg': (768.5,1111.9)
-      (768.5,1115.9)
-      (770.0,1116.545)
-      (770.0,1110.955)
+      'polyg': (10.0,0.0)
+      (10.0,5.0)
+      (11.5,5.75)
+      (11.5,-0.75)
       
-      vnodes : (-3 8 -4 30 -11 13 -10 27 )}}
+      vnodes : (-3 8 -4 30 -11 13 -10 28 )}}
 
 
 
-.. code:: python
+.. code:: 
 
-    >>> L=Layout('DLR.ini')
+    >>> L=Layout('DLR.lay')
 
-.. code:: python
+.. code:: 
 
     >>> f,a=L.showG('s',aw=False)
 
 
 
-.. image:: Layout_files/Layout_20_0.png
+.. image:: Layout_files/Layout_22_0.png
 
 
 To check which are the used slabs :
 
-.. code:: python
+.. code:: 
 
     >>> L.sl
 
@@ -443,24 +498,29 @@ To check which are the used slabs :
     List of Slabs
     -----------------------------
     
-    _AIR : AIR | [0.05]
+    _AIR : AIR | [0.02]
            white 1
-    DOOR : WOOD | [0.05]
-           red1 1
-    FLOOR : REINFORCED_CONCRETE | [0.05]
+           epr :(1+0j)    sigma : 0.0
+    FLOOR : REINFORCED_CONCRETE | [0.1]
            grey40 1
-    WALL : BRICK | [0.05]
+           epr :(8.69999980927+0j)    sigma : 3.0
+    WALL : BRICK | [0.07]
            grey20 3
-    3D_WINDOW_GLASS : GLASS | AIR | GLASS | [0.05, 0.05, 0.05]
+           epr :(4.09999990463+0j)    sigma : 0.300000011921
+    3D_WINDOW_GLASS : GLASS | AIR | GLASS | [0.005, 0.005, 0.005]
            blue3 1
-    PARTITION : PLASTER | [0.05]
+           epr :(3.79999995232+0j)    sigma : 0.0
+           epr :(1+0j)    sigma : 0.0
+           epr :(3.79999995232+0j)    sigma : 0.0
+    PARTITION : PLASTER | [0.1]
            grey80 4
-    METAL : METAL | [0.05]
-           black 4
-    AIR : AIR | [0.05]
-           white 1
-    CEIL : REINFORCED_CONCRETE | [0.05]
+           epr :(8+0j)    sigma : 0.038
+    CEIL : REINFORCED_CONCRETE | [0.1]
            grey20 1
+           epr :(8.69999980927+0j)    sigma : 3.0
+    AIR : AIR | [0.02]
+           white 1
+           epr :(1+0j)    sigma : 0.0
 
 
 
@@ -468,53 +528,32 @@ To check which are the used slabs :
 Let's load an other layout. This an indoor office where the FP7 WHERE
 project UWB impulse radio measuremnts have been performed.
 
-.. code:: python
+.. code:: 
 
-    >>> L=Layout('WHERE1.ini')
-
-
-.. parsed-literal::
-
-    building Layout ...
-    check len(ncycles) == 2
-    passed
-
+    >>> L=Layout('WHERE1.lay')
 
 The showG method provides many possible visualization of the layout
 
-.. code:: python
+.. code:: 
 
     >>> f,a=L.showG('s',airwalls=False,figsize=(20,10))
 
 
 
-.. image:: Layout_files/Layout_26_0.png
+.. image:: Layout_files/Layout_28_0.png
 
 
-.. code:: python
+.. code:: 
 
-    >>> L=Layout('W2PTIN.ini')
+    >>> L=Layout('W2PTIN.lay')
 
-
-.. parsed-literal::
-
-    It exists degree 1 points : [-80]
-    building Layout ...
-    check len(ncycles) == 2
-    passed
-
-
-
-.. image:: Layout_files/Layout_27_1.png
-
-
-.. code:: python
+.. code:: 
 
     >>> f,a = L.showG('s')
 
 
 
-.. image:: Layout_files/Layout_28_0.png
+.. image:: Layout_files/Layout_30_0.png
 
 
 The useful numpy arrays of the Layout
@@ -542,7 +581,7 @@ The point coordinates are stored in two different places
 -  L.Gs.pos : in a dictionary form (key is the point negative index)
 -  L.pt : in a numpy array
 
-.. code:: python
+.. code:: 
 
     >>> print np.shape(L.pt)
     >>> print len(filter(lambda x: x<0,L.Gs.pos))
@@ -567,17 +606,9 @@ number of segment. The first line is the tail index of the segment
 :math:`k` and the second line is the head of the segment :math:`k`.
 Where :math:`k` is the index of a given segment (starting in 0).
 
-.. code:: python
+.. code:: 
 
     >>> L.build()
-
-
-.. parsed-literal::
-
-    building Layout ...
-    check len(ncycles) == 2
-    passed
-
 
 The figure below illustrates a Layout and a superimposition of the graph
 of cycles :math:`\mathcal{G}_c`. Those cycles are automatically
@@ -587,16 +618,16 @@ PyLayers. Notice that the exterior region is the cycle indexed by 0. All
 the rooms which have a common frontier with the exterior cycle are here
 connected to the origin (corresponding to exterior cycle).
 
-.. code:: python
+.. code:: 
 
     >>> f,a = L.showG('s')
 
 
 
-.. image:: Layout_files/Layout_34_0.png
+.. image:: Layout_files/Layout_36_0.png
 
 
-.. code:: python
+.. code:: 
 
     >>> nx.draw_networkx_nodes(L.Gi,L.Gi.pos,node_color='blue',node_size=1)
     >>> nx.draw_networkx_edges(L.Gi,L.Gi.pos,node_color='blue',node_size=1)
@@ -606,12 +637,12 @@ connected to the origin (corresponding to exterior cycle).
 
 .. parsed-literal::
 
-    <matplotlib.collections.LineCollection at 0x7fadde3fedd0>
+    <matplotlib.collections.LineCollection at 0x7f2acd643a50>
 
 
 
 
-.. image:: Layout_files/Layout_35_1.png
+.. image:: Layout_files/Layout_37_1.png
 
 
 ``tgs`` : trancodage from graph indexing to numpy array indexing
@@ -620,41 +651,41 @@ connected to the origin (corresponding to exterior cycle).
 ``tgs`` is an array with length :math:`N_s`\ +1. The index 0 is not used
 because none segment has 0 as an index.
 
-.. code:: python
+.. code:: 
 
     >>> ns = 5
     >>> utahe = L.tgs[ns]
 
-.. code:: python
+.. code:: 
 
     >>> tahe =  L.tahe[:,utahe]
 
-.. code:: python
+.. code:: 
 
     >>> ptail = L.pt[:,tahe[0]]
     >>> phead = L.pt[:,tahe[1]]
 
-.. code:: python
+.. code:: 
 
     >>> print ptail
 
 
 .. parsed-literal::
 
-    [ 24.574  23.297]
+    [ 29.785   6.822]
 
 
-.. code:: python
+.. code:: 
 
     >>> print phead
 
 
 .. parsed-literal::
 
-    [ 24.573  23.19 ]
+    [ 27.414   6.822]
 
 
-.. code:: python
+.. code:: 
 
     >>> L.Gs.node[5]
 
@@ -663,18 +694,18 @@ because none segment has 0 as an index.
 
 .. parsed-literal::
 
-    {'connect': [-165, -163],
-     'iso': [],
+    {'connect': [-8, -139],
+     'iso': [5, 435],
      'name': 'PARTITION',
-     'ncycles': [88, 89],
-     'norm': array([-0.99995633,  0.00934539,  0.        ]),
+     'ncycles': [70, 72],
+     'norm': array([ 0.,  1.,  0.]),
      'offset': 0,
      'transition': False,
      'z': (0, 3.0)}
 
 
 
-.. code:: python
+.. code:: 
 
     >>> print L.Gs.pos[-8]
 
@@ -684,11 +715,11 @@ because none segment has 0 as an index.
     (29.785, 6.822)
 
 
-.. code:: python
+.. code:: 
 
     >>> aseg = np.array([4,7,134])
 
-.. code:: python
+.. code:: 
 
     >>> print np.shape(aseg)
 
@@ -698,7 +729,7 @@ because none segment has 0 as an index.
     (3,)
 
 
-.. code:: python
+.. code:: 
 
     >>> pt  = L.tahe[:,L.tgs[aseg]][0,:]
     >>> ph = L.tahe[:,L.tgs[aseg]][1,:]

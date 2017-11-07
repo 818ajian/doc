@@ -1,8 +1,13 @@
+```python
+!date
+```
+
 #Network Simulation Configuration
 
 ```python
->>> import ConfigParser
->>> import pylayers.util.pyutil as pyu
+import ConfigParser
+from IPython.display import FileLink
+import pylayers.util.pyutil as pyu
 ```
 
 PyLayers is designed to provide indoor radio channel simulation for mobile agents.
@@ -21,104 +26,18 @@ The configuration file is `simulnet.ini`
 This file is assumed to be located in `$BASENAME/ini`. As the format of this file is not stable yet. Refer to the comment in the file below for obtaining the inforamtion about the format.
 
 ```python
->>> !cat $BASENAME/ini/simulnet.ini
-[Mysql]
-host = localhost
-user = root
-passwd = sqlsql
-dbname = test
-dumpdb =True
-
-[Save]
-; deprecated save option
-save=[]
-;save=['csv','mysql','matlab','pyray','txt','ini']
-; save format using Save class..to be deprecatred soon
-savep=True
-; pandas save format . only record mechanical. To be upgraded soon
-savepd=True
-
-[Layout]
-filename = TA-Office.ini
-
-x_offset  = 30
-y_offset = 2
-
-the_world_width	 = 65
-the_world_height = 20
-the_world_scale	 = 20
-
-[Mechanics]
-; update time for agent movement
-mecanic_update_time = 0.2
-; select how agnt choose destiantion
-;'random' ; file
-choose_destination = 'random'
-; experimental show for debug purpose
-pdshow=False
-
-[Network]
-; simulate the network
-network=True
-; refresh TOA regulary 'synchro 'or with distance 'autionomous'
-Communication_mode='autonomous'
-; update time for refreshing network
-network_update_time = 0.1
-; show nodes moving & radio link
-show = False
-; show in ipython notebook
-ipython_nb_show = False
-; show signature ( not fully functionnal)
-show_sg = False
-; show 2 tables : mecanic & network
-show_table = False
-; show the same information but in terminal
-dispinfo = False
-
-[Localization]
-; perform localization
-localization = False
-; time to refresh localization
-localization_update_time = 1.0
-; list of used methods method = ['alg','geo']
-method = ['geo']
-
-
-
-[Simulation]
-; simulation filename for savepd
-filename = 'simulnet'
-; Simulation duration
-duration = 120.0
-; speed ratio ag
-speedratio = 50.
-; time for refreshing tk plot ( obsolete)
-show_interval = 0.5
-; show scene using tk renderer ( obsolete)
-showtk   = False
-; choose seed for random mobiliity
-seed = 1
-; verbose output
-verbose = False
+!cat $BASENAME/ini/simulnet.ini
 ```
 
 ```python
->>> Cp = ConfigParser.ConfigParser()
->>> Cp.read(pyu.getlong('simulnet.ini','ini'))
-['/home/uguen/Bureau/P1/ini/simulnet.ini']
+Cp = ConfigParser.ConfigParser()
+Cp.read(pyu.getlong('simulnet.ini','ini'))
 ```
 
 Current version of `Simulnet.ini` contains the following sections
 
 ```python
->>> Cp.sections()
-['Mysql',
- 'Save',
- 'Layout',
- 'Mechanics',
- 'Network',
- 'Localization',
- 'Simulation']
+Cp.sections()
 ```
 
 ### Save section
@@ -126,22 +45,19 @@ Current version of `Simulnet.ini` contains the following sections
 The save section handles the output files of the simulation.
 
 ```python
->>> dict(Cp.items('Save'))
-{'save': '[]', 'savep': 'True', 'savepd': 'True'}
+dict(Cp.items('Save'))
 ```
 
 The `savep` boolean enable/disable saving of the simulation.
 
 ```python
->>> dict(Cp.items('Save'))['savep']
-'True'
+dict(Cp.items('Save'))['savep']
 ```
 
 The log file which contains all traces from the simulated dynamics are in `$BASENAME/netsave`
 
 ```python
->>> !ls $BASENAME/netsave/*
-/home/uguen/Bureau/P1/netsave/save  /home/uguen/Bureau/P1/netsave/save.mat  /home/uguen/Bureau/P1/netsave/simulnet_TA-Office.h5  /home/uguen/Bureau/P1/netsave/traj_nicta.h5
+!ls $BASENAME/netsave/*
 ```
 
 ### Layout section
@@ -149,43 +65,26 @@ The log file which contains all traces from the simulated dynamics are in `$BASE
 This section specifies the layout parameter and spatial dimension of the simulation
 
 ```python
->>> dict(Cp.items('Layout'))
-{'filename': 'TA-Office.ini',
- 'the_world_height': '20',
- 'the_world_scale': '20',
- 'the_world_width': '65',
- 'x_offset': '30',
- 'y_offset': '2'}
+dict(Cp.items('Layout'))
 ```
 
 Choose the used Layout for simulation
 
 ```python
->>> dict(Cp.items('Layout'))['filename']
-'TA-Office.ini'
+dict(Cp.items('Layout'))['filename']
 ```
 
 Setup an offset for defining the coordinate system origin
 
 ```python
->>> print dict(Cp.items('Layout'))['x_offset']
->>> print dict(Cp.items('Layout'))['y_offset']
-30
-2
+print dict(Cp.items('Layout'))['x_offset']
+print dict(Cp.items('Layout'))['y_offset']
 ```
 
 ### Network section
 
 ```python
->>> dict(Cp.items('Network'))
-{'communication_mode': "'autonomous'",
- 'dispinfo': 'False',
- 'ipython_nb_show': 'False',
- 'network': 'True',
- 'network_update_time': '0.1',
- 'show': 'False',
- 'show_sg': 'False',
- 'show_table': 'False'}
+dict(Cp.items('Network'))
 ```
 
 Setup communication mode between node:
@@ -194,36 +93,31 @@ Setup communication mode between node:
 + `"synchro"` : the data exchange between nodes is periodic. LDPs are periodically refreshed at the `network_update_time`
 
 ```python
->>> dict(Cp.items('Network'))['communication_mode']
-"'autonomous'"
+dict(Cp.items('Network'))['communication_mode']
 ```
 
 Time step for the refresh network information
 
 ```python
->>> dict(Cp.items('Network'))['network_update_time']
-'0.1'
+dict(Cp.items('Network'))['network_update_time']
 ```
 
 Vizualization of the simulation using matplotlib
 
 ```python
->>> dict(Cp.items('Network'))['show']
-'False'
+dict(Cp.items('Network'))['show']
 ```
 
 Vizualization of a table summing up the data exchange of the nodes
 
 ```python
->>> dict(Cp.items('Network'))['show_table']
-'False'
+dict(Cp.items('Network'))['show_table']
 ```
 
 Vizualization of the simulation inside ipython notebook
 
 ```python
->>> dict(Cp.items('Network'))['ipython_nb_show']
-'False'
+dict(Cp.items('Network'))['ipython_nb_show']
 ```
 
 ## Mechanics
@@ -231,10 +125,7 @@ Vizualization of the simulation inside ipython notebook
 This section specifies agents dynamic during simulation
 
 ```python
->>> dict(Cp.items('Mechanics'))
-{'choose_destination': "'random'",
- 'mecanic_update_time': '0.2',
- 'pdshow': 'False'}
+dict(Cp.items('Mechanics'))
 ```
 
 Setup how agent choose their target:
@@ -243,88 +134,67 @@ Setup how agent choose their target:
 + `"file"` : the agent follow the sequence specified in `<project_dir>/nodes_destination.ini`
 
 ```python
->>> dict(Cp.items('Mechanics'))['choose_destination']
-"'random'"
+dict(Cp.items('Mechanics'))['choose_destination']
 ```
 
 Time step for refreshing the mechanical layer (ground truth position)
 
 ```python
->>> dict(Cp.items('Mechanics'))['mecanic_update_time']
-'0.2'
+dict(Cp.items('Mechanics'))['mecanic_update_time']
 ```
 
 ### Localization section
 Setup Localization algorithms
 
 ```python
->>> dict(Cp.items('Localization'))
-{'localization': 'False',
- 'localization_update_time': '1.0',
- 'method': "['geo']"}
+dict(Cp.items('Localization'))
 ```
 
-enable/disable localizaiton of the agents
+enable/disable localization of the agents
 
 ```python
->>> dict(Cp.items('Localization'))['localization']
-'False'
+dict(Cp.items('Localization'))['localization']
 ```
 
 Select localization methods :
 
-+ Algebraic : htrogeneous localization algorithm
++ Algebraic : heterogeneous localization algorithm
 + Geometric : RGPA
 
 ```python
->>> dict(Cp.items('Localization'))['method']
-"['geo']"
+dict(Cp.items('Localization'))['method']
 ```
 
 Time step for localization update
 
 ```python
->>> dict(Cp.items('Localization'))['localization_update_time']
-'1.0'
+dict(Cp.items('Localization'))['localization_update_time']
 ```
 
 ### Simulation section
 
 ```python
->>> dict(Cp.items('Simulation'))
-{'duration': '120.0',
- 'filename': "'simulnet'",
- 'seed': '1',
- 'show_interval': '0.5',
- 'showtk': 'False',
- 'speedratio': '50.',
- 'verbose': 'False'}
+dict(Cp.items('Simulation'))
 ```
 
 Setup simulation duration in second
 
 ```python
->>> dict(Cp.items('Simulation'))['duration']
-'120.0'
+dict(Cp.items('Simulation'))['duration']
 ```
 
 Setup random seed for simulation
 
 ```python
->>> dict(Cp.items('Simulation'))['seed']
-'1'
+dict(Cp.items('Simulation'))['seed']
 ```
 
 Display messages during simulation
 
 ```python
->>> dict(Cp.items('Simulation'))['verbose']
-'False'
+dict(Cp.items('Simulation'))['verbose']
 ```
 
-See Also
+See Also Mobility_
 
-```python
->>> FileLink('../4-MOB/Mobility.ipynb')
-/home/uguen/Documents/rch/devel/pylayers/doc/notebook/4-MOB/Mobility.ipynb
-```
+.. _Mobility: ../4-MOB/Mobility.html

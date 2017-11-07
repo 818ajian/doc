@@ -80,7 +80,7 @@ Overview
 ########
 
 Pylayers is a site-specific radio channel simulator.
-It is organized in different python modules. 
+It is organized in different modules. 
 
 The source code is distributed in the following directories
 
@@ -106,8 +106,9 @@ The basic usage is first to build a description of the radio propagation
 scene. This means : 
 
 1. Describing a propagation environment 
-2. Setting a transmitter and a receiver and a given standard. 
-3. Producing different kind of outputs for further upper layer analysis.   
+2. Setting a Link in specifying a transmitter and a receiver position with
+   ther antennas type and orientation
+3. Producing channel outputs 
 
 
 
@@ -241,6 +242,13 @@ PyLayers Tools
   8-MISC/Cone.rst
   8-MISC/Geomutil.rst
 
+References
+##########
+
+.. toctree::
+   :maxdepth: 3 
+
+   ../modules/pylayers.rst 
 
 .. raw:: html
 

@@ -1,10 +1,16 @@
+```
+!date
+```
+
+# Outdoor Coverage Knife-Edge Model  
+
 ```python
 from pylayers.gis.ezone import *
 import matplotlib.tri as tri
 %matplotlib inline
 ```
 
-We load 
+We load a earth zone from its name in srtm file convention 
 
 ```python
 z = Ezone('N48W002')

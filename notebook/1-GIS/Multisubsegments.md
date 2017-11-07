@@ -2,7 +2,7 @@
 !date
 ```
 
-# Effect of Modifying the Nature of Sub-Segments
+# Modifying the segment nature 
 
 This illustrates a simple ray tracing simulation. The environement 
 is a building with 2 rooms. At the interface betweebn the two rooms there is 
@@ -17,9 +17,8 @@ from pylayers.gis.layout import *
 from pylayers.antprop.signature import *
 import pylayers.signal.bsignal as bs
 import pylayers.signal.waveform as wvf
-from pylayers.simul.simulem import *
 import matplotlib.pyplot as plt
-%matplotlib inline
+%matplotlib inline 
 ```
 
 Let's start by loading a simple layout with 2 single rooms. The multi subsegment
@@ -27,21 +26,18 @@ appears in the middle with the red vertical lines. Each subsegment is
 materialized by a  segment.
 
 ```python
-L=Layout('defstr.ini')
+L=Layout('defstr.lay')
 f,a=L.showG('s',subseg=True,figsize=(10,10))
 ```
 
-The studied configuration is composed of a simple 2 rooms building separated by
-a subsegment which has a multi subsegment attribute. The attribute of the
-subsegment can be changed  with the method [`chgmss`](http://pylayers.github.io/
-pylayers/modules/generated/pylayers.gis.layout.Layout.chgmss.html) (change
-multisubsegment). In the example WOOD in the lower part then 10cm of AIR then
-wood again until the ceiling.
+The studied configuration is composed of a simple 2 rooms
+building separated by an iso segment 
 
-```python
-L.chgmss(1,ss_name=['WOOD','AIR','WOOD'],ss_z =[(0.0,2.7),(2.7,2.8),(2.8,3)],ss_offset=[0,0,0])
+```python 
+print L.Gs.node[1]
+print L.Gs.node[2]
+print L.Gs.node[3]
 ```
-
 
 The $\mathcal{G}_s$ graph dictionary has the following structure
 
@@ -49,13 +45,13 @@ The $\mathcal{G}_s$ graph dictionary has the following structure
 L.Gs.node
 ```
 
-We define now, the position of the transmitter and the receiver, the two points which are always the termination of a radio link.
+We define now, the position of the transmitter and the receiver, the two termination of a radio link.
 
 ```python
 #tx=np.array([759,1114,1.5])
 #rx=np.array([767,1114,1.5])
-tx=np.array([759,1114,1.5])
-rx=np.array([767,1114,1.5])
+tx=np.array([2,3,1.5])
+rx=np.array([8,4,1.6])
 ```
 
 
@@ -65,23 +61,18 @@ fGHz=np.linspace(1,11,100)
 #Ab = Antenna('S1R1.vsh3')
 Aa = Antenna('Gauss',fGHz=fGHz)
 Ab = Antenna('Gauss',fGHz=fGHz)
-Ab.eval()
-Aa.eval()
 #Aa = AntArray(N=[8,1,1],fGHz=fGHz)
 #Ab = AntArray(N=[4,1,1],fGHz=fGHz)
-Lk = DLink(L=L,a=tx,b=rx,Aa=Aa,Ab=Ab,fGHz=fGHz,cutoff=5)
-ak,tauk=Lk.eval(force=True,verbose=False)
+Lk = DLink(L=L,
+	   a=tx,
+           b=rx,
+           Aa=Aa,
+           Ab=Ab,
+           fGHz=fGHz,
+	   cutoff=5)
+Lk.eval(force=True,verbose=False)
 ```
 
-```python
-ak.shape
-```
-
-```python
-plt.stem(tauk,ak[:,0,0])
-```
-
-A link is the set of a layout and 2 termination points.
 
 ```python
 Aa.eval()
@@ -93,7 +84,7 @@ Lk.C.Ctt
 ```
 
 ```python
-ak,tauk=Lk.eval(force=True,a=tx,b=rx,applywav=True)
+Lk.eval(force=True,a=tx,b=rx,applywav=True)
 ```
 
 ```python
@@ -132,29 +123,29 @@ cir = Lk.H.applywavB(wav.sf)
 ```
 
 ```python
-layer = ['AIR','AIR','AIR']
-Lk.L.chgmss(1,ss_name=layer)
-Lk.L.Gs.node[1]['ss_name']=layer
+
+L.Gs.node[1]['name']='AIR'
+L.Gs.node[2]['name']='AIR'
+L.Gs.node[3]['name']='AIR'
 #Aa = Antenna('Omni',fGHz=fGHz)
-#Aa = Antenna('Omni',fGHz=fGHz)
-ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
-plt.stem(Lk.H.taud,Lk.H.ak[:,0,20])
-plt.title(str(layer))
+#Ab = Antenna('Omni',fGHz=fGHz)
+Lk.eval(force=True,verbose=0,fGHz=fGHz)
+Lk.plt_cir()
+plt.title('AIR/AIR/AIR')
 plt.figure()
-layer = ['METAL','METAL','METAL']
-Lk.L.chgmss(1,ss_name=layer)
-Lk.L.Gs.node[1]['ss_name']=layer
-ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
-plt.stem(Lk.H.taud,Lk.H.ak[:,0,20])
-plt.title(str(layer))
-#plt.stem(Lk.H.taud,Lk.H.ak[:,0,50])
+L.Gs.node[1]['name']='METAL'
+L.Gs.node[2]['name']='METAL'
+L.Gs.node[3]['name']='METAL'
+Lk.eval(force=True,verbose=0,fGHz=fGHz)
+Lk.plt_cir()
+plt.title('METAL/METAL/METAL')
 plt.figure()
-layer = ['WOOD','AIR','WOOD']
-Lk.L.chgmss(1,ss_name=layer)
-Lk.L.Gs.node[1]['ss_name']=layer
-ak,tauk=Lk.eval(force=True,verbose=0,fGHz=fGHz)
-plt.title(str(layer))
-plt.stem(Lk.H.taud,Lk.H.ak[:,0,20])
+L.Gs.node[1]['name']='WOOD'
+L.Gs.node[2]['name']='AIR'
+L.Gs.node[3]['name']='WOOD'
+Lk.eval(force=True,verbose=0,fGHz=fGHz)
+Lk.plt_cir()
+plt.title('WOOD/AIR/WOOD')
 ```
 
 

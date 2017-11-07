@@ -31,24 +31,24 @@ The different argument of the __init__ function are listed below
                  _filematini='matDB.ini',
                  _fileslabini='slabDB.ini',
                  _filefur='',
-                 force=False,
-                 check=True,
-                 build=True,
-                 verbose=False,
-                 cartesian=True,
+                 bcheck=True,
+                 bbuild=True,
+                 bverbose=False,
+                 bcartesian=True,
                  dist_m=400,
-                 typ='floorplan')
+                 typ='indoor')
 ```
 
 + **string** is either an existing layout filename (.ini,.osm,.res) or the coordinates (lat,lon)
-+ ** _filematini** is the material filename
-+ ** _fileslabini** is the slab filename
-+ ** _filefur** is th efurniture filename
-+ ** check** is a boolean which force layout integrity checking 
-+ ** build** is a boolean which force rebuilding the layouts graphs 
-+ **verbose** is a boolean output verbosity
-+ **cartesian** is a boolean controling the type of coordinates cartesian or (lat,lon)
-+ **dist_m** is a number which indicates the zone radius in meters for openstreet map extraction 
++ ** _filematini** is the a material filename
+	material ans slab are now described in .lay file
++ ** _fileslabini** is the a slab filename
++ ** _filefur** is the furniture filename
++ ** bcheck** is a boolean which force layout integrity checking 
++ ** bbuild** is a boolean which force rebuilding the layouts graphs 
++ ** bverbose** is a boolean output verbosity
++ ** bcartesian** is a boolean controling the type of coordinates cartesian or (lat,lon)
++ **dist_m** is a float value which indicates the zone radius in meters for openstreet map extraction 
 + **typ** is a string which takes values either 'floorplan' or 'outdoor'
 
 Querying the file name associated with the Layout.
@@ -57,16 +57,16 @@ Querying the file name associated with the Layout.
 >>> L._filename
 ```
 
- The Layout is described in an `.ini` file, a `.osm`file or a `.res` filed
+ The Layout is described in an `.lay` file, a `.osm`file or a `.res` file.
 
 The `ls()` method lists the layout files which are available in the `struc` directory of your current project, which is set up via the $BASENAME environment variable which should be defined in order PyLayers find the good directories.
 
 ```python
->>> L.ls('ini')
+>>> L.ls('lay')
 ```
 
 ```python
->>> L=Layout('defstr.ini')
+>>> L=Layout('defstr.lay')
 ```
 
 ```python
@@ -74,9 +74,15 @@ The `ls()` method lists the layout files which are available in the `struc` dire
 ```
 
 ```python
->>> f,a=L.showG('s',nodes=True,slab=True,subseg=True,figsize=(10,10),labels=True)
+>>> f,a=L.showG('s',
+             nodes=True,
+ 	     slab=True,
+	     subseg=True,
+	     figsize=(10,10),labels=True)
 ```
-L.ax  provides the boundary of the layout with the following format :  (xmin,xmax,ymin,ymax)
+
+L.ax  provides the boundary of the layout with the following tuple format : 
+ (xmin,xmax,ymin,ymax)
 
 ```python
 >>> L.ax
@@ -86,7 +92,7 @@ L.ax  provides the boundary of the layout with the following format :  (xmin,xma
 >>> L.build()
 ```
 
-This Layout is decomposed into convex cycles which are stored in the Gt graph. 
+A Layout is decomposed into convex cycles which are stored in the Gt graph. 
 The diffraction points are stored in the dictionnary `L.ddiff`. The keys of this dictionnary are the diffraction points number and the values are a zipped list of output cycles and corresponding wedge angles.
 
 ```python
@@ -102,7 +108,7 @@ The diffraction points are stored in the dictionnary `L.ddiff`. The keys of this
 ```
 
 ```python
->>> L=Layout('DLR.ini')
+>>> L=Layout('DLR.lay')
 ```
 
 ```python
@@ -118,7 +124,7 @@ To check which are the used slabs :
 Let's load an other layout. This an indoor office where the FP7 WHERE project UWB impulse radio measuremnts have been performed. 
 
 ```python
->>> L=Layout('WHERE1.ini')
+>>> L=Layout('WHERE1.lay')
 ```
 
 The showG method provides many possible visualization of the layout
@@ -128,7 +134,7 @@ The showG method provides many possible visualization of the layout
 ```
 
 ```python
->>> L=Layout('W2PTIN.ini')
+>>> L=Layout('W2PTIN.lay')
 ```
 
 ```python
