@@ -27,10 +27,10 @@ sys.path.insert(0, os.path.abspath('../../pylayers/pylayers'))
 
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'numpydoc',
+    'sphinx_automodapi.automodapi',
 #    'numpydoc.plot_directive',
 #    'ipython_directive',
 #    'matplotlib.sphinxext.mathmpl',
@@ -70,7 +70,7 @@ copyright = '2017, PyLayers developer team'
 # built documents.
 #
 # The short X.Y version.
-version = '0.4'
+version = '0.5'
 # The full version, including alpha/beta/rc tags.
 release = '1'
 
@@ -129,7 +129,7 @@ html_theme_path = ['themes']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = "PyLayers"
+html_title = "PyLayers"
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = "PyLayers "

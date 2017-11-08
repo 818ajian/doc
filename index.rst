@@ -3,6 +3,6 @@
 .. toctree::
    :hidden:
 
-   notebook/TOC 
-   modules/pylayers
+   notebook/index 
    auto_examples/index
+   api/references

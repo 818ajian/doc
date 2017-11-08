@@ -5,8 +5,10 @@
 # Modifying the segment nature 
 
 This illustrates a simple ray tracing simulation. The environement 
-is a building with 2 rooms. At the interface betweebn the two rooms there is 
-a segment with 3 sub-segment whose material properties are changed in the simulation. The notebook illustrates in details the different steps of the simulation. First we need to import several specialized modules. 
+is a building with 2 rooms. At the interface between the two rooms there is 
+a segment with 3 sub-segment whose material properties are changed in the simulation. 
+This section illustrates in details the different steps of the simulation. 
+First we need to import several specialized modules. 
 
 ```python
 from pylayers.simul.link import *
@@ -30,8 +32,13 @@ L=Layout('defstr.lay')
 f,a=L.showG('s',subseg=True,figsize=(10,10))
 ```
 
+The attribute `lsss` lists all the segments which are superposed called `iso` segment. 
+```
+L.lsss
+```
+
 The studied configuration is composed of a simple 2 rooms
-building separated by an iso segment 
+building separated by an iso segment.
 
 ```python 
 print L.Gs.node[1]
@@ -39,10 +46,12 @@ print L.Gs.node[2]
 print L.Gs.node[3]
 ```
 
-The $\mathcal{G}_s$ graph dictionary has the following structure
+The $\mathcal{G}_s$ graph dictionary has the following node. Negative nodes are points 
+and positive index nodes are segments. 
 
 ```python
-L.Gs.node
+for k in [-1,1,2]:
+    print(L.Gs.node[k])
 ```
 
 We define now, the position of the transmitter and the receiver, the two termination of a radio link.

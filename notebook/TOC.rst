@@ -79,28 +79,22 @@
 Overview
 ########
 
-Pylayers is a site-specific radio channel simulator.
-It is organized in different modules. 
+`PyLayers` is a site-specific radio propagation channel simulator, 
+curently developed at IETR laboratory in Rennes. 
+It aims at providing a very flexible tool to investigate 
+radio propagation channel for education and research in the field of
+communications and localization. The current work is mostly focused 
+on investigating 5G cellular concepts. 
 
-The source code is distributed in the following directories
+If you find some interest in this tool and decide to start to use it. 
+You are welcome to contribute your feedback, suggestions and even 
+improvements back to the project. 
+The best place to do it first it in the issues
+page of the project (https://github.com/pylayers/pylayers/issues)
 
-+ gis
-    Handle geographical information system
-+ antprop
-    Antenna and Propagation Channel related modules
-+ simul 
-    High level simulation tools
-+ mobility 
-    Human and vehicular mobility modules 
-+ signal
-    Signal and PHY tools
-+ measures
-    Measurement related tools 
-+ location 
-    Location and positioning tools
-+ util 
-    Utility functions
 
+Basic Usage
+###########
 
 The basic usage is first to build a description of the radio propagation 
 scene. This means : 
@@ -111,34 +105,19 @@ scene. This means :
 3. Producing channel outputs 
 
 
-
-Radio Propagation Simulation 
-############################
-
 Environment Description 
-************************ 
-
-Indoor and Outdoor Layout
-=========================
+#######################
 
 .. toctree::
   :maxdepth: 2
 
   1-GIS/Layout.rst 
-
   1-GIS/Multisubsegments.rst
-
-GIS and DEM
-===========
-
-.. toctree::
-  :maxdepth: 2
-
   1-GIS/Ezone.rst
   1-GIS/Coverage.rst
 
-Handling Material Properties of Layout
-======================================
+Materials and Slabs
+###################
 
 .. toctree::
   :maxdepth: 2
@@ -146,7 +125,7 @@ Handling Material Properties of Layout
   2-AP/SlabsMaterials.rst
 
 Description of Antennas
-***********************
+#######################
 
 .. toctree::
   :maxdepth: 2
@@ -155,8 +134,8 @@ Description of Antennas
   2-AP/AntennaSSH.rst
   2-AP/AntennaVSH.rst
 
-Multiwall Motley-Keenan Simulation
-**********************************
+Coverage Simulation
+###################
 
 .. toctree::
   :maxdepth: 2
@@ -166,8 +145,8 @@ Multiwall Motley-Keenan Simulation
   2-AP/MultiWall.rst
   2-AP/CoverageMetis.rst
 
-Ray Tracing Tool
-****************
+Ray Tracing Simulation 
+######################
 
 .. toctree::
   :maxdepth: 2
@@ -188,16 +167,9 @@ Handling Agent Mobility
   5-SIM/SimulNetConfig.rst
   4-MOB/Mobility.rst
   4-MOB/Body.rst
-
-Wireless Body Area Network Related Classes
-########################################## 
-  
-.. toctree::
-  :maxdepth: 2
-
   5-SIM/Corser.rst
 
-Some Simulation Examples
+Other Simulation Examples
 ########################
 
 .. toctree::
@@ -211,7 +183,7 @@ Some Simulation Examples
   5-SIM/AggregatedCIR.rst
   5-SIM/
 
-Algorithms for Localization 
+Localization Algorithms
 ###########################
 
 .. toctree::
@@ -241,16 +213,3 @@ PyLayers Tools
   3-PHY/Noise.rst
   8-MISC/Cone.rst
   8-MISC/Geomutil.rst
-
-References
-##########
-
-.. toctree::
-   :maxdepth: 3 
-
-   ../modules/pylayers.rst 
-
-.. raw:: html
-
-  <\div>
-

@@ -1,19 +1,26 @@
+```python 
+!date
+```
 # Handling time and frequency domain signals : `Bsignal` Class
 
-This section presents some features of the classes implemented in the [`pylayers.signal.bsignal.py`](http://pylayers.github.io/pylayers/modules/pylayers.signal.bsignal.html) module.
+This section presents some features of the classes implemented in the
+[`pylayers.signal.bsignal.py`](http://pylayers.github.io/pylayers/modules/pylayers.signal.bsignal.html)
+module.
 
 ```python
 %matplotlib inline
 ```
 
-The `Bsignal` class is a container for a signal with a base which can be either in time domain or frequency domain.
+The `Bsignal` class is a container for a signal with an indexation range which can be either in time domain or frequency domain.
 
 ```python
 from pylayers.signal.bsignal import *
 from matplotlib.pyplot import *
 ```
 
-As a first example, let construct an impulse signal normalized in energy. To do so there exist a specialized function : [`EnImpulse`](http://pylayers.github.io/pylayers/modules/generated/pylayers.signal.bsignal.EnImpulse.demo.html#pylayers.signal.bsignal.EnImpulse.demo)
+As a first example, let construct an impulse signal normalized in energy. To do
+so there exist a specialized function :
+[`EnImpulse`](http://pylayers.github.io/pylayers/modules/generated/pylayers.signal.bsignal.EnImpulse.demo.html)
 
 ```python
 E=TUsignal()
