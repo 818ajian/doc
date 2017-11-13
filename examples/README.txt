@@ -1,2 +1,1 @@
-Illustration of some PyLayers features 
-
+This gallery presents various examples of pylayers suite
